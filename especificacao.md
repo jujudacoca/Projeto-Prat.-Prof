@@ -2,7 +2,8 @@
 ## PROJETO: Aplicativo para Recomendação de Filmes, Séries e Livros
 ### Curso de Sistemas de Informação
 ### Prática Profissional em ADS
-### Turmas 05K
+### Turma 05K
+### Juliano Gomes 31929990
 ### 1º semestre de 2021
 
 #Introdução
