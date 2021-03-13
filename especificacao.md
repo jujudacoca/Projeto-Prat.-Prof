@@ -15,6 +15,7 @@ Usuários do sistema:
 
 * Gerente de Serviço:Terá acesso a estátisticas e gráficos sobre os membros da rede social.
 
+* Administrador de conteúdo: finaliza o cadastro de novas mídias, aprovando ou reprovando o conteúdo. 
 
 # Objetivos Funcionais
 1. O sistema deverá permitir que colaboradores criem cadastros no site com os dados: nome completo, username, senha, data de nascimento, cidade e estado.
