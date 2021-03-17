@@ -44,7 +44,6 @@ Usuários do sistema:
 6. A aplicação precisa estar operante o tempo todo.
 7. A aplicação deverá possuir um sistema de segurança.
 8. O sistema deverá receber novos cadastros de filmes, séries e livros sem necessidade de nova implementação.
-9. O sistema deverá permitir que o gerente de serviço tenho acesso a dados sobre os membros, filmes, séries e livros cadastrados.
 10. O sistema deverá exibir os filmes, séries e livros atráves de um histórico.
 11. O sistema deverá apresentar recomendações de filmes, séries e livros após existerem 10 membros com 10 avaliações.
 12. Cada membro deverá ter uma página pessoal com todas suas avalições ja feitas, lista de amigos e o número de "joinhas" que ja recebeu em suas avaliações.
@@ -52,3 +51,4 @@ Usuários do sistema:
 14. O sistema deverá indicar os amigos em comum nas páginas de outros amigos.
 15. O sistema deverá sugerir uma lista de 3 membros compátiveis para o colaborador criar amizades toda vez que ele entrar no sistema.
 16. Cada filme, série e livro deverá ter uma página lista de todas as avaliações ja realizadas e ordenada pelo número de "joinhas".
+17. O site web do sistema deverá ser visível nos navegadores Mozilla Firefox, Google Chrome e Microsoft Edge.
