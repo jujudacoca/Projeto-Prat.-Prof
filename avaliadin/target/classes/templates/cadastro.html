@@ -1,0 +1,34 @@
+ 
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>User Registration Form</title>
+</head>
+<body>
+    <div align="center">
+        <h1>User Registration</h1>
+        <form action="#" th:action="@{/cadastro}" method="post">
+            <label path="nome">Nome:<label>
+            <input type="text" name="nome" ><br/>
+             
+            <label path="username">login:<label>
+            <input type="text" name="username"/><br/>
+             
+            <label path="senha">Password:<label>
+            <input type="password" name="senha"/><br/>      
+ 
+            <!--<label path="Dt_Nasc">Birthday (yyyy-mm-dd):<label>
+            <input type="text" name="nomedtNasc"/><br/>
+             -->                  
+           	<label path="cidade">codade:<label>
+            <input type="text" name="cidade"/><br/>
+             
+          	<label path="uf">uf:<label>
+            <input type="text" name="uf"/><br/>
+                 
+           <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+    </div>
+</body>
+</html>
