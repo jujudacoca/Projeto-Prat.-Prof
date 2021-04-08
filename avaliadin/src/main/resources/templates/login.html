@@ -1,21 +1,27 @@
-<!DOCTYPE HTML>
+
+<!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-<head> 
-    <title>Getting Started: Login</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-	<h1>Form</h1>
-    <form action="#" th:action="@{/login}"  method="post">
-    	<p>username: <input type="text" name="username" /></p>
-        <p>senha: <input type="password" name="senha" /></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-		<div th:if="${param.error}" >    
-               Invalid username and password.
-         </div>
-         <div th:if="${param.logout}"> 
-               You have been logged out.
-         </div>    
-</form>
-</body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>PPADS Login</title>
+	</head>
+	<body>
+		<form action = '#' th:action="@{/login}"  method="post">
+			<label>Username: </label>
+				<input type = 'text' name = 'username'>
+			<br>
+			<label>Senha: </label>
+				<input type = 'password' name = 'senha'>
+			<input type = 'submit' name = 'btnLogin' value = 'acessar'>
+			
+			<div th:if="${param.error}" >    
+              	Username ou senha inválida
+         	</div>
+         	<div th:if="${param.logout}"> 
+               	Voce saiu
+         	</div>    
+		</form>
+		<a href = '#'>Esqueci minha senha</a>
+		<a href = '/cadastro'>Não é usuário ainda? Cadastre-se!</a>
+	</body>
 </html>

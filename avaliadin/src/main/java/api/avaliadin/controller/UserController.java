@@ -1,6 +1,9 @@
 package api.avaliadin.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,8 +30,12 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	public UserController(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
 	@GetMapping("/login")
-	public String showLogin(User user) {
+	public String showLogin(Model model) {
 		return "login";
 	}
 	@PostMapping("/login")
@@ -35,10 +43,10 @@ public class UserController {
 		User t = userRepository.findByUsername(username);
 		if(t!=null) {
 			if(senha.equals(t.getSenha())) {
-				return "index";
+				return "redirect:/listaUser";
 			}
 		}
-		return "login";
+		return "redirect:/login?error";
 		
 	}
 	@GetMapping("/cadastro")
@@ -46,10 +54,10 @@ public class UserController {
 	    return "cadastro";
 	}
 	@PostMapping("/cadastro")
-	public String addUser(@RequestParam String username, @RequestParam String senha,@RequestParam String nome,@RequestParam String cidade, @RequestParam String uf) {
+	public String addUser(@RequestParam String username, @RequestParam String senha,@RequestParam String nome,@RequestParam String cidade, @RequestParam String uf, @RequestParam String dtNasc) throws ParseException {
 		User t = userRepository.findByUsername(username);
 		if(t!=null){
-			return "cadastro";
+			return "redirect:/cadastro?error";
 		}else {
 			User u = new User();
 		    u.setUsername(username);
@@ -57,13 +65,27 @@ public class UserController {
 		    u.setNome(nome);
 		    u.setCidade(cidade);
 		    u.setUf(uf);
+		    System.out.println(dtNasc);
+		    SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		    if(dtNasc!="") {
+		    	Date d = formatter.parse(dtNasc);
+		    	u.setDtNasc(d);
+		    }
 		    Date b = new Date();
 			u.setDtCad(b);
 		    System.out.println(u.toString());
 		    userRepository.save(u);
-		    return "index";
+		    return "redirect:/login";
 		}
 	}
+	@RequestMapping(value = "/listaUser", method = RequestMethod.GET)
+    public String listaUsers(Model model) {
+		Iterable<User> listaUser = userRepository.findAll();
+        if (listaUser != null) {
+        	model.addAttribute("users", listaUser);
+        }
+        return "listaUser";
+    }
 	
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<User> getAllUsers() {
