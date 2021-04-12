@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>PPADS Login</title>
+		<style>
+			    body {
+			        margin: 0px;
+			        font-family: 'helvetica';
+			        text-align: center;
+			    }
+			    p{
+			    	margin: 0px;
+			    }
+			    .container {
+			        width: 100vw;
+			        height: 100vh;
+			        background: #D1EEEE;
+			        display: flex;
+			        flex-direction: row;
+			        justify-content: center;
+			        align-items: center;
+			    }
+			    .box {
+			        width: 60vw;
+			        height: auto;
+			        background: #fff;
+			    }
+			    .ctd-esq{
+			    	margin: 0 auto;
+			    	float: left;
+			    	width: 50%;
+			        height: fit-content;
+			    }
+			    .ctd-dir{
+			    	margin: 0 0 0 0;
+			    	float: right;
+			    	width: 50%;
+			    	height: fit-content;
+			    }
+			    .box-dentro{
+			    	width: 30vw;
+			        height: 50vh;
+			        background: #fff;
+			        position: relative;
+			        display: flex;
+			        flex-direction: row;
+			        justify-content: center;
+			        align-items: center;
+			    }			    
+			    img{
+			    	max-width: 70%;
+					max-height: 70%;
+					width: auto;
+					height: auto;
+					object-fit: none;
+					object-position: center;
+					overflow: hidden;
+			    }
+			    form{
+			    	width: 90%;
+			    }
+			    a{
+			    	font-size: 1vw;
+					color: #000;
+					text-decoration: none;
+			    }
+			    .titleForm{
+					margin-top: 1vw;
+					font-size: 2vw;
+				}
+				.textForm{
+					font-size: 1.5vw;
+				}
+				.inpForm{
+					font-size: 1.4vw;
+					float: right;
+				}
+				.btnForm{
+					font-size: 1.4vw;
+					padding-right: 2em;
+					padding-left: 2em;
+					margin-top: 1vw;
+					border-radius: 8px;
+				}
+		</style>
+	</head>
+	<body>
+	<div class="container">
+		    <div class="box">
+		    	<p class = 'titleForm'>Login</p>
+		    	<div class = 'ctd-esq'>
+			    	<div class = 'box-dentro'>
+				    	<img src = 'resources/foto.png'>
+				    </div>
+				</div>
+		    	<div class = 'ctd-dir'>
+			    	<div class = 'box-dentro'>
+			    		<form action = '#' th:action="@{/login}"  method="post">
+					   		<p>
+					   			<label class = 'textForm'>Username: </label>
+								<input type = 'text' name = 'username' class = 'inpForm'>
+					   		</p>
+							<br>
+							<br>
+							<p>
+								<label class = 'textForm'>Senha: </label>
+								<input type = 'password' name = 'senha' class = 'inpForm'>
+							</p>
+							<br>
+							<p>
+								<input type = 'submit' name = 'btnLogin' value = 'Login' class = 'btnForm'>
+							</p>
+							<br>
+							<p>
+								<a href = '#'>Esqueci minha senha</a>
+							</p>
+							<p>
+								<a href = '/cadastro'>Não é usuário ainda? Cadastre-se!</a>	
+							</p>				
+						</form>		
+						<div th:if="${param.error}" >    
+              				Username ou senha inválida
+         				</div>
+         				<div th:if="${param.logout}"> 
+               				Voce saiu
+         				</div>   			
+				   	</div>
+				</div>
+			</div>
+		</div>		
+	</body>
+</html>

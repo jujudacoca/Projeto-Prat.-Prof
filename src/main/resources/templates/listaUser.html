@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<title>Lista User</title>
+</head>
+<body>
+  <h2>Lista Usuarios</h2>
+  <div th:unless="${#lists.isEmpty(users)}">
+    <dl th:each="user : ${users}">
+      <dt>
+        <p>Nome: <span th:text="${user.nome}">Nome</span></br></p>
+		<p>username: <span th:text="${user.username}">Username</span></br> </p>
+		<p>cidade: <span th:text="${user.cidade}">Cidade</span></p>
+		<p>Uf: <span th:text="${user.uf}">UF</span></br> </p>
+		<p>Senha: <span th:text="${user.senha}">Senha</span></p>
+
+      </dt>
+    </dl>
+  </div>
+  <div th:if="${#lists.isEmpty(users)}">
+    <p>Nenhum usuario</p>
+  </div>
+	<div> <a href = "/login?logout">Sair</a></div>
+  <hr />
+</body>
+</html>
