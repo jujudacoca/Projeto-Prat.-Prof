@@ -120,9 +120,9 @@
 								<a href = '/cadastro'>Não é usuário ainda? Cadastre-se!</a>	
 							</p>				
 						</form>		
-						<div th:if="${param.error}" >    
-              				Username ou senha inválida
-         				</div>
+						<script th:if="${param.error}" >    
+              				alert("username e senha invalida");
+         				</script>
          				<div th:if="${param.logout}"> 
                				Voce saiu
          				</div>   			

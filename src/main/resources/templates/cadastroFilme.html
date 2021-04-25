@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<form action="#" th:action="@{/cadastroFilme}" method="post" name="cadFilme" >
+		<label>Titulo:</label>
+		<input type="text" name="titulo">
+		</br>
+		<label>Diretor:</label>
+		<input type="text" name="diretor" >
+		</br>
+		<label>Elenco Principal:</label>
+		<input type="text" name="elenco" placeholder="João Paulo, Felipe Silva">
+		</br>
+		<label>Ano de lançamento :</label>
+		<input type="text" name="ano">
+		</br>
+		<label>Pais:</label>
+		<input type="text" name="pais">	
+		</br>
+		<input type = 'submit' value = 'cadastrar'>
+		</form>
+	</body>
+</html>

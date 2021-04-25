@@ -15,6 +15,9 @@ public class WebController implements WebMvcConfigurer {
 		registry.addViewController("/").setViewName("login");
 		registry.addViewController("/cadastro").setViewName("cadastro");
 		registry.addViewController("/listaUser").setViewName("listaUser");
+		registry.addViewController("/cadastroLivro").setViewName("cadastroLivro");
+		registry.addViewController("/cadastroSerie").setViewName("cadastroSerie");
+		registry.addViewController("/cadastroFilme").setViewName("cadastroFilme");
 		
 	}
 }
