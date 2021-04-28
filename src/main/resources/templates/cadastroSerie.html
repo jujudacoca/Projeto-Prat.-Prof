@@ -25,5 +25,8 @@
 		</br>
 		<input type = 'submit' value = 'cadastrar'>
 		</form>
+		<script th:if="${param.error}" >    
+              	alert("serie ja cadastrado");
+        </script>
 	</body>
 </html>

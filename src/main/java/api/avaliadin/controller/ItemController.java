@@ -32,22 +32,23 @@ public class ItemController {
 	}
 	@PostMapping("/cadastroLivro")
 	public String addLivro(@RequestParam String titulo, @RequestParam String autor,@RequestParam String editora,@RequestParam String ano, @RequestParam String pais) throws ParseException {
-		/*Livro t = livroRepository.findBy(username);
+		
+		Livro t = livroRepository.findByTitulo(titulo.toLowerCase());
 		if(t!=null){
-			return "redirect:/cadastro?error";
-		}else {*/
+			return "redirect:/cadastrolivro?error";
+		}else {
 			Livro u = new Livro();
-		    u.setTitulo(titulo);
-		    u.setAutor(autor);
-		    u.setEditora(editora);
-		    u.setAno(ano);
-		    u.setPais(pais);
-		    //}
+		    u.setTitulo(titulo.toLowerCase());
+		    u.setAutor(autor.toLowerCase());
+		    u.setEditora(editora.toLowerCase());
+		    u.setAno(ano.toLowerCase());
+		    u.setPais(pais.toLowerCase());
+		    u.setEstado(false);
 		    Date b = new Date();
 			u.setDtCad(b);
 		    livroRepository.save(u);
 		    return "redirect:/login";
-		
+		}
 		}
 	@GetMapping(path="/allLivro")
 	public @ResponseBody Iterable<Livro> getAllLivros() {
@@ -60,18 +61,23 @@ public class ItemController {
 	}
 	@PostMapping("/cadastroFilme")
 	public String addFilme(@RequestParam String titulo, @RequestParam String diretor,@RequestParam String elenco,@RequestParam String ano, @RequestParam String pais) throws ParseException {
-		Filme u = new Filme();
-		u.setTitulo(titulo);
-		u.setDiretor(diretor);
-		u.setElenco(elenco);
-	    u.setAno(ano);
-	    u.setPais(pais);
-	    Date b = new Date();
-		u.setDtCad(b);
-	    filmeRepository.save(u);
-	    return "redirect:/login";
-		
+		Filme t = filmeRepository.findByTitulo(titulo.toLowerCase());
+		if(t!=null){
+			return "redirect:/cadastrofilme?error";
+		}else {
+			Filme u = new Filme();
+			u.setTitulo(titulo.toLowerCase());
+			u.setDiretor(diretor.toLowerCase());
+			u.setElenco(elenco.toLowerCase());
+		    u.setAno(ano.toLowerCase());
+		    u.setPais(pais.toLowerCase());
+		    u.setEstado(false);
+		    Date b = new Date();
+			u.setDtCad(b);
+		    filmeRepository.save(u);
+		    return "redirect:/login";
 		}
+	}
 	@GetMapping(path="/allFilme")
 	public @ResponseBody Iterable<Filme> getAllFilmes() {
 		return filmeRepository.findAll();
@@ -82,18 +88,24 @@ public class ItemController {
 	}
 	@PostMapping("/cadastroSerie")
 	public String addSerie(@RequestParam String titulo, @RequestParam String diretor,@RequestParam String elenco,@RequestParam String ano, @RequestParam String pais, @RequestParam Integer numTemp) throws ParseException {
-		Serie u = new Serie();
-		u.setTitulo(titulo);
-		u.setDiretor(diretor);
-		u.setElenco(elenco);
-	    u.setAno(ano);
-	    u.setPais(pais);
-	    u.setNumTemp(numTemp);
-	    Date b = new Date();
-		u.setDtCad(b);
-	    serieRepository.save(u);
-	    return "redirect:/login";
+		Serie t = serieRepository.findByTitulo(titulo.toLowerCase());
+		if(t!=null){
+			return "redirect:/cadastroserie?error";
+		}else {
+			Serie u = new Serie();
+			u.setTitulo(titulo.toLowerCase());
+			u.setDiretor(diretor.toLowerCase());
+			u.setElenco(elenco.toLowerCase());
+		    u.setAno(ano.toLowerCase());
+		    u.setPais(pais.toLowerCase());
+		    u.setNumTemp(numTemp);
+		    u.setEstado(false);
+		    Date b = new Date();
+			u.setDtCad(b);
+		    serieRepository.save(u);
+		    return "redirect:/login";
 		
+		}
 		}
 	@GetMapping(path="/allSerie")
 	public @ResponseBody Iterable<Serie> getAllSerie() {
