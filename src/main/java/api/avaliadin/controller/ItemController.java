@@ -3,10 +3,13 @@ package api.avaliadin.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +28,8 @@ public class ItemController {
 	private SerieRepository serieRepository;
 	@Autowired
 	private LivroRepository livroRepository;
+	@Autowired
+	private ItemRepository itemRepository;
 	
 	@GetMapping("/cadastrolivro")
 	public String showCadastro(Livro livro) {
@@ -110,6 +115,22 @@ public class ItemController {
 	@GetMapping(path="/allSerie")
 	public @ResponseBody Iterable<Serie> getAllSerie() {
 		return serieRepository.findAll();
+	}
+	
+	@GetMapping(path="/paginaitem/{id}")
+	public String pagItem(@PathVariable int id, Model model) {
+		String dtype = itemRepository.findDtypeById(id);
+		if(dtype.equals("F")) {
+			Filme u = filmeRepository.findById(id);
+			model.addAttribute("Item",u);
+		}else if(dtype.equals("S")) {
+			Serie u = serieRepository.findById(id);
+			model.addAttribute("Item",u);
+		}else if (dtype.equals("L")) {
+			Livro u = livroRepository.findById(id);
+			model.addAttribute("Item",u);
+		}
+		return "/paginaitem";
 	}
 	
 }

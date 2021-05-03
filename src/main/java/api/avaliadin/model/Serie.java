@@ -1,9 +1,11 @@
 package api.avaliadin.model;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
+@DiscriminatorValue("S")
 public class Serie extends Item{
 	@Column(name="diretor")
 	private String diretor;

@@ -1,10 +1,12 @@
 package api.avaliadin.model;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 
 @Entity
+@DiscriminatorValue("L")
 public class Livro extends Item{
 	@Column(name="autor")
 	private String autor;

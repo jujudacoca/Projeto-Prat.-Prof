@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<h3>Avalie !</h3>
+		<!--<h3>Titulo: <span th:text="${titulo}">Titulo</span></br></h1>-->
+		<form action="#" th:action="@{/criaAvaliacao(id=${Item.id})}" method="post" name="cadAval" >
+		<label>Titulo: </label>
+		<input type="text"  th:value="${Item.titulo}" name="titulo" disabled >
+		</br>
+		
+		<label>Username: </label>
+		<input type="text" name="username">
+		</br>
+		<label>Nota:</label>
+		<input type="number" name="nota" min="0" max="10">
+		</br>
+		<label>Descricao:</label>
+		<input type="text" name="descricao">	
+		</br>
+		<input type = 'submit' value = 'criar'>
+		</form>
+		
+	</body>
+</html>
