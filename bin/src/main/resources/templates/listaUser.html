@@ -20,9 +20,7 @@
   <div th:if="${#lists.isEmpty(users)}">
     <p>Nenhum usuario</p>
   </div>
-	  <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Logout" />
-    </form>
+	<div> <a href = "/login?logout">Sair</a></div>
   <hr />
 </body>
 </html>

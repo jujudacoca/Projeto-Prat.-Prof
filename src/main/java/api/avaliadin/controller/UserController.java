@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,7 @@ public class UserController {
 	public String showLogin(Model model) {
 		return "login";
 	}
-	@PostMapping("/login")
+	/*@PostMapping("/login")
 	public String testeAcesso(@RequestParam String username, @RequestParam String senha) {
 		User t = userRepository.findByUsername(username);
 		if(t!=null) {
@@ -48,7 +49,7 @@ public class UserController {
 		}
 		return "redirect:/login?error";
 		
-	}
+	}*/
 	@GetMapping("/cadastro")
 	public String showCadastro(User user) {
 	    return "cadastro";
@@ -61,7 +62,7 @@ public class UserController {
 		}else {
 			User u = new User();
 		    u.setUsername(username);
-		    u.setSenha(senha);
+		    u.setSenha(criptografar(senha));
 		    u.setNome(nome);
 		    u.setCidade(cidade);
 		    u.setUf(uf);
@@ -73,6 +74,8 @@ public class UserController {
 		    }
 		    Date b = new Date();
 			u.setDtCad(b);
+			u.setRole("ROLE USER");
+			u.setEnabled(true);
 		    userRepository.save(u);
 		    return "redirect:/login";
 		}
@@ -90,4 +93,9 @@ public class UserController {
 	public @ResponseBody Iterable<User> getAllUsers() {
 		return userRepository.findAll();
 	}
+    public static String criptografar(String rawPassword) {
+   	 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodedPassword = encoder.encode(rawPassword);
+        return encodedPassword;
+   }
 }	

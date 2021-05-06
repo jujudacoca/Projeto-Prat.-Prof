@@ -1,0 +1,769 @@
+From 12bac25a1c0decab21dcb0bcd9cc7f785dc36c15 Mon Sep 17 00:00:00 2001
+From: Juliano Gomes <Juhgomes_sousa@hotmail.com>
+Date: Mon, 3 May 2021 18:04:51 -0300
+Subject: index on espec1: 9e246da Create txt
+
+
+diff --git a/.classpath b/.classpath
+new file mode 100644
+index 0000000..a5d9509
+--- /dev/null
++++ b/.classpath
+@@ -0,0 +1,32 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<classpath>
++	<classpathentry kind="src" output="target/classes" path="src/main/java">
++		<attributes>
++			<attribute name="optional" value="true"/>
++			<attribute name="maven.pomderived" value="true"/>
++		</attributes>
++	</classpathentry>
++	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
++		<attributes>
++			<attribute name="maven.pomderived" value="true"/>
++		</attributes>
++	</classpathentry>
++	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
++		<attributes>
++			<attribute name="optional" value="true"/>
++			<attribute name="maven.pomderived" value="true"/>
++			<attribute name="test" value="true"/>
++		</attributes>
++	</classpathentry>
++	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
++		<attributes>
++			<attribute name="maven.pomderived" value="true"/>
++		</attributes>
++	</classpathentry>
++	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
++		<attributes>
++			<attribute name="maven.pomderived" value="true"/>
++		</attributes>
++	</classpathentry>
++	<classpathentry kind="output" path="target/classes"/>
++</classpath>
+diff --git a/.project b/.project
+new file mode 100644
+index 0000000..c0cda9e
+--- /dev/null
++++ b/.project
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<projectDescription>
++	<name>Projeto-Prat.-Prof</name>
++	<comment></comment>
++	<projects>
++	</projects>
++	<buildSpec>
++		<buildCommand>
++			<name>org.eclipse.jdt.core.javabuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++		<buildCommand>
++			<name>org.eclipse.m2e.core.maven2Builder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++	</buildSpec>
++	<natures>
++		<nature>org.eclipse.jdt.core.javanature</nature>
++		<nature>org.eclipse.m2e.core.maven2Nature</nature>
++	</natures>
++</projectDescription>
+diff --git a/.settings/org.eclipse.core.resources.prefs b/.settings/org.eclipse.core.resources.prefs
+new file mode 100644
+index 0000000..839d647
+--- /dev/null
++++ b/.settings/org.eclipse.core.resources.prefs
+@@ -0,0 +1,5 @@
++eclipse.preferences.version=1
++encoding//src/main/java=UTF-8
++encoding//src/main/resources=UTF-8
++encoding//src/test/java=UTF-8
++encoding/<project>=UTF-8
+diff --git a/.settings/org.eclipse.jdt.core.prefs b/.settings/org.eclipse.jdt.core.prefs
+new file mode 100644
+index 0000000..71df522
+--- /dev/null
++++ b/.settings/org.eclipse.jdt.core.prefs
+@@ -0,0 +1,9 @@
++eclipse.preferences.version=1
++org.eclipse.jdt.core.compiler.codegen.methodParameters=generate
++org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8
++org.eclipse.jdt.core.compiler.compliance=1.8
++org.eclipse.jdt.core.compiler.problem.enablePreviewFeatures=disabled
++org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
++org.eclipse.jdt.core.compiler.problem.reportPreviewFeatures=ignore
++org.eclipse.jdt.core.compiler.release=disabled
++org.eclipse.jdt.core.compiler.source=1.8
+diff --git a/target/classes/api/avaliadin/AvaliadinApplication.class b/target/classes/api/avaliadin/AvaliadinApplication.class
+new file mode 100644
+index 0000000..cedbc50
+Binary files /dev/null and b/target/classes/api/avaliadin/AvaliadinApplication.class differ
+diff --git a/target/classes/api/avaliadin/controller/AvaliacaoController.class b/target/classes/api/avaliadin/controller/AvaliacaoController.class
+new file mode 100644
+index 0000000..791afb1
+Binary files /dev/null and b/target/classes/api/avaliadin/controller/AvaliacaoController.class differ
+diff --git a/target/classes/api/avaliadin/controller/ItemController.class b/target/classes/api/avaliadin/controller/ItemController.class
+new file mode 100644
+index 0000000..2b7da1c
+Binary files /dev/null and b/target/classes/api/avaliadin/controller/ItemController.class differ
+diff --git a/target/classes/api/avaliadin/controller/UserController.class b/target/classes/api/avaliadin/controller/UserController.class
+new file mode 100644
+index 0000000..c6cffb1
+Binary files /dev/null and b/target/classes/api/avaliadin/controller/UserController.class differ
+diff --git a/target/classes/api/avaliadin/controller/WebController.class b/target/classes/api/avaliadin/controller/WebController.class
+new file mode 100644
+index 0000000..849447d
+Binary files /dev/null and b/target/classes/api/avaliadin/controller/WebController.class differ
+diff --git a/target/classes/api/avaliadin/model/Avaliacao.class b/target/classes/api/avaliadin/model/Avaliacao.class
+new file mode 100644
+index 0000000..be041c6
+Binary files /dev/null and b/target/classes/api/avaliadin/model/Avaliacao.class differ
+diff --git a/target/classes/api/avaliadin/model/Comentario.class b/target/classes/api/avaliadin/model/Comentario.class
+new file mode 100644
+index 0000000..7e86fd7
+Binary files /dev/null and b/target/classes/api/avaliadin/model/Comentario.class differ
+diff --git a/target/classes/api/avaliadin/model/Filme.class b/target/classes/api/avaliadin/model/Filme.class
+new file mode 100644
+index 0000000..a6354f2
+Binary files /dev/null and b/target/classes/api/avaliadin/model/Filme.class differ
+diff --git a/target/classes/api/avaliadin/model/Item.class b/target/classes/api/avaliadin/model/Item.class
+new file mode 100644
+index 0000000..ca8a06c
+Binary files /dev/null and b/target/classes/api/avaliadin/model/Item.class differ
+diff --git a/target/classes/api/avaliadin/model/Joinha.class b/target/classes/api/avaliadin/model/Joinha.class
+new file mode 100644
+index 0000000..75064ae
+Binary files /dev/null and b/target/classes/api/avaliadin/model/Joinha.class differ
+diff --git a/target/classes/api/avaliadin/model/Livro.class b/target/classes/api/avaliadin/model/Livro.class
+new file mode 100644
+index 0000000..1fdaf64
+Binary files /dev/null and b/target/classes/api/avaliadin/model/Livro.class differ
+diff --git a/target/classes/api/avaliadin/model/Serie.class b/target/classes/api/avaliadin/model/Serie.class
+new file mode 100644
+index 0000000..b1c26cb
+Binary files /dev/null and b/target/classes/api/avaliadin/model/Serie.class differ
+diff --git a/target/classes/api/avaliadin/model/User.class b/target/classes/api/avaliadin/model/User.class
+new file mode 100644
+index 0000000..df64e3f
+Binary files /dev/null and b/target/classes/api/avaliadin/model/User.class differ
+diff --git a/target/classes/api/avaliadin/repository/AvaliacaoRepository.class b/target/classes/api/avaliadin/repository/AvaliacaoRepository.class
+new file mode 100644
+index 0000000..af250d7
+Binary files /dev/null and b/target/classes/api/avaliadin/repository/AvaliacaoRepository.class differ
+diff --git a/target/classes/api/avaliadin/repository/ComentarioRepository.class b/target/classes/api/avaliadin/repository/ComentarioRepository.class
+new file mode 100644
+index 0000000..e289be0
+Binary files /dev/null and b/target/classes/api/avaliadin/repository/ComentarioRepository.class differ
+diff --git a/target/classes/api/avaliadin/repository/FilmeRepository.class b/target/classes/api/avaliadin/repository/FilmeRepository.class
+new file mode 100644
+index 0000000..c4c9b54
+Binary files /dev/null and b/target/classes/api/avaliadin/repository/FilmeRepository.class differ
+diff --git a/target/classes/api/avaliadin/repository/ItemRepository.class b/target/classes/api/avaliadin/repository/ItemRepository.class
+new file mode 100644
+index 0000000..1da7904
+Binary files /dev/null and b/target/classes/api/avaliadin/repository/ItemRepository.class differ
+diff --git a/target/classes/api/avaliadin/repository/JoinhaRepository.class b/target/classes/api/avaliadin/repository/JoinhaRepository.class
+new file mode 100644
+index 0000000..8cee8df
+Binary files /dev/null and b/target/classes/api/avaliadin/repository/JoinhaRepository.class differ
+diff --git a/target/classes/api/avaliadin/repository/LivroRepository.class b/target/classes/api/avaliadin/repository/LivroRepository.class
+new file mode 100644
+index 0000000..0060f91
+Binary files /dev/null and b/target/classes/api/avaliadin/repository/LivroRepository.class differ
+diff --git a/target/classes/api/avaliadin/repository/SerieRepository.class b/target/classes/api/avaliadin/repository/SerieRepository.class
+new file mode 100644
+index 0000000..0a3dffb
+Binary files /dev/null and b/target/classes/api/avaliadin/repository/SerieRepository.class differ
+diff --git a/target/classes/api/avaliadin/repository/UserRepository.class b/target/classes/api/avaliadin/repository/UserRepository.class
+new file mode 100644
+index 0000000..8ad48e1
+Binary files /dev/null and b/target/classes/api/avaliadin/repository/UserRepository.class differ
+diff --git a/target/classes/application.properties b/target/classes/application.properties
+new file mode 100644
+index 0000000..4a1df47
+--- /dev/null
++++ b/target/classes/application.properties
+@@ -0,0 +1,7 @@
++spring.jpa.hibernate.ddl-auto=update
++spring.datasource.url=jdbc:mysql://dbuser.ca2z8gqtfu9u.us-east-1.rds.amazonaws.com:3306/dbuser
++spring.datasource.username= root
++spring.datasource.password=password
++spring.jpa.show-sql = true
++server.port=5000
++spring.jpa.properties.max_allowed_packet=2000
+diff --git a/target/classes/static/image/logo.png b/target/classes/static/image/logo.png
+new file mode 100644
+index 0000000..eb951d8
+Binary files /dev/null and b/target/classes/static/image/logo.png differ
+diff --git a/target/classes/templates/cadastro.html b/target/classes/templates/cadastro.html
+new file mode 100644
+index 0000000..4320d1e
+--- /dev/null
++++ b/target/classes/templates/cadastro.html
+@@ -0,0 +1,157 @@
++<!DOCTYPE html>
++<html xmlns:th="https://www.thymeleaf.org">
++	<head>
++		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
++		<style>
++			body {
++		        margin: 0px
++		    }
++		    p{
++		    	margin-bottom: 0px;
++		    	margin-top: 1.2vw;
++		    }
++		    .container {
++		    	background-color: #D1EEEE;
++		        width: 100vw;
++		        height: 100vh;
++		        position: relative;
++		        display: flex;
++		        flex-direction: row;
++		        justify-content: center;
++		        align-items: center;
++		    }
++		    form{
++		    	text-align: center;
++		    	border-style: solid;
++				border-width: .3vh;
++				border-color: #000;
++				padding: 2vw;
++		    }
++		    .box {
++		    	position: absolute;
++		        width: 38vw;
++		        height: 65vh;
++		        background: #fff;
++		        padding: 1.6em;
++		    }
++			.titleForm{
++				margin-top: 0;
++				margin-bottom: 0.5vw;
++				font-size: 2vw;
++				font-family: 'helvetica';
++				text-align: center;
++			}
++			.textForm{
++				font-size: 1.5vw;
++				font-family: 'helvetica';
++				float: left;
++				margin-top: 1.2vw;
++			}
++			.btnForm{
++				font-size: 1.4vw;
++				padding-right: 2em;
++				padding-left: 2em;
++				margin-top: 1vw;
++				border-radius: 8px;
++				margin-bottom: 0%;
++			}
++			.inpForm{
++				font-size: 1.4vw;
++				font-family: 'helvetica';
++				float: right;
++				margin-top: 1vw;
++			}
++			
++		</style>
++		<script language="JavaScript" >
++		function enviardados(){
++			if(document.cad.username.value==""||document.cad.username.value.length<5){
++				alert("Preencha o campo username corretamente, necessário mais que 5 digitos!")		
++				document.cad.username.focus();
++				return false;
++			}
++			if(document.cad.nome.value==""){
++				alert("Preencha o campo nome!")		
++				document.cad.nome.focus();
++				return false;
++			}
++			if(document.cad.senha.value==""||document.cad.senha.value.length<5){
++				alert("Preencha o campo senha corretamente, necessário 5 digitos!")		
++				document.cad.senha.focus();
++				return false;
++			}
++			if(document.cad.dtNasc.value==""){
++				alert("Preencha a data de nascimento!")		
++				document.cad.dtNasc.focus();
++				return false;
++			}
++			if(document.cad.cidade.value==""){
++				alert("Preencha o campo cidade!")		
++				document.cad.cidade.focus();
++				return false;
++			}
++			if(document.cad.uf.value==""){
++				alert("Preencha o campo Estado, apenas UF!")		
++				document.cad.uf.focus();
++				return false;
++			}
++			document.cad.uf.value.toUpperCase();
++			return true
++		}
++		</script>
++		
++	</head>
++	<body>
++		<div class="container">
++		  <div class="box">
++		  	<p class = 'titleForm'>Cadastro de usuário</p>
++		    <form action="#" th:action="@{/cadastro}" method="post" name="cad" onSubmit="return enviardados();" >
++				<p>
++					<label class = 'textForm'>Nome completo:</label>
++					<input type="text" class = 'inpForm' name="nome">
++				</p>
++				<br>
++				<br>
++				<p>
++					<label class = 'textForm'>Username: </label>
++					<input type="text" class = 'inpForm' name="username">
++				</p>
++				<br>
++				<br>
++				<p>
++					<label class = 'textForm'>Senha: </label>
++					<input type="password" class = 'inpForm' name="senha">
++				</p>
++				<br>
++				<br>
++				<p>
++					<label class = 'textForm'>Data de nascimento: </label>
++					<input type="date" class = 'inpForm' name="dtNasc">
++				</p>
++				<br>
++				<br>
++				<p>
++					<label class = 'textForm'>Estado (UF): </label>
++					<input type="text" class = 'inpForm' name="uf" placeholder="SP">
++				</p>
++				<br>
++				<br>
++				<p>
++					<label class = 'textForm'>Cidade: </label>
++					<input type="text" class = 'inpForm' name="cidade">
++				</p>
++				<br>
++				<br>
++				<p>
++					<input type = 'submit' value = 'cadastrar' class = 'btnForm' name = 'btnCadastro'>
++				</p>
++
++			</form>
++				<div th:if="${param.error}" class="inpForm" >    
++              		Username ja utilizado
++         		</div>
++		  </div>
++		</div>
++	
++	</body>
++</html>
+\ No newline at end of file
+diff --git a/target/classes/templates/cadastroFilme.html b/target/classes/templates/cadastroFilme.html
+new file mode 100644
+index 0000000..eca113c
+--- /dev/null
++++ b/target/classes/templates/cadastroFilme.html
+@@ -0,0 +1,29 @@
++<!DOCTYPE html>
++<html xmlns:th="https://www.thymeleaf.org">
++	<head>
++		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
++	</head>
++	<body>
++		<form action="#" th:action="@{/cadastroFilme}" method="post" name="cadFilme" >
++		<label>Titulo:</label>
++		<input type="text" name="titulo">
++		</br>
++		<label>Diretor:</label>
++		<input type="text" name="diretor" >
++		</br>
++		<label>Elenco Principal:</label>
++		<input type="text" name="elenco" placeholder="João Paulo, Felipe Silva">
++		</br>
++		<label>Ano de lançamento :</label>
++		<input type="text" name="ano">
++		</br>
++		<label>Pais:</label>
++		<input type="text" name="pais">	
++		</br>
++		<input type = 'submit' value = 'cadastrar'>
++		</form>
++		<script th:if="${param.error}" >    
++              	alert("filme ja cadastrado");
++        </script>
++	</body>
++</html>
+\ No newline at end of file
+diff --git a/target/classes/templates/cadastroItem.html b/target/classes/templates/cadastroItem.html
+new file mode 100644
+index 0000000..82c57fc
+--- /dev/null
++++ b/target/classes/templates/cadastroItem.html
+@@ -0,0 +1,18 @@
++<!DOCTYPE html>
++<html xmlns:th="https://www.thymeleaf.org">
++	<head>
++		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
++	</head>
++	<body>
++		<div> 
++			<h1> Escolha qual item será cadastrado</h1>
++			
++			<a href="/cadastrofilme"><button>Filme</button></a>
++			</br>
++			<a href="/cadastrolivro"><button>Livro</button></a>
++			</br>
++			<a href="/cadastroserie"><button>Serie</button></a>
++			</br>
++		</div>
++	</body>
++</html>
+\ No newline at end of file
+diff --git a/target/classes/templates/cadastroLivro.html b/target/classes/templates/cadastroLivro.html
+new file mode 100644
+index 0000000..48ee084
+--- /dev/null
++++ b/target/classes/templates/cadastroLivro.html
+@@ -0,0 +1,29 @@
++<!DOCTYPE html>
++<html xmlns:th="https://www.thymeleaf.org">
++	<head>
++		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
++	</head>
++	<body>
++		<form action="#" th:action="@{/cadastroLivro}" method="post" name="cadLivro" >
++		<label>Titulo:</label>
++		<input type="text" name="titulo">
++		</br>
++		<label>Autor(es):</label>
++		<input type="text" name="autor" placeholder="João Paulo, Felipe Silva">
++		</br>
++		<label>Editora:</label>
++		<input type="text" name="editora">
++		</br>
++		<label>Ano de lançamento :</label>
++		<input type="text" name="ano">
++		</br>
++		<label>Pais:</label>
++		<input type="text" name="pais">	
++		</br>
++		<input type = 'submit' value = 'cadastrar'>
++		</form>
++		<script th:if="${param.error}" >    
++              	alert("livro ja cadastrado");
++        </script>
++	</body>
++</html>
+\ No newline at end of file
+diff --git a/target/classes/templates/cadastroSerie.html b/target/classes/templates/cadastroSerie.html
+new file mode 100644
+index 0000000..dd8aa8f
+--- /dev/null
++++ b/target/classes/templates/cadastroSerie.html
+@@ -0,0 +1,32 @@
++<!DOCTYPE html>
++<html xmlns:th="https://www.thymeleaf.org">
++	<head>
++		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
++	</head>
++	<body>
++		<form action="#" th:action="@{/cadastroSerie}" method="post" name="cadSerie" >
++		<label>Titulo:</label>
++		<input type="text" name="titulo">
++		</br>
++		<label>Diretor:</label>
++		<input type="text" name="diretor" >
++		</br>
++		<label>Elenco Principal:</label>
++		<input type="text" name="elenco" placeholder="João Paulo, Felipe Silva">
++		</br>
++		<label>Ano de lançamento :</label>
++		<input type="text" name="ano">
++		</br>
++		<label>Pais:</label>
++		<input type="text" name="pais">	
++		</br>
++		<label>Numero de Temporadas:</label>
++		<input type="number" name="numTemp" min="1" max="99">
++		</br>
++		<input type = 'submit' value = 'cadastrar'>
++		</form>
++		<script th:if="${param.error}" >    
++              	alert("serie ja cadastrado");
++        </script>
++	</body>
++</html>
+\ No newline at end of file
+diff --git a/target/classes/templates/criaAvaliacao.html b/target/classes/templates/criaAvaliacao.html
+new file mode 100644
+index 0000000..d35716e
+--- /dev/null
++++ b/target/classes/templates/criaAvaliacao.html
+@@ -0,0 +1,27 @@
++<!DOCTYPE html>
++<html xmlns:th="https://www.thymeleaf.org">
++	<head>
++		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
++	</head>
++	<body>
++		<h3>Avalie !</h3>
++		<!--<h3>Titulo: <span th:text="${titulo}">Titulo</span></br></h1>-->
++		<form action="#" th:action="@{/criaAvaliacao(id=${Item.id})}" method="post" name="cadAval" >
++		<label>Titulo: </label>
++		<input type="text"  th:value="${Item.titulo}" name="titulo" disabled >
++		</br>
++		
++		<label>Username: </label>
++		<input type="text" name="username">
++		</br>
++		<label>Nota:</label>
++		<input type="number" name="nota" min="0" max="10">
++		</br>
++		<label>Descricao:</label>
++		<input type="text" name="descricao">	
++		</br>
++		<input type = 'submit' value = 'criar'>
++		</form>
++		
++	</body>
++</html>
+\ No newline at end of file
+diff --git a/target/classes/templates/listaUser.html b/target/classes/templates/listaUser.html
+new file mode 100644
+index 0000000..12c24c2
+--- /dev/null
++++ b/target/classes/templates/listaUser.html
+@@ -0,0 +1,26 @@
++<!DOCTYPE html>
++<html xmlns:th="https://www.thymeleaf.org">
++<head>
++<title>Lista User</title>
++</head>
++<body>
++  <h2>Lista Usuarios</h2>
++  <div th:unless="${#lists.isEmpty(users)}">
++    <dl th:each="user : ${users}">
++      <dt>
++        <p>Nome: <span th:text="${user.nome}">Nome</span></br></p>
++		<p>username: <span th:text="${user.username}">Username</span></br> </p>
++		<p>cidade: <span th:text="${user.cidade}">Cidade</span></p>
++		<p>Uf: <span th:text="${user.uf}">UF</span></br> </p>
++		<p>Senha: <span th:text="${user.senha}">Senha</span></p>
++
++      </dt>
++    </dl>
++  </div>
++  <div th:if="${#lists.isEmpty(users)}">
++    <p>Nenhum usuario</p>
++  </div>
++	<div> <a href = "/login?logout">Sair</a></div>
++  <hr />
++</body>
++</html>
+\ No newline at end of file
+diff --git a/target/classes/templates/login.html b/target/classes/templates/login.html
+new file mode 100644
+index 0000000..adb709f
+--- /dev/null
++++ b/target/classes/templates/login.html
+@@ -0,0 +1,134 @@
++
++<!DOCTYPE html>
++<html xmlns:th="https://www.thymeleaf.org">
++	<head>
++		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
++		<title>PPADS Login</title>
++		<style>
++			    body {
++			        margin: 0px;
++			        font-family: 'helvetica';
++			        text-align: center;
++			    }
++			    p{
++			    	margin: 0px;
++			    }
++			    .container {
++			        width: 100vw;
++			        height: 100vh;
++			        background: #D1EEEE;
++			        display: flex;
++			        flex-direction: row;
++			        justify-content: center;
++			        align-items: center;
++			    }
++			    .box {
++			        width: 60vw;
++			        height: auto;
++			        background: #fff;
++			    }
++			    .ctd-esq{
++			    	margin: 0 auto;
++			    	float: left;
++			    	width: 50%;
++			        height: fit-content;
++			    }
++			    .ctd-dir{
++			    	margin: 0 0 0 0;
++			    	float: right;
++			    	width: 50%;
++			    	height: fit-content;
++			    }
++			    .box-dentro{
++			    	width: 30vw;
++			        height: 50vh;
++			        background: #fff;
++			        position: relative;
++			        display: flex;
++			        flex-direction: row;
++			        justify-content: center;
++			        align-items: center;
++			    }			    
++			    img{
++			    	max-width: 70%;
++					max-height: 70%;
++					width: auto;
++					height: auto;
++					object-fit: none;
++					object-position: center;
++					overflow: hidden;
++			    }
++			    form{
++			    	width: 90%;
++			    }
++			    a{
++			    	font-size: 1vw;
++					color: #000;
++					text-decoration: none;
++			    }
++			    .titleForm{
++					margin-top: 1vw;
++					font-size: 2vw;
++				}
++				.textForm{
++					font-size: 1.5vw;
++				}
++				.inpForm{
++					font-size: 1.4vw;
++					float: right;
++				}
++				.btnForm{
++					font-size: 1.4vw;
++					padding-right: 2em;
++					padding-left: 2em;
++					margin-top: 1vw;
++					border-radius: 8px;
++				}
++		</style>
++	</head>
++	<body>
++	<div class="container">
++		    <div class="box">
++		    	<p class = 'titleForm'>Login</p>
++		    	<div class = 'ctd-esq'>
++			    	<div class = 'box-dentro'>
++				    	<img th:src = "@{/image/logo.png}"/>
++				    </div>
++				</div>
++		    	<div class = 'ctd-dir'>
++			    	<div class = 'box-dentro'>
++			    		<form action = '#' th:action="@{/login}"  method="post">
++					   		<p>
++					   			<label class = 'textForm'>Username: </label>
++								<input type = 'text' name = 'username' class = 'inpForm'>
++					   		</p>
++							<br>
++							<br>
++							<p>
++								<label class = 'textForm'>Senha: </label>
++								<input type = 'password' name = 'senha' class = 'inpForm'>
++							</p>
++							<br>
++							<p>
++								<input type = 'submit' name = 'btnLogin' value = 'Login' class = 'btnForm'>
++							</p>
++							<br>
++							<p>
++								<a href = '#'>Esqueci minha senha</a>
++							</p>
++							<p>
++								<a href = '/cadastro'>Não é usuário ainda? Cadastre-se!</a>	
++							</p>				
++						</form>		
++						<script th:if="${param.error}" >    
++              				alert("username e senha invalida");
++         				</script>
++         				<div th:if="${param.logout}"> 
++               				Voce saiu
++         				</div>   			
++				   	</div>
++				</div>
++			</div>
++		</div>		
++	</body>
++</html>
+\ No newline at end of file
+diff --git a/target/classes/templates/paginaitem.html b/target/classes/templates/paginaitem.html
+new file mode 100644
+index 0000000..71c4e69
+--- /dev/null
++++ b/target/classes/templates/paginaitem.html
+@@ -0,0 +1,50 @@
++<!DOCTYPE html>
++<html xmlns:th="https://www.thymeleaf.org">
++	<head>
++		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
++	</head>
++	<body>
++	<!--  Caso seja um filme  -->
++	<div th:if="${Item.tipo=='F'}">
++		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>
++		<h3>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </h3>
++		<h3>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </h3>
++		<h3>Pais: <span th:text="${Item.pais}">pais</span></br> </h3>
++		<h3>Ano: <span th:text="${Item.ano}">ano</span></br> </h3>
++	</div>
++	<!--  Caso seja um livro  -->
++	<div th:if="${Item.tipo=='L'}">
++		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>
++		<h3>Autor: <span th:text="${Item.autor}">Autor</span></br> </h3>
++		<h3>Editora: <span th:text="${Item.editora}">editora</span></br> </h3>
++		<h3>Pais: <span th:text="${Item.pais}">pais</span></br> </h3>
++		<h3>Ano: <span th:text="${Item.ano}">ano</span></br> </h3>
++	</div>
++	<!--  Caso seja um serie  -->
++	<div th:if="${Item.tipo=='S'}">
++		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>
++		<h3>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </h3>
++		<h3>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </h3>
++		<h3>Pais: <span th:text="${Item.pais}">pais</span></br> </h3>
++		<h3>Ano: <span th:text="${Item.ano}">ano</span></br> </h3>
++		<h3>Num temp: <span th:text="${Item.numTemp}">numTemp</span></br> </h3>
++	</div>
++	</br>
++	<a th:href="@{/criaAvaliacao(id=${Item.id})}"><button>Criar avaliação para este filme</button></a>
++	
++	</br></br></br>
++	<div>
++	<!-- fazer transição para username na url 
++	<h3>Avaliações</h3>
++		<dl th:each="avaliacao : ${avaliacao}">
++      	<dt>
++			<p>username: <span th:text="${user.username}">Username</span></br> </p>
++			<p>cidade: <span th:text="${user.cidade}">Cidade</span></p>
++			<p>Uf: <span th:text="${user.uf}">UF</span></br> </p>
++			<p>Senha: <span th:text="${user.senha}">Senha</span></p>
++      </dt>
++    </dl><-->
++	</div>
++	</body>
++	
++</html>
+\ No newline at end of file
+diff --git a/target/test-classes/api/avaliadin/AvaliadinApplicationTests.class b/target/test-classes/api/avaliadin/AvaliadinApplicationTests.class
+new file mode 100644
+index 0000000..65de5c7
+Binary files /dev/null and b/target/test-classes/api/avaliadin/AvaliadinApplicationTests.class differ

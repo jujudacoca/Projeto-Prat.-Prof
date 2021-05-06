@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+	<!--  Caso seja um filme  -->
+	<div th:if="${Item.tipo=='F'}">
+		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>
+		<h3>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </h3>
+		<h3>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </h3>
+		<h3>Pais: <span th:text="${Item.pais}">pais</span></br> </h3>
+		<h3>Ano: <span th:text="${Item.ano}">ano</span></br> </h3>
+	</div>
+	<!--  Caso seja um livro  -->
+	<div th:if="${Item.tipo=='L'}">
+		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>
+		<h3>Autor: <span th:text="${Item.autor}">Autor</span></br> </h3>
+		<h3>Editora: <span th:text="${Item.editora}">editora</span></br> </h3>
+		<h3>Pais: <span th:text="${Item.pais}">pais</span></br> </h3>
+		<h3>Ano: <span th:text="${Item.ano}">ano</span></br> </h3>
+	</div>
+	<!--  Caso seja um serie  -->
+	<div th:if="${Item.tipo=='S'}">
+		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>
+		<h3>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </h3>
+		<h3>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </h3>
+		<h3>Pais: <span th:text="${Item.pais}">pais</span></br> </h3>
+		<h3>Ano: <span th:text="${Item.ano}">ano</span></br> </h3>
+		<h3>Num temp: <span th:text="${Item.numTemp}">numTemp</span></br> </h3>
+	</div>
+	</br>
+	<a th:href="@{/criaAvaliacao(id=${Item.id})}"><button>Criar avaliação para este filme</button></a>
+	
+	</br></br></br>
+	<div>
+	<!-- fazer transição para username na url 
+	<h3>Avaliações</h3>
+		<dl th:each="avaliacao : ${avaliacao}">
+      	<dt>
+			<p>username: <span th:text="${user.username}">Username</span></br> </p>
+			<p>cidade: <span th:text="${user.cidade}">Cidade</span></p>
+			<p>Uf: <span th:text="${user.uf}">UF</span></br> </p>
+			<p>Senha: <span th:text="${user.senha}">Senha</span></p>
+      </dt>
+    </dl><-->
+	</div>
+	</body>
+	
+</html>

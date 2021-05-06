@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<form action="#" th:action="@{/cadastroLivro}" method="post" name="cadLivro" >
+		<label>Titulo:</label>
+		<input type="text" name="titulo">
+		</br>
+		<label>Autor(es):</label>
+		<input type="text" name="autor" placeholder="João Paulo, Felipe Silva">
+		</br>
+		<label>Editora:</label>
+		<input type="text" name="editora">
+		</br>
+		<label>Ano de lançamento :</label>
+		<input type="text" name="ano">
+		</br>
+		<label>Pais:</label>
+		<input type="text" name="pais">	
+		</br>
+		<input type = 'submit' value = 'cadastrar'>
+		</form>
+		<script th:if="${param.error}" >    
+              	alert("livro ja cadastrado");
+        </script>
+	</body>
+</html>

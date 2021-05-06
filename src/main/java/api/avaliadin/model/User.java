@@ -37,7 +37,23 @@ public class User {
 	@Column(name="dtCad")
 	private Date dtCad;
 	
+	private String role;
+    public String getRole() {
+		return role;
+	}
 
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	private boolean enabled;
 	
 	
 	public String getNome() {
