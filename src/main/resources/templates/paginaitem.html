@@ -34,16 +34,19 @@
 	
 	</br></br></br>
 	<div>
-	<!-- fazer transição para username na url 
 	<h3>Avaliações</h3>
-		<dl th:each="avaliacao : ${avaliacao}">
+		<dl th:each="a : ${listaAvaliacao}">
       	<dt>
-			<p>username: <span th:text="${user.username}">Username</span></br> </p>
-			<p>cidade: <span th:text="${user.cidade}">Cidade</span></p>
-			<p>Uf: <span th:text="${user.uf}">UF</span></br> </p>
-			<p>Senha: <span th:text="${user.senha}">Senha</span></p>
+			<p>Membro: <span th:text="${a.username}">Username</span></br> </p>
+			<p>Joinha: <span th:text="${a.numJoinha}">numJoinha</span></p>
+			<p>nota: <span th:text="${a.nota}">nota</span></br> </p>
+			<p>Descricao: <span th:text="${a.descricao}">descricao</span></p>
+      		</br>
+      		<form th:action="@{/darJoinha(id=${a.id})}" method="post">
+       		 	<input type="submit" value="curtir" />
+   		 	</form>
       </dt>
-    </dl><-->
+    </dl><
 	</div>
 	</body>
 	

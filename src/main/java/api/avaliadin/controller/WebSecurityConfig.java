@@ -51,26 +51,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
     
-	/*@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	    auth.inMemoryAuthentication()
-	        .passwordEncoder(new BCryptPasswordEncoder())
-	            .withUser("namhm")
-	            .password("$2a$10$fCY89aAmJCp9kQ5Ejz0HveVzKSBCyGVk6YmgqSp2uzL2kqwJD/zCm")
-	            .roles("USER")
-	        .and()
-	            .withUser("admin")
-	            .password("$2a$10$K65x7/TZEpXlnDGBZSC.5u0R.iO7U1CbkZ.VIIKjSkY8uOBNmeqzK")
-	            .roles("ADMIN")
-	        ;
-	}
- */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	 String staticResources  = "/image/**";
         http.authorizeRequests()
         	.antMatchers("/").permitAll()
         	.antMatchers("/login").permitAll()
         	.antMatchers("/cadastro").permitAll()
+        	.antMatchers(staticResources).permitAll()
         	.anyRequest().authenticated()
         	.and()
         	.formLogin().loginPage("/login")
@@ -103,42 +91,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.and()
         	.exceptionHandling().accessDeniedPage("/403");
     }  
-    /*@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-        	.antMatchers("/").permitAll()
-        	.antMatchers("/login").permitAll()
-        	.antMatchers("/cadastro").permitAll()
-        	.anyRequest().authenticated()
-        	.and()
-        	.formLogin().loginPage("/login")
-        		.usernameParameter("username")
-        		.passwordParameter("senha")
-        		.loginProcessingUrl("/log")
-        		.successHandler(new AuthenticationSuccessHandler() {
-        		    @Override
-        		    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-        		            Authentication authentication) throws IOException, ServletException {
-        		         
-        		        System.out.println("Logged user: " + authentication.getName());
-        		         
-        		        response.sendRedirect("/listaUser");
-        		    }
-        		})
-        		.failureHandler(new AuthenticationFailureHandler() {
-        		     
-        		    @Override
-        		    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-        		            AuthenticationException exception) throws IOException, ServletException {
-        		        System.out.println("Login failed");
-        		        System.out.println(exception);
-        		         
-        		        response.sendRedirect("/login?error");
-        		    }
-        		})
-        	.and()
-        	.logout().permitAll()
-        	.and()
-        	.exceptionHandling().accessDeniedPage("/403");
-    }  */
+
 }

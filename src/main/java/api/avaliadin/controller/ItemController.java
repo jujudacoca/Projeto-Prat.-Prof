@@ -2,6 +2,7 @@ package api.avaliadin.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
@@ -30,6 +31,12 @@ public class ItemController {
 	private LivroRepository livroRepository;
 	@Autowired
 	private ItemRepository itemRepository;
+	@Autowired
+	private AvaliacaoRepository avaliacaoRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private ComentarioRepository comentarioRepository;
 	
 	@GetMapping("/cadastrolivro")
 	public String showCadastro(Livro livro) {
@@ -119,17 +126,25 @@ public class ItemController {
 	
 	@GetMapping(path="/paginaitem/{id}")
 	public String pagItem(@PathVariable int id, Model model) {
-		String dtype = itemRepository.findDtypeById(id);
-		if(dtype.equals("F")) {
-			Filme u = filmeRepository.findById(id);
-			model.addAttribute("Item",u);
-		}else if(dtype.equals("S")) {
-			Serie u = serieRepository.findById(id);
-			model.addAttribute("Item",u);
-		}else if (dtype.equals("L")) {
-			Livro u = livroRepository.findById(id);
-			model.addAttribute("Item",u);
+		Item i = itemRepository.findById(id);
+		if(i!=null) {
+			String dtype = itemRepository.findDtypeById(id);
+			if(dtype.equals("F")) {
+				Filme u = filmeRepository.findById(id);
+				model.addAttribute("Item",u);
+			}else if(dtype.equals("S")) {
+				Serie u = serieRepository.findById(id);
+				model.addAttribute("Item",u);
+			}else if (dtype.equals("L")) {
+				Livro u = livroRepository.findById(id);
+				model.addAttribute("Item",u);
+			}
+			Iterable<Avaliacao> listaAvaliacao = avaliacaoRepository.findAllByIdItem(id);
+			model.addAttribute("listaAvaliacao", listaAvaliacao);
+		}else {
+			return "redirect:/indexMembro?itemnotfound";//implementar essa excessão ainda 
 		}
+	
 		return "/paginaitem";
 	}
 	

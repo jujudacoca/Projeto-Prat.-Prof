@@ -4,6 +4,8 @@
 <title>Lista User</title>
 </head>
 <body>
+	<h2 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h2>
+	</br>
   <h2>Lista Usuarios</h2>
   <div th:unless="${#lists.isEmpty(users)}">
     <dl th:each="user : ${users}">

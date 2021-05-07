@@ -35,10 +35,10 @@ public class UserController {
 		this.userRepository = userRepository;
 	}
 	
-	@GetMapping("/login")
+	/*@GetMapping("/login")
 	public String showLogin(Model model) {
 		return "login";
-	}
+	}*/
 	/*@PostMapping("/login")
 	public String testeAcesso(@RequestParam String username, @RequestParam String senha) {
 		User t = userRepository.findByUsername(username);

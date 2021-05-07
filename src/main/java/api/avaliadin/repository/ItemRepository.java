@@ -10,7 +10,7 @@ import api.avaliadin.model.Item;
 @EntityScan(basePackages="api.avaliadin.model")
 public interface ItemRepository extends CrudRepository<Item, Integer>{
 	
-	@Query("select tipo from Item where id_item=?1")
+	@Query("select tipo from Item where id_item=:id")
 	String findDtypeById(Integer id);
 
 	Item findById(int id);

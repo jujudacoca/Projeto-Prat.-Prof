@@ -3,6 +3,7 @@ package api.avaliadin.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,9 +40,12 @@ public class AvaliacaoController {
 	}
 	
 	@PostMapping("/criaAvaliacao")
-	public String addAvaliacao(@RequestParam String descricao,@RequestParam Integer nota, @RequestParam String username, @RequestParam int id ) {
+	public String addAvaliacao(@RequestParam String descricao,@RequestParam Integer nota, @RequestParam int id, Authentication authentication ) {
+		String username = authentication.getName();
+		System.out.println(username);
 		User t = userRepository.findByUsername(username);
-		if(t!=null) {
+		Item p = itemRepository.findById(id);
+		if(t!=null && p!=null) {
 			Avaliacao a = new Avaliacao();
 			a.setNota(nota);
 			a.setDescricao(descricao);
@@ -50,6 +54,8 @@ public class AvaliacaoController {
 			Date b = new Date();
 			a.setDtCad(b);
 			a.setNumJoinha(0);
+			a.setUsername(username);
+			a.setTitulo(p.getTitulo());
 			avaliacaoRepository.save(a);
 		}
 		return "redirect:/allAval";
@@ -59,4 +65,31 @@ public class AvaliacaoController {
 	public @ResponseBody Iterable<Avaliacao> getAllAvalicaos() {
 		return avaliacaoRepository.findAll();
 	}
+	
+	@PostMapping("/darJoinha")
+	public String addJoinha(@RequestParam int id,Authentication authentication) {
+		String username = authentication.getName();
+		Avaliacao a = avaliacaoRepository.findById(id);
+		User t = userRepository.findByUsername(username);
+		Joinha j = joinhaRepository.existeJoinha(t.getId(), a.getId());
+		if(j==null) {
+			//implementar erro caso ja foi curtido
+		}else {
+			Joinha o = new Joinha();
+			o.setIdAvaliacao(a.getId());
+			o.setIdUsuario(t.getId());
+			Date b = new Date();
+			o.setDtCad(b);
+			joinhaRepository.save(o);
+			int x = a.getNumJoinha()+1;
+			System.out.println(x);
+			a.setNumJoinha(x);
+			avaliacaoRepository.save(a);
+		}
+		
+		
+		
+	return "redirect:/paginaitem/"+a.getIdItem();	
+	}
+	
 }

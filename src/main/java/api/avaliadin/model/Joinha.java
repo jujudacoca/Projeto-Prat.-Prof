@@ -10,6 +10,38 @@ import javax.persistence.Id;
 
 @Entity
 public class Joinha {
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getIdAvaliacao() {
+		return idAvaliacao;
+	}
+
+	public void setIdAvaliacao(Integer idAvaliacao) {
+		this.idAvaliacao = idAvaliacao;
+	}
+
+	public Integer getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public Date getDtCad() {
+		return dtCad;
+	}
+
+	public void setDtCad(Date dtCad) {
+		this.dtCad = dtCad;
+	}
+
 	@Id
 	@Column(name="idJoinha")
 	@GeneratedValue(strategy=GenerationType.AUTO)

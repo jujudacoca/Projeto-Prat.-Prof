@@ -37,6 +37,29 @@ public class Avaliacao {
 	@Column(name="numJoinha")
 	private int numJoinha;
 
+	@Column(name="username")
+	private String username;
+	
+	@Column(name="titulo")
+	private String titulo;
+	
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
 	public Integer getId() {
 		return id;
 	}
