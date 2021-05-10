@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,21 +36,6 @@ public class UserController {
 		this.userRepository = userRepository;
 	}
 	
-	/*@GetMapping("/login")
-	public String showLogin(Model model) {
-		return "login";
-	}*/
-	/*@PostMapping("/login")
-	public String testeAcesso(@RequestParam String username, @RequestParam String senha) {
-		User t = userRepository.findByUsername(username);
-		if(t!=null) {
-			if(senha.equals(t.getSenha())) {
-				return "redirect:/listaUser";
-			}
-		}
-		return "redirect:/login?error";
-		
-	}*/
 	@GetMapping("/cadastro")
 	public String showCadastro(User user) {
 	    return "cadastro";
@@ -66,7 +52,6 @@ public class UserController {
 		    u.setNome(nome);
 		    u.setCidade(cidade);
 		    u.setUf(uf);
-		    System.out.println(dtNasc);
 		    SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
 		    if(dtNasc!="") {
 		    	Date d = formatter.parse(dtNasc);
@@ -79,6 +64,41 @@ public class UserController {
 		    userRepository.save(u);
 		    return "redirect:/login";
 		}
+	}
+	@GetMapping("/alterarCadastro")
+	public String alterarCadastro(User user) {
+	    return "alterarCadastro";
+	}
+	@PostMapping("/alterarcadastro")
+	public String updateUser(Authentication authentication,@RequestParam String username, @RequestParam String senha,@RequestParam String nome,@RequestParam String cidade, @RequestParam String uf, @RequestParam String dtNasc) throws ParseException {
+		String username_ = authentication.getName();
+		User t = userRepository.findByUsername(username_);
+		if (!username.isBlank()){
+			t.setUsername(username);
+		}
+		if (!senha.isBlank()){
+			t.setSenha(criptografar(senha));
+		}
+		if (!nome.isBlank()){
+			t.setNome(nome);
+		}
+		if (!cidade.isBlank()){
+			t.setCidade(cidade);
+		}
+		if (!uf.isBlank()){
+			t.setUf(uf);
+		}
+		if (!dtNasc.isBlank()){
+			SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		    if(dtNasc!="") {
+		    	Date d = formatter.parse(dtNasc);
+		    	t.setDtNasc(d);
+		    }
+		}
+	
+		userRepository.save(t);
+		return "redirect:/listaUser";
+		
 	}
 	@RequestMapping(value = "/listaUser", method = RequestMethod.GET)
     public String listaUsers(Model model) {

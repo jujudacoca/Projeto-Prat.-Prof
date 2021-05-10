@@ -4,6 +4,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	</head>
 	<body>
+	<script th:if="${param.curtido}">
+		alert("Avaliação ja curtida");
+	</script>
 	<!--  Caso seja um filme  -->
 	<div th:if="${Item.tipo=='F'}">
 		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>

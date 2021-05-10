@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<!-- NO WIREFRAME FALA Q PRECISA DO USERNAME E SENHA PRA FAZER A ALTERÇÃO MAS N VAI PRECISAR
+	ENTAO SÓ VAI TROCAR OS DADOS QUE QUISEREM.
+	
+	precisa implementar o javascript para garantir q pelo menos um campo esteja preenchido
+ -->
+<form action="#" th:action="@{/alterarcadastro}" method="post" name="cad" >
+				<p>
+					<label >Nome completo:</label>
+					<input type="text"  name="nome">
+				</p>
+				<br>
+				<br>
+				<p>
+					<label>Username: </label>
+					<input type="text" name="username">
+				</p>
+				<br>
+				<br>
+				<p>
+					<label >Nova Senha: </label>
+					<input type="password"  name="senha">
+				</p>
+				<br>
+				<br>
+				<p>
+					<label >Data de nascimento: </label>
+					<input type="date"  name="dtNasc">
+				</p>
+				<br>
+				<br>
+				<p>
+					<label>Estado (UF): </label>
+					<input type="text" name="uf" placeholder="SP">
+				</p>
+				<br>
+				<br>
+				<p>
+					<label>Cidade: </label>
+					<input type="text" name="cidade">
+				</p>
+				<br>
+				<br>
+				<p>
+					<input type = 'submit' value = 'alterar' >
+				</p>
+
+			</form>
+</body>
+</html>

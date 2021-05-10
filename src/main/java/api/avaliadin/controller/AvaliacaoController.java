@@ -72,8 +72,9 @@ public class AvaliacaoController {
 		Avaliacao a = avaliacaoRepository.findById(id);
 		User t = userRepository.findByUsername(username);
 		Joinha j = joinhaRepository.existeJoinha(t.getId(), a.getId());
-		if(j==null) {
+		if(j!=null) {
 			//implementar erro caso ja foi curtido
+			return "redirect:/paginaitem/"+a.getIdItem()+"?curtido";
 		}else {
 			Joinha o = new Joinha();
 			o.setIdAvaliacao(a.getId());
