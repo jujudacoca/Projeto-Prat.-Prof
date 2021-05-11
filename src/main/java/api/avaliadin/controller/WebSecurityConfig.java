@@ -72,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         		         
         		        System.out.println("Logged user: " + authentication.getName());
         		         
-        		        response.sendRedirect("/listaUser");
+        		        response.sendRedirect("/indexmembro");
         		    }
         		})
         		.failureHandler(new AuthenticationFailureHandler() {

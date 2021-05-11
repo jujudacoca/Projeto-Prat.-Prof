@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<h2>Pedidos de amizade</h2>
+			<dl th:each="a : ${listaAmizade}">
+	      	<dt>
+				<p>Este membro quer ser seu amigo: <span th:text="${a.username1}">Username</span></br> </p>
+	      		<a th:href="@{/perfilmembro/{username}(username=${a.username1})}"><button>Visite a página do membro</button></a>
+	      		<form th:action="@{/checaramizade(check='s',id=${a.id})}" method="post">
+	       		 	<input type="submit" value="aceitar amizade" />
+	   		 	</form>
+	   		 	<form th:action="@{/checaramizade(check='n',id=${a.id})}" method="post">
+	       		 	<input type="submit" value="recusar amizade" />
+	   		 	</form>
+	   		 	</br>
+	      </dt>
+	    </dl><
+		</div>
+		</br>
+		<h2>Recomendações de amizades</h2>
+		</br>
+		<h2>Recomendações de filmes</h2>
+	</body>
+	
+</html>

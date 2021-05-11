@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import api.avaliadin.model.User;
+import api.avaliadin.model.*;
+import api.avaliadin.repository.AmizadeRepository;
+import api.avaliadin.repository.AvaliacaoRepository;
 import api.avaliadin.repository.UserRepository;
 
 
@@ -31,6 +33,10 @@ import api.avaliadin.repository.UserRepository;
 public class UserController {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private AvaliacaoRepository avaliacaoRepository;
+	@Autowired
+	private AmizadeRepository amizadeRepository;
 	
 	public UserController(UserRepository userRepository) {
 		this.userRepository = userRepository;
@@ -100,6 +106,84 @@ public class UserController {
 		return "redirect:/listaUser";
 		
 	}
+	
+	@GetMapping(path="/perfilmembro/{username}")
+	public String pagItem(@PathVariable String username, Model model,Authentication authentication) {
+		System.out.println(username);
+		String username_ = authentication.getName();
+		User u = userRepository.findByUsername(username);
+		if(u!=null) {
+			model.addAttribute("user", u);
+			Iterable<Avaliacao> listaAvaliacao = avaliacaoRepository.findAllByIdUser(u.getId());
+			model.addAttribute("listaAvaliacao", listaAvaliacao);
+			Iterable<Amizade> listaAmizade = amizadeRepository.findAllByIdUser(u.getId());
+			model.addAttribute("listaAmizade", listaAmizade);
+		}else {
+			return "redirect:/indexMembro?notfound";//implementar essa excessão ainda 
+		}
+		if(username.equals(username_)) {
+				model.addAttribute("membro", "eu");
+		}else {
+			User t = userRepository.findByUsername(username_);
+			Amizade a = amizadeRepository.findByTwoId(u.getId(), t.getId());
+			if(a!=null) {
+				if(a.getEstado().equals("a")) {
+					model.addAttribute("membro", "amigo");
+				}else {
+					model.addAttribute("membro", "pedido");
+				}
+			}else {
+				model.addAttribute("membro", "membro");
+			}
+			
+		}
+		return "/perfilMembro";
+	}
+	@GetMapping(path="/indexmembro")
+	public String pagRecomendacao(Model model,Authentication authentication) {
+		String username_ = authentication.getName();
+		User u = userRepository.findByUsername(username_);
+		Iterable<Amizade> listaSoliAmizade = amizadeRepository.findSolicitacaoById(u.getId());
+		model.addAttribute("listaAmizade", listaSoliAmizade);
+		return "/indexMembro";
+	}
+	
+	
+	@PostMapping("/pediramizade")
+	public String pediramizade(@RequestParam int id,Authentication authentication) {
+		String username = authentication.getName();
+		
+		User u = userRepository.findByUsername(username);
+		User t = userRepository.findById(id);
+		Amizade a = new Amizade();
+		a.setIdUser1(u.getId());
+		a.setIdUser2(t.getId());
+		a.setUsername1(u.getUsername());
+		a.setUsername2(t.getUsername());
+		a.setEstado("s");
+		Date b = new Date();
+		a.setDtCad(b);
+		amizadeRepository.save(a);
+		return "redirect:/perfilmembro/"+t.getUsername();
+	}
+	@PostMapping("/checaramizade")
+	public String checaramizade(@RequestParam int id,@RequestParam String check) {
+		Amizade a = amizadeRepository.findById(id);
+		a.setEstado("a");
+		Date b = new Date();
+		a.setDtCad(b);
+		amizadeRepository.save(a);
+		return "redirect:/indexmembro";
+	}
+	
+	@PostMapping("/deletarconta")
+	public String deleteUser(Authentication authentication) {
+		String username_ = authentication.getName();
+		User t = userRepository.findByUsername(username_);
+		userRepository.delete(t);
+		return "redirect:/login?logout";
+	}
+	
 	@RequestMapping(value = "/listaUser", method = RequestMethod.GET)
     public String listaUsers(Model model) {
 		Iterable<User> listaUser = userRepository.findAll();

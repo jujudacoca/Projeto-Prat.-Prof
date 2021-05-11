@@ -5,7 +5,7 @@
 	</head>
 	<body>
 	<script th:if="${param.curtido}">
-		alert("Avaliação ja curtida");
+		alert("Voce retirou a curtida");
 	</script>
 	<!--  Caso seja um filme  -->
 	<div th:if="${Item.tipo=='F'}">
@@ -45,11 +45,11 @@
 			<p>nota: <span th:text="${a.nota}">nota</span></br> </p>
 			<p>Descricao: <span th:text="${a.descricao}">descricao</span></p>
       		</br>
-      		<form th:action="@{/darJoinha(id=${a.id})}" method="post">
+      		<form th:action="@{/darJoinha(id=${a.id},ind='pgitem')}" method="post">
        		 	<input type="submit" value="curtir" />
    		 	</form>
       </dt>
-    </dl><
+    </dl>
 	</div>
 	</body>
 	

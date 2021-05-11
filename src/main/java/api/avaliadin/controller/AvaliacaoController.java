@@ -3,6 +3,8 @@ package api.avaliadin.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,14 +69,19 @@ public class AvaliacaoController {
 	}
 	
 	@PostMapping("/darJoinha")
-	public String addJoinha(@RequestParam int id,Authentication authentication) {
+	public String addJoinhapgitem(@RequestParam int id,@RequestParam String ind,Authentication authentication) {
 		String username = authentication.getName();
 		Avaliacao a = avaliacaoRepository.findById(id);
 		User t = userRepository.findByUsername(username);
 		Joinha j = joinhaRepository.existeJoinha(t.getId(), a.getId());
 		if(j!=null) {
-			//implementar erro caso ja foi curtido
-			return "redirect:/paginaitem/"+a.getIdItem()+"?curtido";
+			joinhaRepository.delete(j);
+			a.setNumJoinha(a.getNumJoinha()-1);
+			if(ind.equals("pgitem")) {
+				return "redirect:/paginaitem/"+a.getIdItem()+"?curtido";
+			}else if(ind.equals("pgmembro")) {
+				return "redirect:/perfilmembro/"+a.getUsername()+"?curtido";
+			}
 		}else {
 			Joinha o = new Joinha();
 			o.setIdAvaliacao(a.getId());
@@ -83,14 +90,16 @@ public class AvaliacaoController {
 			o.setDtCad(b);
 			joinhaRepository.save(o);
 			int x = a.getNumJoinha()+1;
-			System.out.println(x);
 			a.setNumJoinha(x);
-			avaliacaoRepository.save(a);
+			
 		}
+		avaliacaoRepository.save(a);
+		if(ind.equals("pgitem")) {
+			return "redirect:/paginaitem/"+a.getIdItem();
+		}else {
+			return "redirect:/perfilmembro/"+a.getUsername();
+		}	
 		
-		
-		
-	return "redirect:/paginaitem/"+a.getIdItem();	
 	}
 	
 }
