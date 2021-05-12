@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+	<!-- MENU  -->
+	
+		<form th:action="@{/pesquisar}" method="post">
+	       		 	<label>Digite: </label>
+					<input type="text" name="pesquisa">
+	       		 	<input type="submit" value="pesquisar" />
+	   	</form>
+	   	<a th:if="${User.role}=='ROLE ADMIN'" th:href="@{/indexadmin}"><button>Volte para a página de inicial</button></a>
+	   	
+	   	<h2>Resultados de Membros</h2>
+	   	<div th:if="${l1==0}">
+	   		<p>Não há membros encontrados</p>
+	   	</div>
+	   	<div th:if="${l1!=0}">
+	   		<dl th:each="u : ${listaUser}">
+	      	<dt>
+				<p>Membro: <span th:text="${u.username}">Username</span></p>
+				<p>Nome: <span th:text="${u.nome}">Username</span></p>
+				<p>Cidade: <span th:text="${u.cidade}">Username</span> - <span th:text="${u.uf}">Username</span></p>
+				<a th:href="@{/perfilmembro/{username}(username=${u.username})}"><button>Visite a página do membro</button></a>
+	      		</br>
+	      </dt>
+	   	</div>
+	   	<h2>Resultados de Mídia</h2>
+	   	<div th:if="${l2==0}">
+	   		<p>Não há mídias encontradas</p>
+	   	</div>
+	   	<div th:if="${l2!=0}">
+	   		<dl th:each="Item : ${listaItem}">
+	      	<dt>
+				<div th:if="${Item.tipo=='F'}">
+					<h4>Filme</h4>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></p>
+					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </p>
+					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span></br> </p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span></br> </p>
+				</div>
+				<!--  Caso seja um livro  -->
+				<div th:if="${Item.tipo=='L'}">
+					<h4>Livro</h4>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></p>
+					<p>Autor: <span th:text="${Item.autor}">Autor</span></br> </p>
+					<p>Editora: <span th:text="${Item.editora}">editora</span></br> </p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span></br> </p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span></br> </p>
+				</div>
+				<!--  Caso seja um serie  -->
+				<div th:if="${Item.tipo=='S'}">
+					<h4>Série</h4>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></p>
+					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </p>
+					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span></br> </p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span></br> </p>
+					<p>Num temp: <span th:text="${Item.numTemp}">numTemp</span></br> </p>
+				</div>
+				<a th:href="@{/paginaitem/{id}(id=${Item.id})}"><button>Visite a página da mídia</button></a>
+		      	</br>
+	      </dt>
+	   	</div>
+	</body>
+	
+</html>

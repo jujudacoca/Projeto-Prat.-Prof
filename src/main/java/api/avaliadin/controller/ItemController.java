@@ -128,24 +128,40 @@ public class ItemController {
 	public String pagItem(@PathVariable int id, Model model) {
 		Item i = itemRepository.findById(id);
 		if(i!=null) {
-			String dtype = itemRepository.findDtypeById(id);
-			if(dtype.equals("F")) {
-				Filme u = filmeRepository.findById(id);
-				model.addAttribute("Item",u);
-			}else if(dtype.equals("S")) {
-				Serie u = serieRepository.findById(id);
-				model.addAttribute("Item",u);
-			}else if (dtype.equals("L")) {
-				Livro u = livroRepository.findById(id);
-				model.addAttribute("Item",u);
+			if(i.isEstado()) {
+				String dtype = itemRepository.findDtypeById(id);
+				if(dtype.equals("F")) {
+					Filme u = filmeRepository.findById(id);
+					model.addAttribute("Item",u);
+				}else if(dtype.equals("S")) {
+					Serie u = serieRepository.findById(id);
+					model.addAttribute("Item",u);
+				}else if (dtype.equals("L")) {
+					Livro u = livroRepository.findById(id);
+					model.addAttribute("Item",u);
+				}
+				Iterable<Avaliacao> listaAvaliacao = avaliacaoRepository.findAllByIdItem(id);
+				model.addAttribute("listaAvaliacao", listaAvaliacao);
+				return "/paginaitem";
 			}
-			Iterable<Avaliacao> listaAvaliacao = avaliacaoRepository.findAllByIdItem(id);
-			model.addAttribute("listaAvaliacao", listaAvaliacao);
-		}else {
-			return "redirect:/indexMembro?itemnotfound";//implementar essa excessão ainda 
 		}
+			return "redirect:/indexMembro?itemnotfound";//implementar essa excessão ainda 
+	}
 	
-		return "/paginaitem";
+	@PostMapping(path="/aprovarItem")
+	public String aprovarItem(@RequestParam int id) {
+		Item i = itemRepository.findById(id);
+		i.setEstado(true);
+		itemRepository.save(i);
+		return "redirect:/indexadmin";
+		
+	}
+
+	@PostMapping(path="/rejeitarItem")
+	public String jaexiste(@RequestParam int id) {
+		Item i = itemRepository.findById(id);
+		itemRepository.delete(i);
+		return "redirect:/indexadmin";
 	}
 	
 }

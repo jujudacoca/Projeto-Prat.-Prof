@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import api.avaliadin.model.*;
 import api.avaliadin.repository.*;
+import details.MyUserDetails;
 
 @Controller
 @RequestMapping
@@ -44,7 +45,6 @@ public class AvaliacaoController {
 	@PostMapping("/criaAvaliacao")
 	public String addAvaliacao(@RequestParam String descricao,@RequestParam Integer nota, @RequestParam int id, Authentication authentication ) {
 		String username = authentication.getName();
-		System.out.println(username);
 		User t = userRepository.findByUsername(username);
 		Item p = itemRepository.findById(id);
 		if(t!=null && p!=null) {
@@ -70,9 +70,9 @@ public class AvaliacaoController {
 	
 	@PostMapping("/darJoinha")
 	public String addJoinhapgitem(@RequestParam int id,@RequestParam String ind,Authentication authentication) {
-		String username = authentication.getName();
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User t = m.getUser();
 		Avaliacao a = avaliacaoRepository.findById(id);
-		User t = userRepository.findByUsername(username);
 		Joinha j = joinhaRepository.existeJoinha(t.getId(), a.getId());
 		if(j!=null) {
 			joinhaRepository.delete(j);
@@ -100,6 +100,23 @@ public class AvaliacaoController {
 			return "redirect:/perfilmembro/"+a.getUsername();
 		}	
 		
+	}
+	
+	@PostMapping("/comentar")
+	public String addComentario(@RequestParam String comentario,@RequestParam int id,@RequestParam String ind,Authentication authentication) {
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User t = m.getUser();
+		Avaliacao a = avaliacaoRepository.findById(id);
+		Comentario c = new Comentario();
+		c.setDescricao(comentario);
+		c.setIdAvaliacao(a.getId());
+		c.setIdUsuario(t.getId());
+		comentarioRepository.save(c);
+		if(ind.equals("pgitem")) {
+			return "redirect:/paginaitem/"+a.getIdItem();
+		}else {
+			return "redirect:/perfilmembro/"+a.getUsername();
+		}	
 	}
 	
 }

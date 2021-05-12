@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+	<div th:if="${user.role}=='ROLE ADMIN'">
+	<form th:action="@{/pesquisar}" method="post">
+	 	<label>Digite: </label>
+	 	<input type="text" name="pesquisa">
+	     <input type="submit" value="pesquisar" />
+	</form>
+	<br>
+	
+	<h2>Avalie novos cadastros de mídia de Mídia</h2>
+	   	<div th:if="${l2==0}">
+	   		<p>Não há mídias para serem checadas</p>
+	   	</div>
+	   	<div th:if="${l2!=0}">
+	   		<dl th:each="Item : ${listaItem}">
+	      	<dt>
+				<div th:if="${Item.tipo=='F'}">
+					<h4>Filme</h4>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></p>
+					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span></p>
+					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span></p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span></p>
+				</div>
+				<!--  Caso seja um livro  -->
+				<div th:if="${Item.tipo=='L'}">
+					<h4>Livro</h4>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></p>
+					<p>Autor: <span th:text="${Item.autor}">Autor</span></p>
+					<p>Editora: <span th:text="${Item.editora}">editora</span></p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span> </p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span> </p>
+				</div>
+				<!--  Caso seja um serie  -->
+				<div th:if="${Item.tipo=='S'}">
+					<h4>Série</h4>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></p>
+					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span> </p>
+					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span></p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span></p>
+					<p>Num temp: <span th:text="${Item.numTemp}">numTemp</span></p>
+				</div>
+				<form th:action="@{/aprovarItem(id=${Item.id})}" method="post">
+       		 		<input type="submit" value="aprovar mídia" />
+   		 		</form>
+   		 		<form th:action="@{/rejeitarItem(id=${Item.id})}" method="post">
+       		 		<input type="submit" value="mídia ja existe" />
+   		 		</form>
+   		 		<form th:action="@{/rejeitarItem(id=${Item.id})}" method="post">
+       		 		<input type="submit" value="rejeitar mídia" />
+   		 		</form>
+		      	<br>
+	      </dt>
+	      </dl>
+	      </div>
+	</div>
+	<div th:if="${user.role}=='ROLE USER'">
+		<h3> Você não tem acesso a essa página</h3>
+		<a th:href="@{/indexmembro}"><button>Visite a página do membro</button></a>
+	</div>
+	
+	</body>
+	</html>

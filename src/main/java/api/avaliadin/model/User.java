@@ -37,6 +37,16 @@ public class User {
 	@Column(name="dtCad")
 	private Date dtCad;
 	
+	@Column(name="numAmigos")
+	private int numAmigos;
+	
+	public int getNumAmigos() {
+		return numAmigos;
+	}
+
+	public void setNumAmigos(int numAmigos) {
+		this.numAmigos = numAmigos;
+	}
 	private String role;
     public String getRole() {
 		return role;

@@ -7,10 +7,10 @@ import api.avaliadin.model.Amizade;
 
 
 public interface AmizadeRepository extends CrudRepository<Amizade, Integer>{
-	@Query("SELECT a FROM Amizade a WHERE id_user1 = :id_user or id_user2 = :id_user ")
+	@Query("SELECT a FROM Amizade a WHERE (id_user1 = :id_user or id_user2 = :id_user) and estado = 'a' ")
     public Iterable<Amizade> findAllByIdUser(@Param("id_user") Integer id);
 	
-	@Query("SELECT a FROM Amizade a WHERE (id_user1 = :id_user1 and id_user2 = :id_user2) or (id_user1 = :id_user2 and id_user2 = :id_user1) ")
+	@Query("SELECT a FROM Amizade a WHERE ((id_user1 = :id_user1 and id_user2 = :id_user2) or (id_user1 = :id_user2 and id_user2 = :id_user1))")
     public Amizade findByTwoId(@Param("id_user1") Integer id1,@Param("id_user2") Integer id2);
 
 	@Query("SELECT a FROM Amizade a WHERE id_user2 = :id_user and estado = 's' ")

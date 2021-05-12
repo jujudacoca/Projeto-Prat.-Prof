@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -23,10 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import api.avaliadin.model.*;
 import api.avaliadin.repository.AmizadeRepository;
 import api.avaliadin.repository.AvaliacaoRepository;
+import api.avaliadin.repository.ItemRepository;
 import api.avaliadin.repository.UserRepository;
-
-
-
+import details.MyUserDetails;
 
 @Controller
 @RequestMapping
@@ -37,6 +38,8 @@ public class UserController {
 	private AvaliacaoRepository avaliacaoRepository;
 	@Autowired
 	private AmizadeRepository amizadeRepository;
+	@Autowired
+	private ItemRepository itemRepository;
 	
 	public UserController(UserRepository userRepository) {
 		this.userRepository = userRepository;
@@ -53,6 +56,16 @@ public class UserController {
 			return "redirect:/cadastro?error";
 		}else {
 			User u = new User();
+			String teste = username.substring(0, 5);
+			if(teste.equals("admin")){
+				username = username.replaceAll("admin", "");
+				u.setRole("ROLE ADMIN");
+			}else if(teste.equals("geren")){
+				username = username.replaceAll("geren", "");
+				u.setRole("ROLE GM");
+			}else {
+				u.setRole("ROLE USER");
+			}
 		    u.setUsername(username);
 		    u.setSenha(criptografar(senha));
 		    u.setNome(nome);
@@ -65,7 +78,7 @@ public class UserController {
 		    }
 		    Date b = new Date();
 			u.setDtCad(b);
-			u.setRole("ROLE USER");
+			
 			u.setEnabled(true);
 		    userRepository.save(u);
 		    return "redirect:/login";
@@ -77,8 +90,8 @@ public class UserController {
 	}
 	@PostMapping("/alterarcadastro")
 	public String updateUser(Authentication authentication,@RequestParam String username, @RequestParam String senha,@RequestParam String nome,@RequestParam String cidade, @RequestParam String uf, @RequestParam String dtNasc) throws ParseException {
-		String username_ = authentication.getName();
-		User t = userRepository.findByUsername(username_);
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User t = m.getUser();
 		if (!username.isBlank()){
 			t.setUsername(username);
 		}
@@ -109,7 +122,6 @@ public class UserController {
 	
 	@GetMapping(path="/perfilmembro/{username}")
 	public String pagItem(@PathVariable String username, Model model,Authentication authentication) {
-		System.out.println(username);
 		String username_ = authentication.getName();
 		User u = userRepository.findByUsername(username);
 		if(u!=null) {
@@ -141,8 +153,8 @@ public class UserController {
 	}
 	@GetMapping(path="/indexmembro")
 	public String pagRecomendacao(Model model,Authentication authentication) {
-		String username_ = authentication.getName();
-		User u = userRepository.findByUsername(username_);
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User u = m.getUser();
 		Iterable<Amizade> listaSoliAmizade = amizadeRepository.findSolicitacaoById(u.getId());
 		model.addAttribute("listaAmizade", listaSoliAmizade);
 		return "/indexMembro";
@@ -151,9 +163,8 @@ public class UserController {
 	
 	@PostMapping("/pediramizade")
 	public String pediramizade(@RequestParam int id,Authentication authentication) {
-		String username = authentication.getName();
-		
-		User u = userRepository.findByUsername(username);
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User u = m.getUser();
 		User t = userRepository.findById(id);
 		Amizade a = new Amizade();
 		a.setIdUser1(u.getId());
@@ -169,17 +180,51 @@ public class UserController {
 	@PostMapping("/checaramizade")
 	public String checaramizade(@RequestParam int id,@RequestParam String check) {
 		Amizade a = amizadeRepository.findById(id);
-		a.setEstado("a");
-		Date b = new Date();
-		a.setDtCad(b);
-		amizadeRepository.save(a);
+		User u1 = userRepository.findById(a.getIdUser1());
+		User u2 = userRepository.findById(a.getIdUser2());
+		if(check.equals("s")) {
+			a.setEstado("a");
+			Date b = new Date();
+			a.setDtCad(b);
+			u1.setNumAmigos(u1.getNumAmigos()+1);
+			u2.setNumAmigos(u2.getNumAmigos()+1);
+			amizadeRepository.save(a);
+		}else {
+			amizadeRepository.delete(a);
+		}
 		return "redirect:/indexmembro";
 	}
 	
+	@GetMapping(path="/indexadmin")
+	public String indexAdmin(Model model ,Authentication authentication){
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User u = m.getUser();
+		model.addAttribute("user", u);
+		Iterable<Item> listaItem = itemRepository.findAllStateFalse();
+		model.addAttribute("listaItem", listaItem);
+		model.addAttribute("l2", count(listaItem));
+		return "/indexadmin";
+	}
+	@GetMapping(path="/indexgerente")
+	public String indexmembro(Model model ,Authentication authentication){
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User u = m.getUser();
+		model.addAttribute("user", u);
+		float numUsers = userRepository.findSomTotalUser(); 
+		float numAmigos = userRepository.findSomTotalAmigos(); 
+		float numMedio = numAmigos/numUsers;
+		model.addAttribute("numMedio", numMedio);
+		Pageable top10 = PageRequest.of(0, 10);
+		List<User> listatop10 = userRepository.findByOrderByNumAmigosDesc(top10);
+		model.addAttribute("listatop10", listatop10);
+		return "/indexgerente";
+	}
+	
+	
 	@PostMapping("/deletarconta")
 	public String deleteUser(Authentication authentication) {
-		String username_ = authentication.getName();
-		User t = userRepository.findByUsername(username_);
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User t = m.getUser();
 		userRepository.delete(t);
 		return "redirect:/login?logout";
 	}
@@ -197,9 +242,17 @@ public class UserController {
 	public @ResponseBody Iterable<User> getAllUsers() {
 		return userRepository.findAll();
 	}
+	
     public static String criptografar(String rawPassword) {
    	 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodedPassword = encoder.encode(rawPassword);
         return encodedPassword;
    }
+    public int count(Iterable a) {
+		int counter = 0;
+		for (Object i : a) {
+		    counter++;
+		}
+		return counter;
+	}
 }	

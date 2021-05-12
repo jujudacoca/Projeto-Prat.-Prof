@@ -3,6 +3,7 @@ package api.avaliadin.repository;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import api.avaliadin.model.Item;
@@ -16,4 +17,10 @@ public interface ItemRepository extends CrudRepository<Item, Integer>{
 	Item findById(int id);
 	
 	Item findByTitulo(String titulo);
+	
+	@Query("select i from Item i where i.titulo like %:pesquisa%")
+	public Iterable<Item> pesquisa(@Param("pesquisa") String pesquisa);
+	
+	@Query("select i from Item i where i.estado=false")
+	public Iterable<Item> findAllStateFalse();
 }

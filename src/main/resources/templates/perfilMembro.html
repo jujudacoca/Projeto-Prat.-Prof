@@ -25,17 +25,21 @@
 		<div>
 		<h3>Avaliações</h3>
 			<dl th:each="a : ${listaAvaliacao}">
-	      	<dt>
-				<p>Membro: <span th:text="${a.username}">Username</span></br> </p>
-				<p>Joinha: <span th:text="${a.numJoinha}">numJoinha</span></p>
-				<p>nota: <span th:text="${a.nota}">nota</span></br> </p>
-				<p>Descricao: <span th:text="${a.descricao}">descricao</span></p>
-	      		</br>
-	      		<form th:action="@{/darJoinha(id=${a.id},ind='pgmembro')}" method="post">
-	       		 	<input type="submit" value="curtir" />
-	   		 	</form>
-	      </dt>
-	    </dl>
+	      		<dt>
+					<p>Membro: <span th:text="${a.username}">Username</span></br> </p>
+					<p>Joinha: <span th:text="${a.numJoinha}">numJoinha</span></p>
+					<p>nota: <span th:text="${a.nota}">nota</span></br> </p>
+					<p>Descricao: <span th:text="${a.descricao}">descricao</span></p>
+		      		</br>
+		      		<form th:action="@{/darJoinha(id=${a.id},ind='pgmembro')}" method="post">
+		       		 	<input type="submit" value="curtir" />
+		   		 	</form>
+		   		 	<form th:if="${membro=='amigo'}" th:action="@{/comentar(id=${a.id},ind='pgmembro')}" method="post">
+	       		 		<input type="text" name="comentario">
+	       		 		<input type="submit" value="comentar" />
+	   		 		</form>
+	      		</dt>
+	    	</dl>
 		</div>
 		
 		<h3>Amizades</h3>

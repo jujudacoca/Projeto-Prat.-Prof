@@ -16,13 +16,16 @@ public class MyUserDetails implements UserDetails {
     public MyUserDetails(User user) {
         this.user = user;
     }
- 
+    public User getUser(){
+    	return user;
+    }
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
         return Arrays.asList(authority);
     }
- 
+    
     @Override
     public String getPassword() {
         return user.getSenha();

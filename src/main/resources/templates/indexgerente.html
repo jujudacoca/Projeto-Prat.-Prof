@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+	<div th:if="${user.role}=='ROLE GM'">
+		<h3>Número médio: <span th:text="${numMedio}">num</span></h3>
+		
+		<br>
+		<h3>Top membros mais conectados</h3>
+		<dl th:each="a : ${listatop10}">
+	      	<dt>
+				<p>Membro: <span th:text="${a.username}">Username</span></p>
+				<a th:href="@{/perfilmembro/{username}(username=${a.username})}"><button>Visite a página do membro</button></a>
+	      		</br>
+	    </dt>
+	</div>
+	<div th:if="${user.role}=='ROLE USER'">
+		<h3> Você não tem acesso a essa página</h3>
+		<a th:href="@{/indexmembro}"><button>Visite a página do membro</button></a>
+	</div>
+	</body>
+</html>

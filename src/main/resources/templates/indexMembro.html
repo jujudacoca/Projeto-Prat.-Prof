@@ -4,6 +4,12 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	</head>
 	<body>
+		<form th:action="@{/pesquisar}" method="post">
+	       		 	<label>Digite: </label>
+					<input type="text" name="pesquisa">
+	       		 	<input type="submit" value="pesquisar" />
+	   	</form>
+	   	</br>
 		<h2>Pedidos de amizade</h2>
 			<dl th:each="a : ${listaAmizade}">
 	      	<dt>

@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,12 +21,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import api.avaliadin.model.User;
+import api.avaliadin.repository.UserRepository;
 import details.UserDetailsServiceImpl;
  
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Bean
     public UserDetailsService userDetailsService() {
@@ -70,9 +75,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         		    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
         		            Authentication authentication) throws IOException, ServletException {
         		         
-        		        System.out.println("Logged user: " + authentication.getName());
-        		         
-        		        response.sendRedirect("/indexmembro");
+        		        String username = authentication.getName();
+        		        User t = userRepository.findByUsername(username);
+        		        if(t.getRole().equals("ROLE USER")) {
+        		        	response.sendRedirect("/indexmembro");
+        		        }else if(t.getRole().equals("ROLE ADMIN")) {
+        		        	response.sendRedirect("/indexadmin");
+        		        }else if(t.getRole().equals("ROLE GM")) {
+        		        	response.sendRedirect("/indexgerente");
+        		        }
         		    }
         		})
         		.failureHandler(new AuthenticationFailureHandler() {

@@ -1,8 +1,6 @@
 package api.avaliadin.controller;
 
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -25,6 +23,8 @@ public class WebController implements WebMvcConfigurer {
 		registry.addViewController("/alterarCadastro").setViewName("alterarCadastro");
 		registry.addViewController("/perfilMembro").setViewName("perfilMembro");
 		registry.addViewController("/indexMembro").setViewName("indexMembro");
-		
+		registry.addViewController("/pesquisa").setViewName("pesquisa");
+		registry.addViewController("/indexadmin").setViewName("indexadmin");
+		registry.addViewController("/indexgerente").setViewName("indexgerente");
 	}
 }
