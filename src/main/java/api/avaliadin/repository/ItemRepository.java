@@ -18,7 +18,7 @@ public interface ItemRepository extends CrudRepository<Item, Integer>{
 	
 	Item findByTitulo(String titulo);
 	
-	@Query("select i from Item i where i.titulo like %:pesquisa%")
+	@Query("select i from Item i where i.titulo like %:pesquisa% and i.estado=true")
 	public Iterable<Item> pesquisa(@Param("pesquisa") String pesquisa);
 	
 	@Query("select i from Item i where i.estado=false")

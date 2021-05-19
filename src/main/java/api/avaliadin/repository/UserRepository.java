@@ -28,4 +28,7 @@ public interface UserRepository extends CrudRepository<User, Integer>{
     public int findSomTotalAmigos();
 
 	List<User> findByOrderByNumAmigosDesc(Pageable pageable);
+	
+	@Query("SELECT u FROM User u WHERE u.id=:id")
+	public User getUserById(@Param("id") Integer id);
 }

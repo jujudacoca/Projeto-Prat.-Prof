@@ -5,7 +5,17 @@
 	</head>
 	<body>
 	<!-- MENU  -->
-	
+		<ul>
+              <li>
+                <a th:href="@{/perfilmembro/{username}(username=${User.username})}">Pagina pessoal</a>
+              </li>
+              <li>
+                <a href="/cadastroItem">Cadastre um item</a>
+              </li>
+              <li >
+                <a href="/indexmembro" >solicitações de amizade e item sugeridos</a>
+              </li>
+            </ul>
 		<form th:action="@{/pesquisar}" method="post">
 	       		 	<label>Digite: </label>
 					<input type="text" name="pesquisa">

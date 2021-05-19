@@ -2,9 +2,17 @@ package api.avaliadin.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -22,12 +30,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import api.avaliadin.details.MyUserDetails;
 import api.avaliadin.model.*;
+import api.avaliadin.recomendation.Ulikes;
 import api.avaliadin.repository.AmizadeRepository;
 import api.avaliadin.repository.AvaliacaoRepository;
 import api.avaliadin.repository.ItemRepository;
 import api.avaliadin.repository.UserRepository;
-import details.MyUserDetails;
 
 @Controller
 @RequestMapping
@@ -155,8 +164,15 @@ public class UserController {
 	public String pagRecomendacao(Model model,Authentication authentication) {
 		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
 		User u = m.getUser();
+		model.addAttribute("user", u);
 		Iterable<Amizade> listaSoliAmizade = amizadeRepository.findSolicitacaoById(u.getId());
 		model.addAttribute("listaAmizade", listaSoliAmizade);
+		List<User> listaAmigo = topMatches(gerarLista(true,u.getId()),u.getId());
+		List<Item> listaItem = getRecomendation(gerarLista(false,u.getId()),u.getId());
+		model.addAttribute("listaAmigo", listaAmigo);
+		model.addAttribute("listaItem", listaItem);
+		model.addAttribute("l1", count(listaAmigo));
+		model.addAttribute("l2", count(listaItem));
 		return "/indexMembro";
 	}
 	
@@ -206,7 +222,7 @@ public class UserController {
 		return "/indexadmin";
 	}
 	@GetMapping(path="/indexgerente")
-	public String indexmembro(Model model ,Authentication authentication){
+	public String indexgerente(Model model ,Authentication authentication){
 		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
 		User u = m.getUser();
 		model.addAttribute("user", u);
@@ -254,5 +270,226 @@ public class UserController {
 		    counter++;
 		}
 		return counter;
+	}
+    
+    
+    //recomendacao
+    
+    public List<Ulikes> gerarLista(boolean amigo, int id) {
+		List<Ulikes> l = new ArrayList<Ulikes>(); 
+		Iterable<Avaliacao> la = avaliacaoRepository.findAll();
+		Map<Integer,Float> map = new HashMap<Integer,Float>();
+		if(amigo) {
+			Iterable<User> users = userRepository.findAll();
+			Iterable<Amizade> amgs = amizadeRepository.findAll();
+			List<Integer> lista = new ArrayList<Integer>();
+			boolean temamizade = false;
+			for(User u: users) {
+				temamizade = false;
+				if(u.getId()==id){
+					continue;
+				}
+				for(Amizade a: amgs) {
+					if((u.getId()==a.getIdUser1())&&(id==a.getIdUser2())||(u.getId()==a.getIdUser2())&&(id==a.getIdUser1())) {
+						temamizade = true;
+						break;
+					}
+				}
+				if(!temamizade){
+					lista.add(u.getId());
+				}
+			}
+			for(int i: lista) {
+				for(Avaliacao a: la) {
+					if(a.getIdUsuario()==i) {
+						map.put(a.getIdItem(), a.getNota());
+					}
+				}
+				Ulikes o = new Ulikes();
+				o.setIduser(i);
+				o.setLista(map);
+				l.add(o);
+				map.clear();
+			}
+		}else {
+			Iterable<User> users = userRepository.findAll();
+			for(User u : users) {
+				for(Avaliacao a: la) {
+					if(a.getIdUsuario()==u.getId()) {
+						map.put(a.getIdItem(), a.getNota());
+					}
+				}
+				Ulikes o = new Ulikes();
+				o.setIduser(u.getId());
+				o.setLista(map);
+				l.add(o);
+				map.clear();
+			}
+		}
+		return l;
+	}
+    public double sim_pearson(List<Ulikes> l,int a1, int a2) {
+		Map<Integer,Float> l1 = new HashMap<Integer,Float>();
+		Map<Integer,Float> l2 = new HashMap<Integer,Float>();
+		for(Ulikes u : l) {
+			if(a1==u.getIduser()) {
+				l1 = u.getLista();
+			}else if(a2==u.getIduser()) {
+				l2= u.getLista();
+			}
+			if(!l1.isEmpty() &&  !l2.isEmpty()){
+				break;
+			}
+		}
+		if(l1.isEmpty() ||  l2==null){
+			return -1;
+		}
+		Map<Integer,Integer> si = new HashMap<Integer,Integer>();
+		for(int i1 : l1.keySet() ) {
+			if(l2.containsKey(i1)) {
+				si.put(i1, 1);
+			}
+		}
+		if (si.isEmpty()) {
+			return 0;
+		}
+		int n = si.size();
+		
+		//soma
+		float sum1 = 0;
+		float sum2 = 0;
+		//soma das quadrados
+		float sum1sq = 0;
+		float sum2sq = 0;
+		//soma dos produtos
+		float psum = 0;
+		for(int i: si.keySet()){
+			if(l1.containsKey(i) || l2.containsKey(i)) {
+				sum1 += l1.get(i);
+				sum2 += l2.get(i);
+				sum1sq += Math.pow(l1.get(i), 2);
+				sum2sq += Math.pow(l2.get(i),2);
+				psum += l1.get(i)*l2.get(i);
+			}
+		}
+		double num = psum - ((sum1*sum2)/2);
+		double den = Math.sqrt((((sum1sq-Math.pow(sum1, 2))/n)*((sum2sq-Math.pow(sum2, 2))/n)));
+		if(den==0) {
+			return 0;
+		}
+		return num/den;
+	}
+    public List<User> topMatches(List<Ulikes> l,int a1) {
+		Map<Integer,Double> list = new HashMap<Integer,Double>();
+		double sim = 0;
+		
+		for(Ulikes other: l) {
+			if(other.getIduser()==a1) {
+				continue;
+			}
+			sim = sim_pearson(l,a1,other.getIduser());
+			if(sim<=0) {
+				sim = sim + 1;
+			}
+			list.put(other.getIduser(), sim);
+		}
+		
+		List<Entry<Integer, Double>> rank = new ArrayList<>(list.entrySet());
+		rank.sort(Entry.comparingByValue());
+		int val = rank.size();
+		if(rank.size()>=3) {
+			val = 3;
+		}
+		
+		List<Entry<Integer, Double>> rank2 = rank.subList(0, val);
+		List<User> rec = new ArrayList<User>();
+		User u = new User();
+		for(int i=0;i<rank2.size();i++) {
+			u = userRepository.getUserById(rank2.get(i).getKey());
+			if(u!=null) {
+				rec.add(u);	
+			}
+		}
+		return rec;
+	}
+	public List<Item> getRecomendation(List<Ulikes> l,int a1) {
+		Map<Integer,Float> l1 = new HashMap<Integer,Float>();
+		Map<Integer,Float> l2 = new HashMap<Integer,Float>();
+		Map<Integer,Double> totals = new HashMap<Integer,Double>();
+		Map<Integer,Double> simsums = new HashMap<Integer,Double>();
+		Map<Integer,Double> rank = new HashMap<Integer,Double>();
+		double v = 0;
+		for(Ulikes u : l) {
+			if(a1==u.getIduser()) {
+				l1 = u.getLista();
+				break;
+			}
+		}
+		for(Ulikes other: l) {
+			if(other.getIduser()==a1) {
+				continue;
+			}
+			double sim = sim_pearson(l,a1,other.getIduser());
+			if(sim<=0) {
+				continue;
+			}
+			l2 = other.getLista();
+			for(int item: l2.keySet()) {
+				if(!l1.containsKey(item)) {
+					if(!totals.containsKey(item)) {
+						totals.put(item,  1.0);
+					}
+					v = l2.get(item)*sim;
+					totals.replace(item, v);
+					if(!simsums.containsKey(item)) {
+						simsums.put(item, 0.00);
+					}
+					v = simsums.get(item) + sim;
+					simsums.put(item, v);
+					v=(totals.get(item)/simsums.get(item));
+				}
+			}
+		}
+		for(int item: totals.keySet()) {
+			rank.put(item,totals.get(item)/simsums.get(item));
+			
+		}
+		List<Entry<Integer, Double>> list = new ArrayList<>(rank.entrySet());
+		list.sort(Entry.comparingByValue());
+		Collections.reverse(list);
+		int val = list.size();
+		if(list.size()>=3) {
+			val = 3;
+		}
+		List<Entry<Integer, Double>> rank2 = list.subList(0, val);
+		List<Item> rec = new ArrayList<Item>();
+		Item u = new Item();
+		int x = 0;
+		for(int i=0;i<rank2.size();i++) {
+			v = rank2.get(i).getKey();
+			u = itemRepository.findById(x);
+			rec.add(u);
+		}
+		if(rec.isEmpty()) {
+			Set<Integer> itemv = new HashSet<Integer>();
+			for(Ulikes other: l) {
+				if(other.getIduser()==a1) {
+					itemv = other.getLista().keySet();
+				}
+			}
+			Iterable<Item> items = itemRepository.findAll();
+			Iterator<Item> it = items.iterator();
+			List<Item> rec2 = new ArrayList<Item>();
+			while (it.hasNext()) {
+				rec2.add(it.next());
+			}
+			val = rec2.size();
+			if(rec2.size()>=3) {
+				val = 3;
+			}
+			rec = rec2.subList(0, val);
+			
+		}
+		return rec;
 	}
 }	

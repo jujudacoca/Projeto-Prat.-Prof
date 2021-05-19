@@ -16,5 +16,6 @@ public interface AmizadeRepository extends CrudRepository<Amizade, Integer>{
 	@Query("SELECT a FROM Amizade a WHERE id_user2 = :id_user and estado = 's' ")
     public Iterable<Amizade> findSolicitacaoById(@Param("id_user") Integer id);
 	
+	
 	Amizade findById(int id);
 }

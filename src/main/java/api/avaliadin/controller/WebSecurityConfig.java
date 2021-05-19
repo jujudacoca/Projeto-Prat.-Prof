@@ -21,9 +21,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import api.avaliadin.details.UserDetailsServiceImpl;
 import api.avaliadin.model.User;
 import api.avaliadin.repository.UserRepository;
-import details.UserDetailsServiceImpl;
  
 @Configuration
 @EnableWebSecurity

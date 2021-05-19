@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import api.avaliadin.details.MyUserDetails;
 import api.avaliadin.model.*;
 import api.avaliadin.repository.ItemRepository;
 import api.avaliadin.repository.UserRepository;
-import details.MyUserDetails;
 
 @Controller
 @RequestMapping

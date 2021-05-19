@@ -7,6 +7,9 @@
 	<script th:if="${param.curtido}">
 		alert("Voce retirou a curtida");
 	</script>
+	<script th:if="${param.avaliado}">
+		alert("Você ja avaliou esta mídia!");
+	</script>
 	<!--  Caso seja um filme  -->
 	<div th:if="${Item.tipo=='F'}">
 		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>

@@ -12,5 +12,10 @@ public interface AvaliacaoRepository extends CrudRepository<Avaliacao, Integer> 
 	@Query("SELECT a FROM Avaliacao a WHERE id_usuario = :id_usuario")
     public Iterable<Avaliacao> findAllByIdUser(@Param("id_usuario") Integer id);
 	
+	@Query("select a from Avaliacao a where id_usuario = :id_usuario and id_item=:id_item")
+	public Avaliacao findByIds(@Param("id_usuario") Integer id2,@Param("id_item") Integer id);
+	
 	Avaliacao findById(int id);
+
+
 }

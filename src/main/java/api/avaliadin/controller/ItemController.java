@@ -59,7 +59,7 @@ public class ItemController {
 		    Date b = new Date();
 			u.setDtCad(b);
 		    livroRepository.save(u);
-		    return "redirect:/login";
+		    return "redirect:/indexmembro";
 		}
 		}
 	@GetMapping(path="/allLivro")
@@ -87,7 +87,7 @@ public class ItemController {
 		    Date b = new Date();
 			u.setDtCad(b);
 		    filmeRepository.save(u);
-		    return "redirect:/login";
+		    return "redirect:/indexmembro";
 		}
 	}
 	@GetMapping(path="/allFilme")
@@ -115,7 +115,7 @@ public class ItemController {
 		    Date b = new Date();
 			u.setDtCad(b);
 		    serieRepository.save(u);
-		    return "redirect:/login";
+		    return "redirect:/indexmembro";
 		
 		}
 		}

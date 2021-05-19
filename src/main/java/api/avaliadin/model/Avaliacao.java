@@ -23,7 +23,7 @@ public class Avaliacao {
 	private String descricao;
 	
 	@Column(name="nota")
-	private int nota;
+	private float nota;
 	
 	@Column(name="idItem")
 	private int idItem;
@@ -76,11 +76,11 @@ public class Avaliacao {
 		this.descricao = descricao;
 	}
 
-	public int getNota() {
+	public float getNota() {
 		return nota;
 	}
 
-	public void setNota(int nota) {
+	public void setNota(float nota) {
 		this.nota = nota;
 	}
 

@@ -4,6 +4,17 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	</head>
 	<body>
+			<ul>
+              <li>
+                <a th:href="@{/perfilmembro/{username}(username=${user.username})}">Pagina pessoal</a>
+              </li>
+              <li>
+                <a href="/cadastroItem">Cadastre um item</a>
+              </li>
+              <li >
+                <a href="/indexmembro" >solicitações de amizade e item sugeridos</a>
+              </li>
+            </ul>
 		<form th:action="@{/pesquisar}" method="post">
 	       		 	<label>Digite: </label>
 					<input type="text" name="pesquisa">
@@ -23,12 +34,63 @@
 	   		 	</form>
 	   		 	</br>
 	      </dt>
-	    </dl><
+	    </dl>
 		</div>
 		</br>
 		<h2>Recomendações de amizades</h2>
+		<div th:if="${l1==0}">
+	   		<p>Não há membros recomendados para você</p>
+	   	</div>
+	   	<div th:if="${l1!=0}">
+	   		<dl th:each="u : ${listaAmigo}">
+	      	<dt>
+				<p>Membro: <span th:text="${u.username}">Username</span></p>
+				<p>Nome: <span th:text="${u.nome}">Username</span></p>
+				<p>Cidade: <span th:text="${u.cidade}">Username</span> - <span th:text="${u.uf}">Username</span></p>
+				<a th:href="@{/perfilmembro/{username}(username=${u.username})}"><button>Visite a página do membro</button></a>
+	      		</br>
+	      </dt>
+	   	</div>
 		</br>
 		<h2>Recomendações de filmes</h2>
+			<div th:if="${l2==0}">
+	   		<p>Não há mídias recomendadas para você</p>
+	   	</div>
+	   	<div th:if="${l2!=0}">
+		<dl th:each="Item : ${listaItem}">
+	      	<dt>
+				<div th:if="${Item.tipo=='F'}">
+					<h4>Filme</h4>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></p>
+					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </p>
+					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span></br> </p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span></br> </p>
+				</div>
+				<!--  Caso seja um livro  -->
+				<div th:if="${Item.tipo=='L'}">
+					<h4>Livro</h4>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></p>
+					<p>Autor: <span th:text="${Item.autor}">Autor</span></br> </p>
+					<p>Editora: <span th:text="${Item.editora}">editora</span></br> </p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span></br> </p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span></br> </p>
+				</div>
+				<!--  Caso seja um serie  -->
+				<div th:if="${Item.tipo=='S'}">
+					<h4>Série</h4>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></p>
+					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </p>
+					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span></br> </p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span></br> </p>
+					<p>Num temp: <span th:text="${Item.numTemp}">numTemp</span></br> </p>
+				</div>
+				<a th:href="@{/paginaitem/{id}(id=${Item.id})}"><button>Visite a página da mídia</button></a>
+		      	</br>
+	      </dt>
+	    </dl>
+	    </div>
 	</body>
 	
 </html>

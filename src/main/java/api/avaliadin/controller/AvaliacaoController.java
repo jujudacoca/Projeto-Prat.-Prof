@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import api.avaliadin.details.MyUserDetails;
 import api.avaliadin.model.*;
 import api.avaliadin.repository.*;
-import details.MyUserDetails;
 
 @Controller
 @RequestMapping
@@ -47,20 +47,25 @@ public class AvaliacaoController {
 		String username = authentication.getName();
 		User t = userRepository.findByUsername(username);
 		Item p = itemRepository.findById(id);
+		Avaliacao b =  avaliacaoRepository.findByIds(t.getId(), p.getId());
+		if(b!=null) {
+			System.out.println("jÁ TEM");
+			return "redirect:/paginaitem/"+p.getId()+"?avaliado";
+		}
 		if(t!=null && p!=null) {
 			Avaliacao a = new Avaliacao();
 			a.setNota(nota);
 			a.setDescricao(descricao);
 			a.setIdUsuario(t.getId());
 			a.setIdItem(id);
-			Date b = new Date();
-			a.setDtCad(b);
+			Date D = new Date();
+			a.setDtCad(D);
 			a.setNumJoinha(0);
 			a.setUsername(username);
 			a.setTitulo(p.getTitulo());
 			avaliacaoRepository.save(a);
 		}
-		return "redirect:/allAval";
+		return "redirect:/paginaitem/"+p.getId();
 	}
 	
 	@GetMapping(path="/allAval")
