@@ -1,8 +1,8 @@
 package api.avaliadin.recomendation;
-import java.util.List;
+
 import java.util.Map;
 
-import api.avaliadin.model.Avaliacao;
+
 public class Ulikes {
 	private int iduser;
 	private Map<Integer,Float> lista;

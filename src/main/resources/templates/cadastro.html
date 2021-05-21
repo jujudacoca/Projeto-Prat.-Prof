@@ -90,7 +90,7 @@
 				document.cad.cidade.focus();
 				return false;
 			}
-			if(document.cad.uf.value==""){
+			if(document.cad.uf.value==""||document.cad.uf.value.length>2){
 				alert("Preencha o campo Estado, apenas UF!")		
 				document.cad.uf.focus();
 				return false;

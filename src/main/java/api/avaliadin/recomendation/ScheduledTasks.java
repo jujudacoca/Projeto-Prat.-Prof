@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
 import java.util.Map.Entry;
 
 import org.slf4j.Logger;
@@ -44,7 +44,7 @@ public class ScheduledTasks {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	@Scheduled(fixedDelay = 60000*120, initialDelay = 60000*10)
-	public void reportCurrentTime() {
+	public void atualizarecomendacao() {
 		log.info("The time is now {}", dateFormat.format(new Date()));
 		Iterable<User> users = userRepository.findAll();
 		Iterable<Avaliacao> la = avaliacaoRepository.findAll();
@@ -66,6 +66,10 @@ public class ScheduledTasks {
 			rp.save(r);
 		}
 	}
+	
+
+		
+		
 	
 	
 	public List<Ulikes> gerarLista( int id,Iterable<Avaliacao> la,Iterable<User> users,Iterable<Amizade> amgs) {

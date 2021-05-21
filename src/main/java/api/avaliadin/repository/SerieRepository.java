@@ -1,7 +1,5 @@
 package api.avaliadin.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.repository.CrudRepository;
 
 import api.avaliadin.model.Serie;

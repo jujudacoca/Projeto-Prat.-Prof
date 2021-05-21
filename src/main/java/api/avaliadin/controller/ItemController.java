@@ -1,10 +1,8 @@
 package api.avaliadin.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,10 +31,6 @@ public class ItemController {
 	private ItemRepository itemRepository;
 	@Autowired
 	private AvaliacaoRepository avaliacaoRepository;
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private ComentarioRepository comentarioRepository;
 	
 	@GetMapping("/cadastrolivro")
 	public String showCadastro(Livro livro) {

@@ -1,20 +1,24 @@
 package api.avaliadin.controller;
 
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.Map.Entry;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.entity.StandardEntityCollection;
+import org.jfree.chart.servlet.DisplayChart;
+import org.jfree.chart.servlet.ServletUtilities;
+import org.jfree.data.category.CategoryDataset;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -22,17 +26,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import api.avaliadin.details.MyUserDetails;
 import api.avaliadin.model.*;
-import api.avaliadin.recomendation.Ulikes;
+import api.avaliadin.recomendation.GraficoDeBarra;
+import api.avaliadin.recomendation.Ufc;
 import api.avaliadin.repository.AmizadeRepository;
 import api.avaliadin.repository.AvaliacaoRepository;
 import api.avaliadin.repository.ItemRepository;
@@ -58,7 +61,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/cadastro")
-	public String showCadastro(User user) {
+	public String showCadastro(User user) throws IOException {
 	    return "cadastro";
 	}
 	@PostMapping("/cadastro")
@@ -172,32 +175,46 @@ public class UserController {
 		model.addAttribute("listaAmizade", listaSoliAmizade);
 		List<User> listaAmigo = new ArrayList<User>();
 		List<Item> listaItem = new ArrayList<Item>();
-		int i = u.getId();
-		Recomendacao r = rp.recomendadoById(i);
-		//User u1 = userRepository.findById(r.getIduser1());
-		//if(u1!=null) {
-		//	listaAmigo.add(u1);
-		//}
-		User u2 = userRepository.findById(r.getIduser2());
-		if(u2!=null) {
-			listaAmigo.add(u2);
-		}
-		User u3 = userRepository.findById(r.getIduser3());
-		if(u3!=null) {
-			listaAmigo.add(u3);
+		Recomendacao r = rp.recomendadoById(u.getId());
+	
+		Iterable<User> users = userRepository.findAll();
+		Iterator<User> itu = users.iterator();
+		List<Integer> l1 = new ArrayList<Integer>();
+		l1.add(r.getIduser1());
+		l1.add(r.getIduser2());
+		l1.add(r.getIduser3());
+		int count = 0;
+		while(itu.hasNext()) {
+			User idt = itu.next();
+			for(int j = 0; j<3;j++) {
+				if(idt.getId()==l1.get(j)) {
+					listaAmigo.add(idt);
+					count++;
+				}
+			}
+			if(count>=3) {
+				break;
+			}
 		}
 		model.addAttribute("listaAmigo", listaAmigo);
-		Item i1 = itemRepository.findById(r.getIdItem1());
-		if(i1!=null) {
-			listaItem.add(i1);
-		}
-		Item i2 = itemRepository.findById(r.getIdItem2());
-		if(i2!=null) {
-			listaItem.add(i2);
-		}
-		Item i3 = itemRepository.findById(r.getIdItem3());
-		if(i3!=null) {
-			listaItem.add(i3);
+		Iterable<Item> items = itemRepository.findAll();
+		Iterator<Item> iti = items.iterator();
+		List<Integer> l2 = new ArrayList<Integer>();
+		l2.add(r.getIdItem1());
+		l2.add(r.getIdItem2());
+		l2.add(r.getIdItem3());
+		count = 0;
+		while(iti.hasNext()) {
+			Item idt = iti.next();
+			for(int j = 0; j<3;j++) {
+				if(idt.getId()==l2.get(j)) {
+					listaItem.add(idt);
+					count++;
+				}
+			}
+			if(count>=3) {
+				break;
+			}
 		}
 		model.addAttribute("listaItem", listaItem);
 		model.addAttribute("l1", count(listaAmigo));
@@ -251,7 +268,7 @@ public class UserController {
 		return "/indexadmin";
 	}
 	@GetMapping(path="/indexgerente")
-	public String indexgerente(Model model ,Authentication authentication){
+	public String indexgerente(Model model ,Authentication authentication,HttpServletRequest request, HttpServletResponse response) throws IOException{
 		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
 		User u = m.getUser();
 		model.addAttribute("user", u);
@@ -262,9 +279,30 @@ public class UserController {
 		Pageable top10 = PageRequest.of(0, 10);
 		List<User> listatop10 = userRepository.findByOrderByNumAmigosDesc(top10);
 		model.addAttribute("listatop10", listatop10);
+		
+		//gerar dados grafico
+		List<Ufc> lista = new ArrayList<Ufc>();
+		List<String> teste = userRepository.getCountUf();
+		System.out.println(teste.size());
+		for(int i = 0; i<teste.size();i++){
+			String msg = teste.get(i);
+			int j = msg.indexOf(",");
+			int valor = Integer.parseInt(msg.substring(j+1,msg.length()));
+			lista.add(new Ufc(msg.substring(0,j),valor));
+		}
+		
+		GraficoDeBarra grafico = new GraficoDeBarra();
+		CategoryDataset dataset = grafico.createDataSet(lista);
+		JFreeChart graficoBarra = grafico.createBarChart(dataset,lista.size());
+        String filename = ServletUtilities.saveChartAsPNG(graficoBarra, 500, 500, null,request.getSession());
+        String chartURL = request.getContextPath() + "/chart?filename="+filename;
+		model.addAttribute("makeline", chartURL);
 		return "/indexgerente";
 	}
-	
+	@Bean
+	public ServletRegistrationBean<DisplayChart> MyServlet() {
+		return new ServletRegistrationBean<>(new DisplayChart(),"/chart");
+	}
 	
 	@PostMapping("/deletarconta")
 	public String deleteUser(Authentication authentication) {
@@ -284,7 +322,7 @@ public class UserController {
     }
 	
 	@GetMapping(path="/all")
-	public @ResponseBody Iterable<User> getAllUsers() {
+	public @ResponseBody Iterable<User> getAllUsers() throws IOException {
 		return userRepository.findAll();
 	}
 	

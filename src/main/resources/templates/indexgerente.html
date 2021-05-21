@@ -15,7 +15,13 @@
 				<a th:href="@{/perfilmembro/{username}(username=${a.username})}"><button>Visite a página do membro</button></a>
 	      		</br>
 	    </dt>
+		
+		</dl>
+		<img th:src="${makeline}"
+			width=500 height=500 border=0 color=gray>
+	
 	</div>
+	
 	<div th:if="${user.role}=='ROLE USER'">
 		<h3> Você não tem acesso a essa página</h3>
 		<a th:href="@{/indexmembro}"><button>Visite a página do membro</button></a>

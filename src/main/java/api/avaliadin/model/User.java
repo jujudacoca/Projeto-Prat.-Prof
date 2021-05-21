@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity
 public class User {
 	
@@ -39,6 +40,7 @@ public class User {
 	
 	@Column(name="numAmigos")
 	private int numAmigos;
+	
 	
 	public int getNumAmigos() {
 		return numAmigos;

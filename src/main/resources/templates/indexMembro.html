@@ -20,11 +20,11 @@
 					<input type="text" name="pesquisa">
 	       		 	<input type="submit" value="pesquisar" />
 	   	</form>
-	   	</br>
+	   	<br>
 		<h2>Pedidos de amizade</h2>
 			<dl th:each="a : ${listaAmizade}">
 	      	<dt>
-				<p>Este membro quer ser seu amigo: <span th:text="${a.username1}">Username</span></br> </p>
+				<p>Este membro quer ser seu amigo: <span th:text="${a.username1}">Username</span><br> </p>
 	      		<a th:href="@{/perfilmembro/{username}(username=${a.username1})}"><button>Visite a página do membro</button></a>
 	      		<form th:action="@{/checaramizade(check='s',id=${a.id})}" method="post">
 	       		 	<input type="submit" value="aceitar amizade" />
@@ -32,11 +32,10 @@
 	   		 	<form th:action="@{/checaramizade(check='n',id=${a.id})}" method="post">
 	       		 	<input type="submit" value="recusar amizade" />
 	   		 	</form>
-	   		 	</br>
+	   		 	<br>
 	      </dt>
 	    </dl>
-		</div>
-		</br>
+		<br>
 		<h2>Recomendações de amizades</h2>
 		<div th:if="${l1==0}">
 	   		<p>Não há membros recomendados para você</p>
@@ -48,10 +47,12 @@
 				<p>Nome: <span th:text="${u.nome}">Username</span></p>
 				<p>Cidade: <span th:text="${u.cidade}">Username</span> - <span th:text="${u.uf}">Username</span></p>
 				<a th:href="@{/perfilmembro/{username}(username=${u.username})}"><button>Visite a página do membro</button></a>
-	      		</br>
+	      		<br>
+	      	
 	      </dt>
+	      </dl>
 	   	</div>
-		</br>
+		<br>
 		<h2>Recomendações de filmes</h2>
 			<div th:if="${l2==0}">
 	   		<p>Não há mídias recomendadas para você</p>
@@ -61,33 +62,33 @@
 	      	<dt>
 				<div th:if="${Item.tipo=='F'}">
 					<h4>Filme</h4>
-					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></p>
-					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </p>
-					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </p>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span><br></p>
+					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span><br> </p>
+					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span><br> </p>
 					<p>Pais: <span th:text="${Item.pais}">pais</span></br> </p>
 					<p>Ano: <span th:text="${Item.ano}">ano</span></br> </p>
 				</div>
 				<!--  Caso seja um livro  -->
 				<div th:if="${Item.tipo=='L'}">
 					<h4>Livro</h4>
-					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></p>
-					<p>Autor: <span th:text="${Item.autor}">Autor</span></br> </p>
-					<p>Editora: <span th:text="${Item.editora}">editora</span></br> </p>
-					<p>Pais: <span th:text="${Item.pais}">pais</span></br> </p>
-					<p>Ano: <span th:text="${Item.ano}">ano</span></br> </p>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span><br></p>
+					<p>Autor: <span th:text="${Item.autor}">Autor</span><br> </p>
+					<p>Editora: <span th:text="${Item.editora}">editora</span><br> </p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span><br> </p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span><br> </p>
 				</div>
 				<!--  Caso seja um serie  -->
 				<div th:if="${Item.tipo=='S'}">
 					<h4>Série</h4>
-					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></p>
-					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </p>
-					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </p>
-					<p>Pais: <span th:text="${Item.pais}">pais</span></br> </p>
-					<p>Ano: <span th:text="${Item.ano}">ano</span></br> </p>
-					<p>Num temp: <span th:text="${Item.numTemp}">numTemp</span></br> </p>
+					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span><br></p>
+					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span><br> </p>
+					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span><br> </p>
+					<p>Pais: <span th:text="${Item.pais}">pais</span><br> </p>
+					<p>Ano: <span th:text="${Item.ano}">ano</span><br> </p>
+					<p>Num temp: <span th:text="${Item.numTemp}">numTemp</span><br> </p>
 				</div>
 				<a th:href="@{/paginaitem/{id}(id=${Item.id})}"><button>Visite a página da mídia</button></a>
-		      	</br>
+		      	<br>
 	      </dt>
 	    </dl>
 	    </div>

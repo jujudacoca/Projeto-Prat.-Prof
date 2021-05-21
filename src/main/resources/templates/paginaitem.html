@@ -12,36 +12,36 @@
 	</script>
 	<!--  Caso seja um filme  -->
 	<div th:if="${Item.tipo=='F'}">
-		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>
-		<h3>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </h3>
-		<h3>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </h3>
-		<h3>Pais: <span th:text="${Item.pais}">pais</span></br> </h3>
-		<h3>Ano: <span th:text="${Item.ano}">ano</span></br> </h3>
+		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span><br></h1>
+		<h3>Diretor: <span th:text="${Item.diretor}">Diretor</span><br> </h3>
+		<h3>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span><br> </h3>
+		<h3>Pais: <span th:text="${Item.pais}">pais</span><br> </h3>
+		<h3>Ano: <span th:text="${Item.ano}">ano</span><br> </h3>
 	</div>
 	<!--  Caso seja um livro  -->
 	<div th:if="${Item.tipo=='L'}">
-		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>
-		<h3>Autor: <span th:text="${Item.autor}">Autor</span></br> </h3>
-		<h3>Editora: <span th:text="${Item.editora}">editora</span></br> </h3>
-		<h3>Pais: <span th:text="${Item.pais}">pais</span></br> </h3>
-		<h3>Ano: <span th:text="${Item.ano}">ano</span></br> </h3>
+		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span><br></h1>
+		<h3>Autor: <span th:text="${Item.autor}">Autor</span><br> </h3>
+		<h3>Editora: <span th:text="${Item.editora}">editora</span><br> </h3>
+		<h3>Pais: <span th:text="${Item.pais}">pais</span><br> </h3>
+		<h3>Ano: <span th:text="${Item.ano}">ano</span><br> </h3>
 	</div>
 	<!--  Caso seja um serie  -->
 	<div th:if="${Item.tipo=='S'}">
-		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span></br></h1>
-		<h3>Diretor: <span th:text="${Item.diretor}">Diretor</span></br> </h3>
-		<h3>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span></br> </h3>
-		<h3>Pais: <span th:text="${Item.pais}">pais</span></br> </h3>
-		<h3>Ano: <span th:text="${Item.ano}">ano</span></br> </h3>
-		<h3>Num temp: <span th:text="${Item.numTemp}">numTemp</span></br> </h3>
+		<h1>Titulo: <span th:text="${Item.titulo}">Titulo</span><br></h1>
+		<h3>Diretor: <span th:text="${Item.diretor}">Diretor</span><br> </h3>
+		<h3>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span><br> </h3>
+		<h3>Pais: <span th:text="${Item.pais}">pais</span><br> </h3>
+		<h3>Ano: <span th:text="${Item.ano}">ano</span><br> </h3>
+		<h3>Num temp: <span th:text="${Item.numTemp}">numTemp</span><br> </h3>
 	</div>
-	</br>
+	<br>
 	<a th:href="@{/criaAvaliacao(id=${Item.id})}"><button>Criar avaliação para este filme</button></a>
 	
-	</br></br></br>
+	<br><br><br>
 	<div>
 	<h3>Avaliações</h3>
-		<dl th:each="a : ${listaAvaliacao}">
+	<dl th:each="a : ${listaAvaliacao}">
       	<dt>
 			<p>Membro: <span th:text="${a.username}">Username</span><br> </p>
 			<p>Joinha: <span th:text="${a.numJoinha}">numJoinha</span></p>

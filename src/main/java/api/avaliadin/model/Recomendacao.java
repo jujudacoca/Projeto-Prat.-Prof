@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Entity;
 
 @Entity
@@ -15,12 +14,9 @@ public class Recomendacao {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@OneToOne(mappedBy = "id")
-	private User idUser;
+	@Column(name="id_user")
+	private int idUser;
 	
-	public void setIdUser(User idUser) {
-		this.idUser = idUser;
-	}
 	@Column(name="id_user1")
 	private int iduser1;
 	@Column(name="idUser2")
@@ -75,6 +71,12 @@ public class Recomendacao {
 	}
 	public void setIdItem3(int idItem3) {
 		this.idItem3 = idItem3;
+	}
+	public int getIdUser() {
+		return idUser;
+	}
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
 	}
 	
 	
