@@ -136,7 +136,7 @@ public class ItemController {
 				}
 				Iterable<Avaliacao> listaAvaliacao = avaliacaoRepository.findAllByIdItem(id);
 				model.addAttribute("listaAvaliacao", listaAvaliacao);
-				return "/paginaitem";
+				return "paginaitem";
 			}
 		}
 			return "redirect:/indexMembro?itemnotfound";//implementar essa excessão ainda 

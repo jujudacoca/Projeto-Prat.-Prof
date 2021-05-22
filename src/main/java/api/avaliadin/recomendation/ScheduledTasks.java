@@ -52,17 +52,19 @@ public class ScheduledTasks {
 		Iterable<Item> items = itemRepository.findAll();
 		rp.deleteAll();
 		List<Ulikes> listaTotal = gerarListaTotal(); 
+		System.out.println();
 		for(User u: users) {
+			System.out.println(u.getId());
 			List<Integer> listaAmigo = topMatches(gerarLista(u.getId(),la,users,amgs),u.getId());
 			List<Integer> listaItem = getRecomendation(listaTotal,u.getId(),items);
 			Recomendacao r = new Recomendacao();
 			r.setIdUser(u.getId());
-			r.setIduser1(listaAmigo.get(0));
-			r.setIduser2(listaAmigo.get(1));
-			r.setIduser3(listaAmigo.get(2));
-			r.setIdItem1(listaItem.get(0));
-			r.setIdItem2(listaItem.get(1));
-			r.setIdItem3(listaItem.get(2));
+			if(listaAmigo.size()==1) {r.setIduser1(listaAmigo.get(0));}
+			if(listaAmigo.size()==2) {r.setIduser2(listaAmigo.get(1));}
+			if(listaAmigo.size()==3) {r.setIduser3(listaAmigo.get(2));}
+			if(listaItem.size()==1) {r.setIdItem1(listaItem.get(0));}
+			if(listaItem.size()==2) {r.setIdItem2(listaItem.get(1));}
+			if(listaItem.size()==3) {r.setIdItem3(listaItem.get(2));}
 			rp.save(r);
 		}
 	}

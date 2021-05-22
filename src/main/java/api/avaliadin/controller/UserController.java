@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.jfree.chart.ChartRenderingInfo;
+
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.servlet.DisplayChart;
 import org.jfree.chart.servlet.ServletUtilities;
 import org.jfree.data.category.CategoryDataset;
@@ -32,8 +32,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import api.avaliadin.details.MyUserDetails;
-import api.avaliadin.model.*;
+import api.avaliadin.model.Amizade;
+import api.avaliadin.model.Avaliacao;
+import api.avaliadin.model.Item;
+import api.avaliadin.model.Recomendacao;
+import api.avaliadin.model.User;
 import api.avaliadin.recomendation.GraficoDeBarra;
 import api.avaliadin.recomendation.Ufc;
 import api.avaliadin.repository.AmizadeRepository;
@@ -164,7 +169,7 @@ public class UserController {
 			}
 			
 		}
-		return "/perfilMembro";
+		return "perfilMembro";
 	}
 	@GetMapping(path="/indexmembro")
 	public String pagRecomendacao(Model model,Authentication authentication) {
@@ -176,50 +181,55 @@ public class UserController {
 		List<User> listaAmigo = new ArrayList<User>();
 		List<Item> listaItem = new ArrayList<Item>();
 		Recomendacao r = rp.recomendadoById(u.getId());
-	
-		Iterable<User> users = userRepository.findAll();
-		Iterator<User> itu = users.iterator();
-		List<Integer> l1 = new ArrayList<Integer>();
-		l1.add(r.getIduser1());
-		l1.add(r.getIduser2());
-		l1.add(r.getIduser3());
-		int count = 0;
-		while(itu.hasNext()) {
-			User idt = itu.next();
-			for(int j = 0; j<3;j++) {
-				if(idt.getId()==l1.get(j)) {
-					listaAmigo.add(idt);
-					count++;
+		
+		if(r!=null) {
+			Iterable<User> users = userRepository.findAll();
+			Iterator<User> itu = users.iterator();
+			List<Integer> l1 = new ArrayList<Integer>();
+			l1.add(r.getIduser1());
+			l1.add(r.getIduser2());
+			l1.add(r.getIduser3());
+			int count = 0;
+			while(itu.hasNext()) {
+				User idt = itu.next();
+				for(int j = 0; j<3;j++) {
+					if(idt.getId()==l1.get(j)) {
+						listaAmigo.add(idt);
+						count++;
+					}
+				}
+				if(count>=3) {
+					break;
 				}
 			}
-			if(count>=3) {
-				break;
+		
+			
+			Iterable<Item> items = itemRepository.findAll();
+			Iterator<Item> iti = items.iterator();
+			List<Integer> l2 = new ArrayList<Integer>();
+			l2.add(r.getIdItem1());
+			l2.add(r.getIdItem2());
+			l2.add(r.getIdItem3());
+			count = 0;
+			while(iti.hasNext()) {
+				Item idt = iti.next();
+				for(int j = 0; j<3;j++) {
+					if(idt.getId()==l2.get(j)) {
+						listaItem.add(idt);
+						count++;
+					}
+				}
+				if(count>=3) {
+					break;
+				}
 			}
+
 		}
 		model.addAttribute("listaAmigo", listaAmigo);
-		Iterable<Item> items = itemRepository.findAll();
-		Iterator<Item> iti = items.iterator();
-		List<Integer> l2 = new ArrayList<Integer>();
-		l2.add(r.getIdItem1());
-		l2.add(r.getIdItem2());
-		l2.add(r.getIdItem3());
-		count = 0;
-		while(iti.hasNext()) {
-			Item idt = iti.next();
-			for(int j = 0; j<3;j++) {
-				if(idt.getId()==l2.get(j)) {
-					listaItem.add(idt);
-					count++;
-				}
-			}
-			if(count>=3) {
-				break;
-			}
-		}
 		model.addAttribute("listaItem", listaItem);
 		model.addAttribute("l1", count(listaAmigo));
 		model.addAttribute("l2", count(listaItem));
-		return "/indexMembro";
+		return "indexMembro";
 	}
 	
 	
@@ -265,7 +275,7 @@ public class UserController {
 		Iterable<Item> listaItem = itemRepository.findAllStateFalse();
 		model.addAttribute("listaItem", listaItem);
 		model.addAttribute("l2", count(listaItem));
-		return "/indexadmin";
+		return "indexadmin";
 	}
 	@GetMapping(path="/indexgerente")
 	public String indexgerente(Model model ,Authentication authentication,HttpServletRequest request, HttpServletResponse response) throws IOException{
