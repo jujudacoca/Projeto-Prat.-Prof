@@ -41,6 +41,8 @@ public class User {
 	@Column(name="numAmigos")
 	private int numAmigos;
 	
+	@Column(name="numJoinha")
+	private int numJoinha;
 	
 	public int getNumAmigos() {
 		return numAmigos;
@@ -133,6 +135,13 @@ public class User {
 	public String toString() {
 		String msg = "Nome: " + this.nome + "Username: " + this.username;
 		return msg;
+	}
+	public int getNumJoinha() {
+		return numJoinha;
+	}
+
+	public void setNumJoinha(int numJoinha) {
+		this.numJoinha = numJoinha;
 	}
 
 

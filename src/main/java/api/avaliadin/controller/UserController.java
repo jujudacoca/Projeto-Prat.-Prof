@@ -91,6 +91,7 @@ public class UserController {
 		    u.setNome(nome);
 		    u.setCidade(cidade);
 		    u.setUf(uf);
+		    u.setNumJoinha(0);
 		    SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
 		    if(dtNasc!="") {
 		    	Date d = formatter.parse(dtNasc);
@@ -141,7 +142,7 @@ public class UserController {
 	}
 	
 	@GetMapping(path="/perfilmembro/{username}")
-	public String pagItem(@PathVariable String username, Model model,Authentication authentication) {
+	public String pagMembro(@PathVariable String username, Model model,Authentication authentication) {
 		String username_ = authentication.getName();
 		User u = userRepository.findByUsername(username);
 		if(u!=null) {

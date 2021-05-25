@@ -34,24 +34,23 @@ body, html {
 
 /*---------------------------------------------*/
 a {
-	font-family: OpenSans-Regular;
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
-	transition: all 0.4s;
-	-webkit-transition: all 0.4s;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #fff;
+  margin: 0px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
 }
 
 a:focus {
-	outline: none !important;
+  outline: none !important;
 }
 
 a:hover {
-	text-decoration: none;
-  color: #fff;
+  text-decoration: none;
+  color: #000;
 }
 
 /*---------------------------------------------*/
@@ -138,7 +137,6 @@ iframe {
   font-family: OpenSans-Regular;
   font-size: 13px;
   line-height: 1.4;
-  color: #cccccc;
 }
 
 
@@ -163,11 +161,11 @@ iframe {
   align-items: center;
   padding: 15px;
 
-  background: #FF8C00;
-  background: -webkit-linear-gradient(left, #800080, #FF8C00);
-  background: -o-linear-gradient(left, #800080, #FF8C00);
-  background: -moz-linear-gradient(left, #800080, #FF8C00);
-  background: linear-gradient(left, #800080, #FF8C00);
+  background: #FF9A1F;
+  background: -webkit-linear-gradient(left, #A300A3, #FF9A1F);
+  background: -o-linear-gradient(left, #A300A3, #FF9A1F);
+  background: -moz-linear-gradient(left, #A300A3, #FF9A1F);
+  background: linear-gradient(left, #A300A3, #FF9A1F);
 
 }
 
@@ -197,7 +195,6 @@ iframe {
   font-size: 30px;
   color: #fefefe;
   line-height: 1.2;
-  text-transform: uppercase;
   text-align: center;
 }
 
@@ -328,6 +325,7 @@ input.input100 {
   border-bottom-right-radius: 12px;
   overflow: hidden;
   background: #111111;
+  opacity: 1;
 
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -337,34 +335,9 @@ input.input100 {
   z-index: 1;
 }
 
-.login100-form-btn::before {
-  content: "";
-  display: block;
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-
-  background: #FF8C00;
-  background: -webkit-linear-gradient(right, #800080, #FF8C00);
-  background: -o-linear-gradient(right, #800080, #FF8C00);
-  background: -moz-linear-gradient(right, #800080, #FF8C00);
-  background: linear-gradient(right, #800080, #FF8C00);
-
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  transition: all 0.4s;
-}
-
 .login100-form-btn:hover {
-  background-color: transparent;
+  opacity: 0.75;
 }
-.login100-form-btn:hover:before {
-  opacity: 1;
-}
-
 
 
 /*------------------------------------------------------------------
@@ -379,7 +352,6 @@ input.input100 {
 }
 
 .alert-validate::before {
-  content: attr(data-validate);
   position: absolute;
   z-index: 100;
   max-width: 70%;
@@ -412,12 +384,12 @@ input.input100 {
 }
 
 .alert-validate::after {
-  content: "\f12a";
+  content: "\f00d";
   font-family: FontAwesome;
   display: block;
   position: absolute;
   z-index: 110;
-  color: #c80000;
+  color: #dc3545;
   font-size: 16px;
   top: 50%;
   -webkit-transform: translateY(-50%);

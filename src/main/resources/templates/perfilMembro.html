@@ -9,6 +9,8 @@
 		</script>
 		<h1><span th:text="${user.username}">username</span></h1>
 		
+		<h3><span th:text="${user.numJoinha}">Num curtidas</span></h3>
+		
 		</br></br>
 		<div th:if="${membro=='eu'}">
 			<a href="/alterarCadastro"><button>Alterar Dados de cadastro</button></a>

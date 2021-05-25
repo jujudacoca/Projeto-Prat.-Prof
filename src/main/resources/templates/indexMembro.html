@@ -46,6 +46,7 @@
 				<p>Membro: <span th:text="${u.username}">Username</span></p>
 				<p>Nome: <span th:text="${u.nome}">Username</span></p>
 				<p>Cidade: <span th:text="${u.cidade}">Username</span> - <span th:text="${u.uf}">Username</span></p>
+				<p><span th:text="${u.numJoinha}">Num curtidas</span></p>
 				<a th:href="@{/perfilmembro/{username}(username=${u.username})}"><button>Visite a página do membro</button></a>
 	      		<br>
 	      	

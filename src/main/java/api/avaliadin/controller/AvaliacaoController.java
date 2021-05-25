@@ -80,7 +80,9 @@ public class AvaliacaoController {
 		Joinha j = joinhaRepository.existeJoinha(t.getId(), a.getId());
 		if(j!=null) {
 			joinhaRepository.delete(j);
-			a.setNumJoinha(a.getNumJoinha()-1);
+			int y = a.getNumJoinha()-1;
+			a.setNumJoinha(y);
+			avaliacaoRepository.save(a);
 			if(ind.equals("pgitem")) {
 				return "redirect:/paginaitem/"+a.getIdItem()+"?curtido";
 			}else if(ind.equals("pgmembro")) {
@@ -115,6 +117,7 @@ public class AvaliacaoController {
 		c.setDescricao(comentario);
 		c.setIdAvaliacao(a.getId());
 		c.setIdUsuario(t.getId());
+		c.setUsername(t.getUsername());
 		comentarioRepository.save(c);
 		if(ind.equals("pgitem")) {
 			return "redirect:/paginaitem/"+a.getIdItem();

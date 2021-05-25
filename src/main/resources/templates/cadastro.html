@@ -1,157 +1,111 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<style>
-			body {
-		        margin: 0px
-		    }
-		    p{
-		    	margin-bottom: 0px;
-		    	margin-top: 1.2vw;
-		    }
-		    .container {
-		    	background-color: #D1EEEE;
-		        width: 100vw;
-		        height: 100vh;
-		        position: relative;
-		        display: flex;
-		        flex-direction: row;
-		        justify-content: center;
-		        align-items: center;
-		    }
-		    form{
-		    	text-align: center;
-		    	border-style: solid;
-				border-width: .3vh;
-				border-color: #000;
-				padding: 2vw;
-		    }
-		    .box {
-		    	position: absolute;
-		        width: 38vw;
-		        height: 65vh;
-		        background: #fff;
-		        padding: 1.6em;
-		    }
-			.titleForm{
-				margin-top: 0;
-				margin-bottom: 0.5vw;
-				font-size: 2vw;
-				font-family: 'helvetica';
-				text-align: center;
-			}
-			.textForm{
-				font-size: 1.5vw;
-				font-family: 'helvetica';
-				float: left;
-				margin-top: 1.2vw;
-			}
-			.btnForm{
-				font-size: 1.4vw;
-				padding-right: 2em;
-				padding-left: 2em;
-				margin-top: 1vw;
-				border-radius: 8px;
-				margin-bottom: 0%;
-			}
-			.inpForm{
-				font-size: 1.4vw;
-				font-family: 'helvetica';
-				float: right;
-				margin-top: 1vw;
-			}
-			
-		</style>
-		<script language="JavaScript" >
-		function enviardados(){
-			if(document.cad.username.value==""||document.cad.username.value.length<5){
-				alert("Preencha o campo username corretamente, necessário mais que 5 digitos!")		
-				document.cad.username.focus();
-				return false;
-			}
-			if(document.cad.nome.value==""){
-				alert("Preencha o campo nome!")		
-				document.cad.nome.focus();
-				return false;
-			}
-			if(document.cad.senha.value==""||document.cad.senha.value.length<5){
-				alert("Preencha o campo senha corretamente, necessário 5 digitos!")		
-				document.cad.senha.focus();
-				return false;
-			}
-			if(document.cad.dtNasc.value==""){
-				alert("Preencha a data de nascimento!")		
-				document.cad.dtNasc.focus();
-				return false;
-			}
-			if(document.cad.cidade.value==""){
-				alert("Preencha o campo cidade!")		
-				document.cad.cidade.focus();
-				return false;
-			}
-			if(document.cad.uf.value==""||document.cad.uf.value.length>2){
-				alert("Preencha o campo Estado, apenas UF!")		
-				document.cad.uf.focus();
-				return false;
-			}
-			document.cad.uf.value.toUpperCase();
-			return true
-		}
-		</script>
-		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Cadastro</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/image/css/my-login.css">
+		<link rel="stylesheet" type="text/css" href="/image/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="/image/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 	</head>
-	<body>
-		<div class="container">
-		  <div class="box">
-		  	<p class = 'titleForm'>Cadastro de usuário</p>
-		    <form action="#" th:action="@{/cadastro}" method="post" name="cad" onSubmit="return enviardados();" >
-				<p>
-					<label class = 'textForm'>Nome completo:</label>
-					<input type="text" class = 'inpForm' name="nome">
-				</p>
-				<br>
-				<br>
-				<p>
-					<label class = 'textForm'>Username: </label>
-					<input type="text" class = 'inpForm' name="username">
-				</p>
-				<br>
-				<br>
-				<p>
-					<label class = 'textForm'>Senha: </label>
-					<input type="password" class = 'inpForm' name="senha">
-				</p>
-				<br>
-				<br>
-				<p>
-					<label class = 'textForm'>Data de nascimento: </label>
-					<input type="date" class = 'inpForm' name="dtNasc">
-				</p>
-				<br>
-				<br>
-				<p>
-					<label class = 'textForm'>Estado (UF): </label>
-					<input type="text" class = 'inpForm' name="uf" placeholder="SP">
-				</p>
-				<br>
-				<br>
-				<p>
-					<label class = 'textForm'>Cidade: </label>
-					<input type="text" class = 'inpForm' name="cidade">
-				</p>
-				<br>
-				<br>
-				<p>
-					<input type = 'submit' value = 'cadastrar' class = 'btnForm' name = 'btnCadastro'>
-				</p>
+	<body class="my-login-page">
+		<section class="h-100">
+			<div class="container h-100">
+				<div class="row justify-content-md-center h-100">
+					<div class="card-wrapper">
+						<div class="brand">
+							<img src="/image/img/logo.jpg" alt="bootstrap 4 login page">
+						</div>
+						<div class="card fat">
+							<div class="card-body">
+								<h4 class="card-title">Criar Cadastro</h4>
+								<form method="POST" class="my-login-validation" novalidate="" th:action="@{/cadastro}">
+									<div class="form-group">
+										<label>Nome completo: </label>
+										<input type="text" class="form-control" name="nome" required autofocus>
+									</div>
 
-			</form>
-				<div th:if="${param.error}" class="inpForm" >    
-              		Username ja utilizado
-         		</div>
-		  </div>
-		</div>
-	
+									<div class="form-group">
+										<label>Data de nascimento: </label>
+										<input type="date" class="form-control" name="dtNasc" required>
+									</div>
+
+									<div class="form-group">
+										<label>Estado (UF): </label>
+										<select type = "text" class = "form-control" name = "uf" required>
+											<option value = "">Selecione</option>
+											<option value = "AC">Acre</option>
+											<option value = "AL">Alagoas</option>
+											<option value = "AP">Amapá</option>
+											<option value = "AM">Amazonas</option>
+											<option value = "BA">Bahia</option>
+											<option value = "CE">Ceará</option>
+											<option value = "DF">Distrito Federal</option>
+											<option value = "ES">Espírito Santo</option>
+											<option value = "GO">Goiás</option>
+											<option value = "MA">Maranhão</option>
+											<option value = "MT">Mato Grosso</option>
+											<option value = "MS">Mato Groso do Sul</option>
+											<option value = "MG">Minas Gerais</option>
+											<option value = "PA">Pará</option>
+											<option value = "PB">Paraíba</option>
+											<option value = "PR">Paraná</option>
+											<option value = "PE">Pernambuco</option>
+											<option value = "PI">Piauí</option>
+											<option value = "RJ">Rio de Janeiro</option>
+											<option value = "RN">Rio Grande do Norte</option>
+											<option value = "RS">Rio Grande do Sul</option>
+											<option value = "RO">Rondônia</option>
+											<option value = "RR">Roraima</option>
+											<option value = "SC">Santa Catarina</option>
+											<option value = "SP">São Paulo</option>
+											<option value = "SE">Sergipe</option>
+											<option value = "TO">Tocantins</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label>Cidade: </label>
+										<input type="text" class="form-control" name="cidade" required>
+									</div>
+
+									<div class="form-group">
+										<label>Username: </label>
+										<input type="text" class="form-control" name="username" required>
+									</div>
+									<div class="form-group">
+										<label>Senha: </label>
+										<input type="password" class="form-control" name="senha" required data-eye>
+									</div>
+
+									<div class="form-group m-0">
+										<button type="submit" class="btn btn-primary btn-block">
+											SALVAR
+										</button>
+									</div>
+
+									<!--FAZER O LINK PARA A TELA DE LOGIN-->
+
+									<div class="mt-4 text-center">
+										<a href = "/login">Já tem uma conta? Faça o login!</a>
+									</div>
+
+									<!--LINK-->
+
+								</form>
+							</div>
+						</div>
+						<div class="footer">
+							Copyright &copy; 2021 &mdash; Isabela, Juliano e Leonardo 
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="/image/js/my-login.js"></script>
 	</body>
 </html>

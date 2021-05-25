@@ -59,13 +59,21 @@ public class ScheduledTasks {
 			List<Integer> listaItem = getRecomendation(listaTotal,u.getId(),items);
 			Recomendacao r = new Recomendacao();
 			r.setIdUser(u.getId());
-			if(listaAmigo.size()==1) {r.setIduser1(listaAmigo.get(0));}
-			if(listaAmigo.size()==2) {r.setIduser2(listaAmigo.get(1));}
-			if(listaAmigo.size()==3) {r.setIduser3(listaAmigo.get(2));}
-			if(listaItem.size()==1) {r.setIdItem1(listaItem.get(0));}
-			if(listaItem.size()==2) {r.setIdItem2(listaItem.get(1));}
-			if(listaItem.size()==3) {r.setIdItem3(listaItem.get(2));}
+			if(listaAmigo.size()>=1) {r.setIduser1(listaAmigo.get(0));}
+			if(listaAmigo.size()>=2) {r.setIduser2(listaAmigo.get(1));}
+			if(listaAmigo.size()>=3) {r.setIduser3(listaAmigo.get(2));}
+			if(listaItem.size()>=1) {r.setIdItem1(listaItem.get(0));}
+			if(listaItem.size()>=2) {r.setIdItem2(listaItem.get(1));}
+			if(listaItem.size()>=3) {r.setIdItem3(listaItem.get(2));}
 			rp.save(r);
+			int count = 0;
+			for(Avaliacao a: la) {
+				if(u.getId()==a.getIdUsuario()) {
+					count+= a.getNumJoinha();
+				}
+			}
+			u.setNumJoinha(count);
+			userRepository.save(u);
 		}
 	}
 	
