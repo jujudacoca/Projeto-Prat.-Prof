@@ -2,31 +2,85 @@
 <html xmlns:th="https://www.thymeleaf.org">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Cadastro de série</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/image/css/my-login.css">
+		<link rel="stylesheet" type="text/css" href="/image/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="/image/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 	</head>
-	<body>
-		<form action="#" th:action="@{/cadastroSerie}" method="post" name="cadSerie" >
-		<label>Titulo:</label>
-		<input type="text" name="titulo">
-		</br>
-		<label>Diretor:</label>
-		<input type="text" name="diretor" >
-		</br>
-		<label>Elenco Principal:</label>
-		<input type="text" name="elenco" placeholder="João Paulo, Felipe Silva">
-		</br>
-		<label>Ano de lançamento :</label>
-		<input type="text" name="ano">
-		</br>
-		<label>Pais:</label>
-		<input type="text" name="pais">	
-		</br>
-		<label>Numero de Temporadas:</label>
-		<input type="number" name="numTemp" min="1" max="99">
-		</br>
-		<input type = 'submit' value = 'cadastrar'>
-		</form>
+	<body class="my-login-page">
+		<section class="h-100">
+			<div class="container h-100">
+				<div class="row justify-content-md-center h-100">
+					<div class="card-wrapper">
+						<div class="brand">
+							<img src="/image/img/logo.jpg" alt="bootstrap 4 login page">
+						</div>
+						<div class="card fat">
+							<div class="card-body">
+								<h4 class="card-title">Cadastrar nova série</h4>
+								<h5 class="card-title">Como funciona? Você envia a sugestão de cadastro de série e nossa equipe avalia assim que possível, o que nos ajuda a sempre manter nosso site atualizado!</h5>
+								<form action="#" th:action="@{/cadastroSerie}" method="post" name="cadSerie" class="my-login-validation" novalidate="">
+									<div class="form-group">
+										<label>Título: </label>
+										<input type="text" class="form-control" name="titulo" required autofocus>
+									</div>
+
+									<div class="form-group">
+										<label>Diretor: </label>
+										<input type="text" class="form-control" name="diretor" required>
+									</div>
+
+									<div class="form-group">
+										<label>Elenco principal: </label>
+										<input type="text" class="form-control" name="elenco" required>
+									</div>
+
+									<div class="form-group">
+										<label>Ano de lançamento: </label>
+										<input type="text" class="form-control" name="ano" required>
+									</div>
+									
+									<div class="form-group">
+										<label>País: </label>
+										<input type="text" class="form-control" name="pais" required>
+									</div>
+									
+									<div class="form-group">
+										<label>Quantidade de temporadas: </label>
+										<input type="text" class="form-control" name="numTemp" min="1" max="99" required>
+									</div>
+
+									<div class="form-group m-0">
+										<button type="submit" class="btn btn-primary btn-block">
+											ENVIAR
+										</button>
+									</div>
+
+									<!--FAZER O LINK PARA A TELA DE LOGIN-->
+
+									<div class="mt-4 text-center">
+										<a href = "/indexmembro">A série já está cadastrado? Avalie-a!</a>
+									</div>
+
+									<!--LINK-->
+
+								</form>
+							</div>
+						</div>
+						<div class="footer">
+							Copyright &copy; 2021 &mdash; Isabela, Juliano e Leonardo 
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 		<script th:if="${param.error}" >    
-              	alert("serie ja cadastrado");
+              	alert("série ja cadastrado");
         </script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="/image/js/my-login.js"></script>
 	</body>
 </html>
