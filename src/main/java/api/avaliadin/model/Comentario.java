@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Comentario {
@@ -18,16 +20,25 @@ public class Comentario {
 		this.id = id;
 	}
 
+	/**
 	public Integer getIdAvaliacao() {
 		return idAvaliacao;
 	}
 
 	public void setIdAvaliacao(Integer idAvaliacao) {
 		this.idAvaliacao = idAvaliacao;
-	}
+	}**/
 
 	public Integer getIdUsuario() {
 		return idUsuario;
+	}
+
+	public Avaliacao getAvaliacao() {
+		return avaliacao;
+	}
+
+	public void setAvaliacao(Avaliacao avaliacao) {
+		this.avaliacao = avaliacao;
 	}
 
 	public void setIdUsuario(Integer idUsuario) {
@@ -55,13 +66,13 @@ public class Comentario {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name="idAvaliacao")
-	private Integer idAvaliacao;
+	//@Column(name="idAvaliacao")
+	//private Integer idAvaliacao;
 	
 	@Column(name="idUsuario")
 	private Integer idUsuario;
 	
-	@Column(name="descricao", length=300)
+	@Column(name="descricao", length=1024)
 	private String descricao;
 	
 	@Column(name="dtCad")
@@ -69,7 +80,11 @@ public class Comentario {
 	
 	@Column(name="username")
 	private String username;
-
+	
+	@ManyToOne
+	@JoinColumn(name="id_avaliacao",nullable = false)
+	private Avaliacao avaliacao;
+	
 	public String getUsername() {
 		return username;
 	}

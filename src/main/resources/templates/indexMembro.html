@@ -2,97 +2,137 @@
 <html xmlns:th="https://www.thymeleaf.org">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+		<title>IndexMembro</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+		<link rel="stylesheet" href="/image/css/styleIndexMembro.css">
+		<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
+		<link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css' rel='stylesheet'>
+		<link rel="stylesheet" href="styleIndexMembro.css">
+		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+		<script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+		<script src="https://www.w3schools.com/lib/w3.js"></script>
+		<script>
+			$(function(){
+				$("#teste").load("/image/headers/headerPadrao.html"); 
+			});
+		</script>
 	</head>
-	<body>
-			<ul>
-              <li>
-                <a th:href="@{/perfilmembro/{username}(username=${user.username})}">Pagina pessoal</a>
-              </li>
-              <li>
-                <a href="/cadastroItem">Cadastre um item</a>
-              </li>
-              <li >
-                <a href="/indexmembro" >solicitações de amizade e item sugeridos</a>
-              </li>
-            </ul>
-		<form th:action="@{/pesquisar}" method="post">
-	       		 	<label>Digite: </label>
-					<input type="text" name="pesquisa">
-	       		 	<input type="submit" value="pesquisar" />
-	   	</form>
-	   	<br>
-		<h2>Pedidos de amizade</h2>
-			<dl th:each="a : ${listaAmizade}">
-	      	<dt>
-				<p>Este membro quer ser seu amigo: <span th:text="${a.username1}">Username</span><br> </p>
-	      		<a th:href="@{/perfilmembro/{username}(username=${a.username1})}"><button>Visite a página do membro</button></a>
-	      		<form th:action="@{/checaramizade(check='s',id=${a.id})}" method="post">
-	       		 	<input type="submit" value="aceitar amizade" />
-	   		 	</form>
-	   		 	<form th:action="@{/checaramizade(check='n',id=${a.id})}" method="post">
-	       		 	<input type="submit" value="recusar amizade" />
-	   		 	</form>
-	   		 	<br>
-	      </dt>
-	    </dl>
-		<br>
-		<h2>Recomendações de amizades</h2>
-		<div th:if="${l1==0}">
-	   		<p>Não há membros recomendados para você</p>
-	   	</div>
-	   	<div th:if="${l1!=0}">
-	   		<dl th:each="u : ${listaAmigo}">
-	      	<dt>
-				<p>Membro: <span th:text="${u.username}">Username</span></p>
-				<p>Nome: <span th:text="${u.nome}">Username</span></p>
-				<p>Cidade: <span th:text="${u.cidade}">Username</span> - <span th:text="${u.uf}">Username</span></p>
-				<p><span th:text="${u.numJoinha}">Num curtidas</span></p>
-				<a th:href="@{/perfilmembro/{username}(username=${u.username})}"><button>Visite a página do membro</button></a>
-	      		<br>
-	      	
-	      </dt>
-	      </dl>
-	   	</div>
-		<br>
-		<h2>Recomendações de filmes</h2>
-			<div th:if="${l2==0}">
-	   		<p>Não há mídias recomendadas para você</p>
-	   	</div>
-	   	<div th:if="${l2!=0}">
-		<dl th:each="Item : ${listaItem}">
-	      	<dt>
-				<div th:if="${Item.tipo=='F'}">
-					<h4>Filme</h4>
-					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span><br></p>
-					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span><br> </p>
-					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span><br> </p>
-					<p>Pais: <span th:text="${Item.pais}">pais</span></br> </p>
-					<p>Ano: <span th:text="${Item.ano}">ano</span></br> </p>
-				</div>
-				<!--  Caso seja um livro  -->
-				<div th:if="${Item.tipo=='L'}">
-					<h4>Livro</h4>
-					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span><br></p>
-					<p>Autor: <span th:text="${Item.autor}">Autor</span><br> </p>
-					<p>Editora: <span th:text="${Item.editora}">editora</span><br> </p>
-					<p>Pais: <span th:text="${Item.pais}">pais</span><br> </p>
-					<p>Ano: <span th:text="${Item.ano}">ano</span><br> </p>
-				</div>
-				<!--  Caso seja um serie  -->
-				<div th:if="${Item.tipo=='S'}">
-					<h4>Série</h4>
-					<p>Titulo: <span th:text="${Item.titulo}">Titulo</span><br></p>
-					<p>Diretor: <span th:text="${Item.diretor}">Diretor</span><br> </p>
-					<p>Elenco Principal: <span th:text="${Item.elenco}">Elenco</span><br> </p>
-					<p>Pais: <span th:text="${Item.pais}">pais</span><br> </p>
-					<p>Ano: <span th:text="${Item.ano}">ano</span><br> </p>
-					<p>Num temp: <span th:text="${Item.numTemp}">numTemp</span><br> </p>
-				</div>
-				<a th:href="@{/paginaitem/{id}(id=${Item.id})}"><button>Visite a página da mídia</button></a>
-		      	<br>
-	      </dt>
-	    </dl>
-	    </div>
-	</body>
+	<body oncontextmenu='return false' class='snippet-body'>
 	
+		<div w3-include-html="/image/headers/headerPadrao.html"></div>
+	   	<div class="container mx-auto mt-4">
+			<div class="cardAmizade">
+				<div class="card-bodyAmizade text-center">
+					<h4 class="card-titleAmizade m-b-0">Pedidos de amizade recebidos: </h4>
+					<br/>				
+				</div>
+				<ul class="list-style-none">
+					<h5 class="card-titleAmizade m-b-0" th:if="${l3==0}">Não há pedidos de amizade recebidos.</h5>
+					<li class="d-flex no-block card-body" th:if="${l3!=0}" th:each="a : ${listaAmizade}">
+						<div> 
+							<a th:href="@{/perfilmembro/{username}(username=${a.username1})}"><h5  class="m-b-0 font-medium p-0" data-abc="true" th:utext="${a.nome1}"></h5></a>
+								<span class="text-muted" th:text="${a.username1}"></span>
+						</div>
+						<div class="ml-auto">
+							<div class="tetx-right">
+								<h5 class="text-muted m-b-0">
+									<form th:action="@{/checaramizade(check='s',id=${a.id})}" method="post">
+										<input type="submit" value="Aceitar" class="a-aceitar"/><i class="fas fa-check-circle a-aceitar"></i>
+									</form>
+								</h5>
+								<h5 class="text-muted m-b-0">
+									<form th:action="@{/checaramizade(check='n',id=${a.id})}" method="post">
+										<input type="submit" value="Recusar"  class="a-recusar"/><i class="fas fa-times-circle a-recusar"></i>
+									</form>
+								</h5>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<br>
+		<div class="container mx-auto mt-4">
+			<h4 class="card-title">Recomendações de amigos: </h4>
+			<h4 class="card-title" th:if="${l1==0}">Não há amigos recomendados para você.</h4>
+			<div class="row" th:if="${l1!=0}">			
+				<div class="col-md-4" th:each="u : ${listaAmigo}">				
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title" th:text="${u.nome}"></h5>
+	
+							<h6 class="card-subtitle mb-2 text-muted" th:text="${u.username}"></h6>
+	
+							<p class="card-text" th:text="${u.cidade}"></p>
+	
+							<!--p class="card-text" th:text="${u.numJoinha}"></p-->
+	
+							<a th:href="@{/perfilmembro/{username}(username=${u.username})}" class="btn mr-2"><i class="fas fa-external-link-alt"></i> Visitar a página desse membro</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!--ROW DE RECOMENDAÇÃO DE FILMES-->
+			<h4 class="card-title">Recomendações de mídias: </h4>
+			<h4 class="card-title" th:if="${l2==0}">Não há mídias recomendadas para você.</h4>
+			<div class="row" th:if="${l2!=0}">	
+			<!-- COL DE FILME -->		
+				<div class="col-md-4" th:each="Item : ${listaItem}" th:if="${Item.tipo=='F'}">
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title" th:text="${Item.titulo}"></h5>
+	
+							<h6 class="card-subtitle mb-2 text-muted" th:text="${Item.diretor}"></h6>
+	
+							<h6 class="card-subtitle mb-2 text-muted" th:text="${Item.ano}"></h6>			
+	
+							<a th:href="@{/paginaitem/{id}(id=${Item.id})}" class="btn mr-2"><i class="fas fa-external-link-alt"></i> Visitar a página desse filme</a>
+						</div>
+					</div>
+				</div>
+				
+				<!-- COL DE LIVRO -->
+				<div class="col-md-4" th:each="Item : ${listaItem}" th:if="${Item.tipo=='L'}">
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title" th:text="${Item.titulo}"></h5>
+	
+							<h6 class="card-subtitle mb-2 text-muted" th:text="${Item.autor}"></h6>
+	
+							<h6 class="card-subtitle mb-2 text-muted" th:text="${Item.ano}"></h6>			
+	
+							<a th:href="@{/paginaitem/{id}(id=${Item.id})}" class="btn mr-2"><i class="fas fa-external-link-alt"></i> Visitar a página desse livro</a>
+						</div>
+					</div>
+				</div>
+				
+				<!-- COL DE SÉRIE -->
+				<div class="col-md-4" th:each="Item : ${listaItem}" th:if="${Item.tipo=='S'}">
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title" th:text="${Item.titulo}"></h5>
+	
+							<h6 class="card-subtitle mb-2 text-muted" th:text="${Item.diretor}"></h6>
+	
+							<h6 class="card-subtitle mb-2 text-muted" th:text="${Item.numTemp}"></h6>			
+	
+							<a th:href="@{/paginaitem/{id}(id=${Item.id})}" class="btn mr-2"><i class="fas fa-external-link-alt"></i> Visitar a página dessa série</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.2/umd/popper.min.js"></script>
+		<script>
+			w3.includeHTML();
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	</body>	
 </html>

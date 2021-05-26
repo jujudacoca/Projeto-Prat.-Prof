@@ -48,7 +48,6 @@ public class AvaliacaoController {
 		Item p = itemRepository.findById(id);
 		Avaliacao b =  avaliacaoRepository.findByIds(t.getId(), p.getId());
 		if(b!=null) {
-			System.out.println("jÁ TEM");
 			return "redirect:/paginaitem/"+p.getId()+"?avaliado";
 		}
 		if(t!=null && p!=null) {
@@ -115,7 +114,8 @@ public class AvaliacaoController {
 		Avaliacao a = avaliacaoRepository.findById(id);
 		Comentario c = new Comentario();
 		c.setDescricao(comentario);
-		c.setIdAvaliacao(a.getId());
+		//c.setIdAvaliacao(a.getId());
+		c.setAvaliacao(a);
 		c.setIdUsuario(t.getId());
 		c.setUsername(t.getUsername());
 		comentarioRepository.save(c);

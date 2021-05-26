@@ -9,7 +9,7 @@ public interface AvaliacaoRepository extends CrudRepository<Avaliacao, Integer> 
 	@Query("SELECT a FROM Avaliacao a WHERE id_item = :id_item order by numJoinha DESC")
     public Iterable<Avaliacao> findAllByIdItem(@Param("id_item") Integer id);
 	
-	@Query("SELECT a FROM Avaliacao a WHERE id_usuario = :id_usuario")
+	@Query("SELECT a FROM Avaliacao a WHERE id_usuario = :id_usuario order by numJoinha DESC")
     public Iterable<Avaliacao> findAllByIdUser(@Param("id_usuario") Integer id);
 	
 	@Query("select a from Avaliacao a where id_usuario = :id_usuario and id_item=:id_item")

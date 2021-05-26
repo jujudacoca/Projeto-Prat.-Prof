@@ -179,6 +179,7 @@ public class UserController {
 		model.addAttribute("user", u);
 		Iterable<Amizade> listaSoliAmizade = amizadeRepository.findSolicitacaoById(u.getId());
 		model.addAttribute("listaAmizade", listaSoliAmizade);
+		model.addAttribute("l3", count(listaSoliAmizade));
 		List<User> listaAmigo = new ArrayList<User>();
 		List<Item> listaItem = new ArrayList<Item>();
 		Recomendacao r = rp.recomendadoById(u.getId());
@@ -245,6 +246,8 @@ public class UserController {
 		a.setUsername1(u.getUsername());
 		a.setUsername2(t.getUsername());
 		a.setEstado("s");
+		a.setNome1(u.getNome());
+		a.setNome2(t.getNome());
 		Date b = new Date();
 		a.setDtCad(b);
 		amizadeRepository.save(a);

@@ -9,8 +9,6 @@
 		</script>
 		<h1><span th:text="${user.username}">username</span></h1>
 		
-		<h3><span th:text="${user.numJoinha}">Num curtidas</span></h3>
-		
 		</br></br>
 		<div th:if="${membro=='eu'}">
 			<a href="/alterarCadastro"><button>Alterar Dados de cadastro</button></a>
@@ -32,7 +30,14 @@
 					<p>Joinha: <span th:text="${a.numJoinha}">numJoinha</span></p>
 					<p>nota: <span th:text="${a.nota}">nota</span></br> </p>
 					<p>Descricao: <span th:text="${a.descricao}">descricao</span></p>
-		      		</br>
+		      		<h5>Comentarios</h5>
+		      		<dl th:each="c : ${a.comentarios}">
+		      		<span th:text="${#lists.size(c)}"></span>
+		      		 	<dt th:if="${#lists.size(c) > 0}">
+		      				<p>Comentario: <span th:text="${c.descricao}">descicao</span></p>
+		      			</dt>
+		      	
+		      		</dl>
 		      		<form th:action="@{/darJoinha(id=${a.id},ind='pgmembro')}" method="post">
 		       		 	<input type="submit" value="curtir" />
 		   		 	</form>

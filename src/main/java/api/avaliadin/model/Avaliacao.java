@@ -1,13 +1,14 @@
 package api.avaliadin.model;
 
 import java.util.Date;
-
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 
@@ -19,7 +20,7 @@ public class Avaliacao {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name="descricao", length=300)
+	@Column(name="descricao", length=1024)
 	private String descricao;
 	
 	@Column(name="nota")
@@ -43,7 +44,18 @@ public class Avaliacao {
 	@Column(name="titulo")
 	private String titulo;
 	
+	@OneToMany(mappedBy="avaliacao")
+	private List<Comentario> comentarios;
 	
+	
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
 	public String getUsername() {
 		return username;
 	}
