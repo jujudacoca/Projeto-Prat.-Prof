@@ -1,0 +1,40 @@
+.cont-borda{ 
+	border-bottom: 1px solid;
+	border-image-slice: 1;
+	border-image-source: linear-gradient(to right, #A300A3, #FF9A1F);
+}
+.add{
+	background: #333; 
+	padding: 10%; 
+	height: 300px;
+}
+.btn-blog {
+	color: #ffffff;
+	background-color: #111;
+	margin-right: 7px;
+	display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: right;
+}
+.btn-blog:hover,
+.btn-blog:focus {
+	color: #fff !important;
+	background-color:#111 !important;
+	opacity: 0.75 !important;
+}
+h2{color:#34ca78;}
+.margin10{
+	margin-bottom:10px; 
+	margin-right:10px;
+}
+h5{
+	text-align: justify;
+}
+.card-subtitle-individual.em{
+	text-align: center !important;
+	font-style: italic;
+}

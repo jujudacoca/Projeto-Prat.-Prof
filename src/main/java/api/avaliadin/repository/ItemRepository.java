@@ -23,4 +23,7 @@ public interface ItemRepository extends CrudRepository<Item, Integer>{
 	
 	@Query("select i from Item i where i.estado=false")
 	public Iterable<Item> findAllStateFalse();
+	
+	@Query("select i from Item i where i.estado=true")
+	public Iterable<Item> findAllStateTrue();
 }

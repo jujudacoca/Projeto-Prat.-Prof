@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +33,6 @@ public class AvaliacaoController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	
 	@GetMapping("/criaAvaliacao")
 	public String showCriaAvaliacao (Model model, @RequestParam int id) {
 		Item i = itemRepository.findById(id);
@@ -42,16 +41,19 @@ public class AvaliacaoController {
 	}
 	
 	@PostMapping("/criaAvaliacao")
-	public String addAvaliacao(@RequestParam String descricao,@RequestParam Integer nota, @RequestParam int id, Authentication authentication ) {
+	public String addAvaliacao(@RequestParam( required = false) String descricao,@RequestParam( required = false) Integer nota, @RequestParam int id, Authentication authentication ) {
 		String username = authentication.getName();
 		User t = userRepository.findByUsername(username);
 		Item p = itemRepository.findById(id);
 		Avaliacao b =  avaliacaoRepository.findByIds(t.getId(), p.getId());
 		if(b!=null) {
-			return "redirect:/paginaitem/"+p.getId()+"?avaliado";
+			return "redirect:/paginaitem/"+p.getId();
 		}
 		if(t!=null && p!=null) {
 			Avaliacao a = new Avaliacao();
+			if(nota==null) {
+				a.setNota(0);
+			}
 			a.setNota(nota);
 			a.setDescricao(descricao);
 			a.setIdUsuario(t.getId());
@@ -61,9 +63,33 @@ public class AvaliacaoController {
 			a.setNumJoinha(0);
 			a.setUsername(username);
 			a.setTitulo(p.getTitulo());
+			a.setNome(t.getNome());
 			avaliacaoRepository.save(a);
 		}
-		return "redirect:/paginaitem/"+p.getId();
+		return "redirect:/paginaavaliacao/"+b.getId();
+	}
+	@PostMapping("/updateAvaliacao/{id}")
+	public String updateAvaliacao(@RequestParam( required = false) String descricao ,@RequestParam( required = false) Integer nota,@PathVariable int id , Authentication authentication ) {
+		String username = authentication.getName();
+		Avaliacao b =  avaliacaoRepository.findById(id);
+		if(b!=null) {
+			if(nota!=null) {
+				b.setNota(nota);
+			}else {
+				b.setNota(0);
+			}
+			if(descricao!="" && descricao!=null  ) {
+				b.setDescricao(descricao);
+			}
+			avaliacaoRepository.save(b);
+		}
+		return "redirect:/paginaavaliacao/"+b.getId();
+	}
+	
+	@PostMapping("/deletaravaliacao/{id}")
+	public String deletarAvaliacao(@PathVariable int id) {
+		avaliacaoRepository.deleteById(id);
+		return "redirect:/indexmembro";
 	}
 	
 	@GetMapping(path="/allAval")
@@ -126,4 +152,50 @@ public class AvaliacaoController {
 		}	
 	}
 	
+	@PostMapping("/deletarcomentario/{id}")
+	public String deleteComentario(@PathVariable int id) {
+		comentarioRepository.deleteById(id);
+		Comentario c = comentarioRepository.findById(id);
+		return "redirect:/paginaavaliacao/"+ c.getAvaliacao();
+	}
+	
+	
+	@GetMapping(path="/paginaavaliacao/{id}")
+	public String pagAvaliacao(@PathVariable int id, Model model, Authentication authentication) {
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User t = m.getUser();
+		Avaliacao a = avaliacaoRepository.findById(id);
+		
+		System.out.println("Inicio");
+		
+		if(a!=null) {
+			Item i = itemRepository.findById(a.getIdItem());
+			model.addAttribute("Item", i);
+			model.addAttribute("avaliacao", a);
+			model.addAttribute("l5",a.getComentarios().size());
+			model.addAttribute("user", t);
+			if(t.getId()==a.getIdUsuario()){
+				
+				model.addAttribute("membro", "eu");
+				
+			}else {
+					model.addAttribute("membro", "outro");
+			}
+			System.out.println("final");
+			return "paginaavaliacao";
+			
+		}
+		
+		return "redirect:/indexmembro?itemnotfound";//implementar essa excessão ainda 
+	}
+	
+	
+	@PostMapping("/deletarconta/{id}")
+	public String deleteAval(@PathVariable int id) {
+		Avaliacao a = avaliacaoRepository.findById(id);
+		avaliacaoRepository.delete(a);
+		return "redirect:/perfilmembro/"+a.getUsername();
+		
+
+	}
 }

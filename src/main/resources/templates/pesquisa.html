@@ -1,20 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Busca</title>		
 	<link rel="stylesheet" type="text/css" href="/image/css/stylePesquisa.css">
+	<link rel="stylesheet" href="/image/headers/assets/css/style.css">
 	<link rel='stylesheet' type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
-	<link rel='stylesheet' type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	<script src="https://www.w3schools.com/lib/w3.js"></script>
-	<script>
-		$(function(){
-			$("#teste").load("/image/headers/headerPadrao.html"); 
-		});
-	</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	<div w3-include-html="/image/headers/headerPadrao.html"></div> 
+
+	<!-- HEADER -->
+	
+	<div class="header-blue">
+    	<nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+	        <div class="container">
+	        	<a class="navbar-brand" href="#">PPADS</a>
+	            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
+	            	<span class="sr-only">Toggle navigation</span>
+	                <span class="navbar-toggler-icon"></span>
+	            </button>
+	            <div class="collapse navbar-collapse" id="navcol-1">
+	           		<ul class="nav navbar-nav">
+	                	<li class="nav-item" role="presentation">
+	                    	<a class="nav-link" href="/indexmembro">Sugestões para você</a>
+	                    </li>
+	                    <li class="dropdown">
+	                        <a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Cadastrar novo item</a>
+	                	        <div class="dropdown-menu" role="menu">
+	                    	      	<a class="dropdown-item" role="presentation" href="/cadastrofilme">Cadastrar filme</a>
+	                               	<a class="dropdown-item" role="presentation" href="/cadastrolivro">Cadastrar livro</a>
+	                               	<a class="dropdown-item" role="presentation" href="/cadastroserie">Cadastrar série</a>
+	                            </div>
+	                    </li>
+	                </ul>
+	                <form class="form-inline mr-auto" th:action="@{/pesquisar}" method="post">
+	                	<div class="form-group">
+	                    	<label for="search-field">
+	                        	<i class="fa fa-search"></i>
+	                        </label>
+	                        <input class="form-control search-field" type="search" name="pesquisa" id="search-field">
+	                    </div>
+	                </form>
+	                <a class="btn1 btn-light action-button" th:href="@{/perfilmembro/{username}(username=${user.username})}">Meu perfil</a>
+	             </div>
+	         </div>
+         </nav>
+    </div>
+    
+    <!-- FIM DO HEADER -->
+    
+    <!-- RECOMENDAÇÕES -->
+    
 	<div class="container">
 		<!--UL de membros encontrados-->
 		<ul class="list-group" th:if="${l1!=0}">
@@ -40,7 +79,8 @@
 				<p class="list-group-item-text lead" th:text="${Item.titulo}">
 					<br />
 				</p>
-				<p class="list-group-item-text lead" th:text="${Item.diretor}">
+				<p class="list-group-item-text lead">
+					Dirigido por: <span th:text="${Item.diretor}"></span>
 					<br />
 				</p>
 				<p class="list-group-item-text lead" th:text="${Item.ano}">
@@ -74,10 +114,12 @@
 				<p class="list-group-item-text lead" th:text="${Item.titulo}">
 					<br />
 				</p>
-				<p class="list-group-item-text lead" th:text="${Item.diretor}">
+				<p class="list-group-item-text lead">
+					Dirigido por: <span th:text="${Item.diretor}"></span>
 					<br />
 				</p>
-				<p class="list-group-item-text lead" th:text="${Item.numTemp}">
+				<p class="list-group-item-text lead">
+					<span th:text="${Item.numTemp}"></span> temporadas
 					<br />
 				</p>
 				<div class="btn-toolbar pull-right" role="toolbar" aria-label="">
@@ -89,25 +131,25 @@
 		<!--UL de membros não encontrados-->
 		<ul class="list-group" th:if="${l1==0}">
 			<li class="list-group-item clearfix">
-				<h3 class="list-group-item-heading">
+				<h4 class="list-group-item-heading">
 					Não foram encontrados membros.
-				</h3>
+				</h4>
 			</li>
 		</ul>
 
 		<!--UL de filmes não encontrados-->
 		<ul class="list-group" th:if="${l2==0}">
 			<li class="list-group-item clearfix">
-				<h3 class="list-group-item-heading">
+				<h4 class="list-group-item-heading">
 					Não foram encontradas mídias.
-				</h3>
+				</h4>
 			</li>
 		</ul>
 	</div>
+	
+	<!-- FIM DAS RECOMENDAÇÕES -->
+	
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" crossorigin = "anonymous"></script>
 	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin = "anonymous"></script>
-	<script>
-		w3.includeHTML();
-	</script>
 </body>
 </html>

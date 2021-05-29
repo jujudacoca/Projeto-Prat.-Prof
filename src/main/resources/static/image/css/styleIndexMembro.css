@@ -33,6 +33,7 @@ body {
 
 .container.mx-auto.mt-4{
 box-shadow: 0px 11px 23px 5px rgba(0,0,0,0.34) !important;
+margin-top: 0px !important;
 }
 
 .mt-100 {

@@ -17,5 +17,6 @@ public interface AvaliacaoRepository extends CrudRepository<Avaliacao, Integer> 
 	
 	Avaliacao findById(int id);
 
+	Long deleteByIdUsuario(int id);
 
 }

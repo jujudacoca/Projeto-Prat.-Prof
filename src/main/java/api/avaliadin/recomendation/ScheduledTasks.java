@@ -49,7 +49,7 @@ public class ScheduledTasks {
 		Iterable<User> users = userRepository.findAll();
 		Iterable<Avaliacao> la = avaliacaoRepository.findAll();
 		Iterable<Amizade> amgs = amizadeRepository.findAll();
-		Iterable<Item> items = itemRepository.findAll();
+		Iterable<Item> items = itemRepository.findAllStateTrue();
 		rp.deleteAll();
 		List<Ulikes> listaTotal = gerarListaTotal(); 
 		System.out.println();
@@ -263,11 +263,13 @@ public class ScheduledTasks {
 		if(list.size()>=3) {
 			val = 3;
 		}
+		System.out.println(list.size());
 		List<Entry<Integer, Double>> rank2 = list.subList(0, val);
 		List<Integer> rec = new ArrayList<Integer>();
 		for(int i=0;i<rank2.size();i++) {
 			rec.add(rank2.get(i).getKey());
 		}
+		System.out.println(rec.size());
 		if(rec.isEmpty()) {
 			Iterator<Item> it = items.iterator();
 			List<Integer> rec2 = new ArrayList<Integer>();

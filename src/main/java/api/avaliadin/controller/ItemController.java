@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import api.avaliadin.details.MyUserDetails;
 import api.avaliadin.model.*;
 import api.avaliadin.repository.*;
 
@@ -119,7 +121,10 @@ public class ItemController {
 	}
 	
 	@GetMapping(path="/paginaitem/{id}")
-	public String pagItem(@PathVariable int id, Model model) {
+	public String pagItem(@PathVariable int id, Model model, Authentication authentication) {
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User t = m.getUser();
+		model.addAttribute("user", t);
 		Item i = itemRepository.findById(id);
 		if(i!=null) {
 			if(i.isEstado()) {
@@ -136,10 +141,17 @@ public class ItemController {
 				}
 				Iterable<Avaliacao> listaAvaliacao = avaliacaoRepository.findAllByIdItem(id);
 				model.addAttribute("listaAvaliacao", listaAvaliacao);
+				model.addAttribute("l1", count(listaAvaliacao));
+				for(Avaliacao a: listaAvaliacao) {
+					if(a.getIdUsuario()==t.getId()) {
+						model.addAttribute("minha", a);
+						break;
+					}
+				}
 				return "paginaitem";
 			}
 		}
-			return "redirect:/indexMembro?itemnotfound";//implementar essa excessão ainda 
+			return "redirect:/indexmembro?itemnotfound";//implementar essa excessão ainda 
 	}
 	
 	@PostMapping(path="/aprovarItem")
@@ -157,5 +169,13 @@ public class ItemController {
 		itemRepository.delete(i);
 		return "redirect:/indexadmin";
 	}
+	
+	  public int count(Iterable a) {
+			int counter = 0;
+			for (Object i : a) {
+			    counter++;
+			}
+			return counter;
+		}
 	
 }

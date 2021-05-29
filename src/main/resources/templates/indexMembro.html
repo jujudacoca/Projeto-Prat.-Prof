@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 	<head>
-	<title>IndexMembro</title>
+	<title th:text="${user.nome}">index</title>
+		<!-- https://bootsnipp.com/snippets/K0ZmK -->
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1'>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
@@ -10,9 +11,11 @@
 		<link rel="stylesheet" href="/image/css/styleIndexMembro.css">
 		<link rel="stylesheet" href="/image/headers/assets/css/style.css">		
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-		<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.2/css/all.css'>
 	</head>
 	<body oncontextmenu='return false' class='snippet-body'>
+	
+	<!-- HEADER -->
+	
 		<div class="header-blue">
             <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
                 <div class="container">
@@ -43,13 +46,16 @@
                                 <input class="form-control search-field" type="search" name="pesquisa" id="search-field">
                             </div>
                         </form>
-                        
-                        <!-- FAZER LINK DE PERFIL FUNCIONAR -->
                         <a class="btn1 btn-light action-button" th:href="@{/perfilmembro/{username}(username=${user.username})}">Meu perfil</a>
                     </div>
                 </div>
             </nav>
         </div>
+        
+        <!-- FIM DO HEADER -->
+        
+        <!-- PEDIDOS DE AMIZADE -->
+        
 	   	<div class="container mx-auto mt-4">
 			<div class="cardAmizade">
 				<div class="card-bodyAmizade text-center">
@@ -81,6 +87,11 @@
 				</ul>
 			</div>
 		<br>
+		
+		<!-- FIM DOS PEDIDOS DE AMIZADE -->
+		
+		<!-- RECOMENDAÇÕES -->
+		
 			<h4 class="card-title">Recomendações de amigos: </h4>
 			<h4 class="card-title" th:if="${l1==0}">Não há amigos recomendados para você.</h4>
 			<div class="row" th:if="${l1!=0}">			
@@ -95,7 +106,7 @@
 	
 							<!--p class="card-text" th:text="${u.numJoinha}"></p-->
 	
-							<a th:href="@{/perfilmembro/{username}(username=${u.username})}" class="btn mr-2"><i class="fas fa-external-link-alt"></i> Visitar a página desse membro</a>
+							<a th:href="@{/perfilmembro/{username}(username=${u.username})}" class="btn mr-2">Visitar a página desse membro <i class="fas fa-external-link-alt"></i></a>
 						</div>
 					</div>
 				</div>
@@ -116,7 +127,7 @@
 	
 							<h6 class="card-subtitle mb-2 text-muted" th:text="${Item.ano}"></h6>			
 	
-							<a th:href="@{/paginaitem/{id}(id=${Item.id})}" class="btn mr-2"><i class="fas fa-external-link-alt"></i> Visitar a página desse filme</a>
+							<a th:href="@{/paginaitem/{id}(id=${Item.id})}" class="btn mr-2">Visitar a página desse filme <i class="fas fa-external-link-alt"></i></a>
 						</div>
 					</div>
 				</div>
@@ -131,7 +142,7 @@
 	
 							<h6 class="card-subtitle mb-2 text-muted" th:text="${Item.ano}"></h6>			
 	
-							<a th:href="@{/paginaitem/{id}(id=${Item.id})}" class="btn mr-2"><i class="fas fa-external-link-alt"></i> Visitar a página desse livro</a>
+							<a th:href="@{/paginaitem/{id}(id=${Item.id})}" class="btn mr-2">Visitar a página desse livro <i class="fas fa-external-link-alt"></i></a>
 						</div>
 					</div>
 				</div>
@@ -146,11 +157,14 @@
 	
 							<h6 class="card-subtitle mb-2 text-muted" th:text="${Item.numTemp}"></h6>			
 	
-							<a th:href="@{/paginaitem/{id}(id=${Item.id})}" class="btn mr-2"><i class="fas fa-external-link-alt"></i> Visitar a página dessa série</a>
+							<a th:href="@{/paginaitem/{id}(id=${Item.id})}" class="btn mr-2">Visitar a página dessa série<i class="fas fa-external-link-alt"></i></a>
 						</div>
 					</div>
 				</div>
 			</div>
+			
+		<!-- FIM DAS RECOMENDAÇÕES -->
+		
 		</div>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

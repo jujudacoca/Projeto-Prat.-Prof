@@ -32,7 +32,7 @@ public class PesquisaController {
 		model.addAttribute("listaItem", listaItem);
 		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
 		User u = m.getUser();
-		model.addAttribute("User", u);
+		model.addAttribute("user", u);
 		
 	    return "pesquisa";
 	}

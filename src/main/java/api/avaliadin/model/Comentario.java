@@ -81,6 +81,17 @@ public class Comentario {
 	@Column(name="username")
 	private String username;
 	
+	@Column(name="nome")
+	private String nome;
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="id_avaliacao",nullable = false)
 	private Avaliacao avaliacao;

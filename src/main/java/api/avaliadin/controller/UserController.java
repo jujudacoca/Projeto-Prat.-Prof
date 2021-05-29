@@ -43,7 +43,9 @@ import api.avaliadin.recomendation.GraficoDeBarra;
 import api.avaliadin.recomendation.Ufc;
 import api.avaliadin.repository.AmizadeRepository;
 import api.avaliadin.repository.AvaliacaoRepository;
+import api.avaliadin.repository.ComentarioRepository;
 import api.avaliadin.repository.ItemRepository;
+import api.avaliadin.repository.JoinhaRepository;
 import api.avaliadin.repository.RecomendacaoRepository;
 import api.avaliadin.repository.UserRepository;
 
@@ -60,6 +62,10 @@ public class UserController {
 	private ItemRepository itemRepository;
 	@Autowired
 	private RecomendacaoRepository rp;
+	@Autowired
+	private ComentarioRepository comentarioRepository;
+	@Autowired
+	private JoinhaRepository joinhaRepository;
 	
 	public UserController(UserRepository userRepository) {
 		this.userRepository = userRepository;
@@ -106,7 +112,10 @@ public class UserController {
 		}
 	}
 	@GetMapping("/alterarCadastro")
-	public String alterarCadastro(User user) {
+	public String alterarCadastro(Model model,Authentication authentication) {
+		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
+		User t = m.getUser();
+		model.addAttribute("user", t);
 	    return "alterarCadastro";
 	}
 	@PostMapping("/alterarcadastro")
@@ -152,7 +161,7 @@ public class UserController {
 			Iterable<Amizade> listaAmizade = amizadeRepository.findAllByIdUser(u.getId());
 			model.addAttribute("listaAmizade", listaAmizade);
 		}else {
-			return "redirect:/indexMembro?notfound";//implementar essa excessão ainda 
+			return "redirect:/indexmembro?notfound";//implementar essa excessão ainda 
 		}
 		if(username.equals(username_)) {
 				model.addAttribute("membro", "eu");
@@ -322,7 +331,12 @@ public class UserController {
 	public String deleteUser(Authentication authentication) {
 		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
 		User t = m.getUser();
+		amizadeRepository.deleteByIdUser1(t.getId());
+		amizadeRepository.deleteByIdUser2(t.getId());
 		userRepository.delete(t);
+		//comentarioRepository.deleleByIdUsuario(t.getId());
+		joinhaRepository.deleteByIdUsuario(t.getId());
+		avaliacaoRepository.deleteByIdUsuario(t.getId());
 		return "redirect:/login?logout";
 	}
 	
