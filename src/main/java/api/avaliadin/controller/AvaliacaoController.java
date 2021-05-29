@@ -46,11 +46,12 @@ public class AvaliacaoController {
 		User t = userRepository.findByUsername(username);
 		Item p = itemRepository.findById(id);
 		Avaliacao b =  avaliacaoRepository.findByIds(t.getId(), p.getId());
+		Avaliacao a = new Avaliacao();
 		if(b!=null) {
-			return "redirect:/paginaitem/"+p.getId();
+			return "redirect:/paginaavaliacao/"+b.getId();
 		}
 		if(t!=null && p!=null) {
-			Avaliacao a = new Avaliacao();
+			
 			if(nota==null) {
 				a.setNota(0);
 			}
@@ -66,7 +67,7 @@ public class AvaliacaoController {
 			a.setNome(t.getNome());
 			avaliacaoRepository.save(a);
 		}
-		return "redirect:/paginaavaliacao/"+b.getId();
+		return "redirect:/paginaavaliacao/"+a.getId();
 	}
 	@PostMapping("/updateAvaliacao/{id}")
 	public String updateAvaliacao(@RequestParam( required = false) String descricao ,@RequestParam( required = false) Integer nota,@PathVariable int id , Authentication authentication ) {
@@ -98,7 +99,7 @@ public class AvaliacaoController {
 	}
 	
 	@PostMapping("/darJoinha")
-	public String addJoinhapgitem(@RequestParam int id,@RequestParam String ind,Authentication authentication) {
+	public String addJoinhapgitem(@RequestParam int id,Authentication authentication) {
 		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
 		User t = m.getUser();
 		Avaliacao a = avaliacaoRepository.findById(id);
@@ -108,11 +109,8 @@ public class AvaliacaoController {
 			int y = a.getNumJoinha()-1;
 			a.setNumJoinha(y);
 			avaliacaoRepository.save(a);
-			if(ind.equals("pgitem")) {
-				return "redirect:/paginaitem/"+a.getIdItem()+"?curtido";
-			}else if(ind.equals("pgmembro")) {
-				return "redirect:/perfilmembro/"+a.getUsername()+"?curtido";
-			}
+			return "redirect:/paginaavaliacao/"+a.getId()+"?curtido";
+			
 		}else {
 			Joinha o = new Joinha();
 			o.setIdAvaliacao(a.getId());
@@ -125,16 +123,14 @@ public class AvaliacaoController {
 			
 		}
 		avaliacaoRepository.save(a);
-		if(ind.equals("pgitem")) {
-			return "redirect:/paginaitem/"+a.getIdItem();
-		}else {
-			return "redirect:/perfilmembro/"+a.getUsername();
-		}	
+		
+		return "redirect:/paginaavaliacao/"+a.getId();
+		
 		
 	}
 	
 	@PostMapping("/comentar")
-	public String addComentario(@RequestParam String comentario,@RequestParam int id,@RequestParam String ind,Authentication authentication) {
+	public String addComentario(@RequestParam String comentario,@RequestParam int id,Authentication authentication) {
 		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
 		User t = m.getUser();
 		Avaliacao a = avaliacaoRepository.findById(id);
@@ -145,18 +141,14 @@ public class AvaliacaoController {
 		c.setIdUsuario(t.getId());
 		c.setUsername(t.getUsername());
 		comentarioRepository.save(c);
-		if(ind.equals("pgitem")) {
-			return "redirect:/paginaitem/"+a.getIdItem();
-		}else {
-			return "redirect:/perfilmembro/"+a.getUsername();
-		}	
+		return "redirect:/paginaavaliacao/"+c.getAvaliacao().getId();
 	}
 	
 	@PostMapping("/deletarcomentario/{id}")
 	public String deleteComentario(@PathVariable int id) {
-		comentarioRepository.deleteById(id);
 		Comentario c = comentarioRepository.findById(id);
-		return "redirect:/paginaavaliacao/"+ c.getAvaliacao();
+		comentarioRepository.deleteById(id);
+		return "redirect:/paginaavaliacao/"+ c.getAvaliacao().getId();
 	}
 	
 	
@@ -165,9 +157,6 @@ public class AvaliacaoController {
 		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
 		User t = m.getUser();
 		Avaliacao a = avaliacaoRepository.findById(id);
-		
-		System.out.println("Inicio");
-		
 		if(a!=null) {
 			Item i = itemRepository.findById(a.getIdItem());
 			model.addAttribute("Item", i);
@@ -181,12 +170,11 @@ public class AvaliacaoController {
 			}else {
 					model.addAttribute("membro", "outro");
 			}
-			System.out.println("final");
 			return "paginaavaliacao";
 			
 		}
 		
-		return "redirect:/indexmembro?itemnotfound";//implementar essa excessão ainda 
+		return "redirect:/indexmembro?itemnotfound";
 	}
 	
 	

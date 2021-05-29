@@ -79,7 +79,7 @@
 				<h4 class="card-subtitle-individual mb-2 text-muted" th:text="${Item.pais}"></h4>
 				<h4 class="card-subtitle-individual mb-2 text-muted">Elenco principal: <span th:text="${Item.elenco}"></span></h4>
 		
-				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">Avaliar filme</button>							
+				<button th:if="${minha==null}" type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">Avaliar filme</button>							
 			</div>
 		
 			<!--
@@ -93,7 +93,7 @@
 				<h4 class="card-subtitle-individual mb-2 text-muted" th:text="${Item.editora}"></h4>
 				<h4 class="card-subtitle-individual mb-2 text-muted" th:text="${Item.pais}"></h4>
 		
-				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">Avaliar livro</button>							
+				<button th:if="${minha==null}" type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">Avaliar livro</button>							
 			</div>
 		
 			<!--
@@ -108,7 +108,7 @@
 				<h4 class="card-subtitle-individual mb-2 text-muted" th:text="${Item.pais}"></h4>
 				<h4 class="card-subtitle-individual mb-2 text-muted">Elenco principal: <span th:text="${Item.elenco}"></span></h4>
 		
-				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">Avaliar série</button>							
+				<button th:if="${minha==null}" type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">Avaliar série</button>							
 			</div>
 			<br/>
 			
@@ -117,7 +117,7 @@
 		<!-- AVALIAÇÕES DO ITEM -->
 			
 			<h3>Avaliações <span th:if="${Item.tipo=='F'}">desse filme: </span><span th:if="${Item.tipo=='L'}">desse livro: </span><span th:if="${Item.tipo=='S'}">dessa série: </span></h3>
-			<h4 th:if="l1==0">
+			<h4 th:if="${l1==0}">
 				Ainda não há avaliações <span th:if="${Item.tipo=='F'}">desse filme.</span><span th:if="${Item.tipo=='L'}">desse livro.</span><span th:if="${Item.tipo=='S'}">dessa série.</span>
 			</h4>
 			<div class="container cont-borda" th:if="${minha!=null}">
@@ -144,9 +144,6 @@
 				
 				<div>
 					<a th:href="@{/paginaavaliacao/{id}(id=${a.id})}"><button class="btn btn-blog pull-right marginBottom10">Visitar a página dessa avaliação <i class="fas fa-external-link-alt"></i></button></a>
-					<form th:action="@{/darJoinha(id=${a.id},ind='pgitem')}" method="post">
-						<button value="submit" class="btn btn-blog pull-right marginBottom10"><i class="far fa-thumbs-up"></i></button> 
-					</form>
 					<br/>
 					<br/>
 				</div>

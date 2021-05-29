@@ -63,8 +63,8 @@
 		<!-- COMENTÁRIOS -->
 		
 		<div class="container mx-auto mt-4">
-			<h3 class="card-title" th:if="${membro!='eu'}">Avaliação de<a th:href="@{/perfilmembro/{username}(username=${avaliacao.username})}"> <span th:text="${avaliacao.nome}"></span></a> sobre <a th:href="@{/paginaitem/${avaliacao.idItem}}"><span th:text="${avaliacao.titulo}">nome do item</span></a></h3>
-			<h3 th:if="${membro=='eu'}" class="card-title">Sua avaliação de <a th:href="@{/paginaitem/${avaliacao.idItem}}"><span th:text="${avaliacao.titulo}">nome da midia</span></a></h3>
+			<h3 class="card-title" th:if="${membro!='eu'}">Avaliação de <span th:text="${avaliacao.nome}"><a href="#"></a></span> sobre <span th:text="${avaliacao.titulo}"><a th:href="@{/paginaitem/${avaliacao.idItem}}">nome do item</span></h3>
+			<h3 th:if="${membro=='eu'}" class="card-title">Sua avaliação de <span th:text="${avaliacao.titulo}"><a href="#">nome da midia</a></span></h3>
 			
 			<h4 class="card-subtitle-individual">Nota (0 a 10): <span th:text="${avaliacao.nota}"></span></h4>
 			<h4 class="card-subtitle-individual" th:text="${avaliacao.descricao}"></h4>
@@ -74,17 +74,30 @@
 			<div th:if="${membro=='eu'}">	
 				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">Alterar avaliação</button>							
 			</div>	
-			<h3>Comentários nessa avaliação: </h3>
+			
+			<!-- Botao joinha arrumar -->
+			<form th:action="@{/darJoinha(id=${avaliacao.id})}" method="post">
+						<button value="submit" class="btn btn-blog pull-right marginBottom10"><i class="far fa-thumbs-up"></i></button> 
+			</form>
+			
+			<!-- Arrumar o comentario aqui -->
+			
+			<form th:action="@{/comentar(id=${avaliacao.id})}" method="post">
+	       		 	<input type="text" name="comentario">
+	       		 	<input type="submit" value="comentar" />
+	   		 </form>
+	   		 		
+	 		<h3>Comentários nessa avaliação: </h3>
 			<h4 th:if="${l5==0}">Ainda não há comentários nessa avaliação.</h4>
 			
 			<div class="container cont-borda" th:if="${l5!=0}" th:each="c : ${avaliacao.comentarios}">
-				<h4>Comentário de <span th:text="${c.avaliacao.titulo}"></span></h4>	
+				<h4>Comentário de <span th:text="${c.avaliacao.username}"></span></h4>	
 				<h5 th:text="${c.descricao}"></h5>
-				<div th:if="c.idUsuario==user.id">
-					<form th:action="@{/deletarcomentario/{id}(id=${c.id})}" method="post"> 
-		       		 		<input type="submit" value="apagar comentario" />
-		   			</form>
-		   		</div>
+				
+				<form th:action="@{/deletarcomentario/{id}(id=${c.id})}" method="post"> 
+		       		 	<input type="submit" value="apagar comentario" />
+		   		</form>
+				
 			</div>
 		</div>
 		
@@ -116,22 +129,13 @@
 		</div-->
 		
 		
-		<!-- EDITAR AVALIAÇÃO 
-		<script>
-		function criar(frm){
-			console.log(frm.nota.value);
-			if(frm.nota.value==null){
-				frm.nota.value=0;
-			}
-		}
-		
-		</script>
-			-->
+		<!-- EDITAR AVALIAÇÃO -->
+			
 		<div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="text-right cross">
-						<a class = "btn-exit" th:href="@{/paginaavaliacao/{id}(id=${avaliacao.id})}"><i class="fas fa-times"></i></a>
+						<a class = "btn-exit" th:href="@{/paginaitem/{id}(id=${Item.id})}"><i class="fas fa-times"></i></a>
 					</div>
 					<div class="card-body text-center"> 
 						<img src=" https://i.imgur.com/d2dKtI7.png" height="100" width="100">
@@ -154,13 +158,16 @@
 									<textarea class="form-control" name= "descricao" placeholder="Descreva o que achou..." rows="4"></textarea> 
 								</div>
 								<div class="text-center mt-4">
-									<button value = "input" class="btn btn-success send px-5" th:href="@{/updateAvaliacao/{id}(id=${avaliacao.id})}" method="post">Alterar <i class="fas fa-upload"></i></button>
+									<div>
+										<button value = "input" class="btn btn-success send px-5" th:href="@{/updateAvaliacao/{id}(id=${avaliacao.id})}" method="post">Alterar <i class="fas fa-upload"></i></button>
 									
+										
+									</div>
 																	 
 								</div>
 							</form>
 							<form th:action="@{/deletaravaliacao/{id}(id=${avaliacao.id})}" method="post">
-										<button value = "input" class="btn btn-success send px-5">Deletar <i class="far fa-trash-alt"></i></button>	
+								<button value = "input" class="btn btn-success send px-5">Deletar <i class="far fa-trash-alt"></i></button>	
 							</form>	
 						</div>
 					</div>

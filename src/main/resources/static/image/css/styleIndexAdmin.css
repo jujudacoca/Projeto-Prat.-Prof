@@ -70,18 +70,14 @@ a:hover{
 	margin-bottom: 100px
 }
 
-.position1, .position2, .position3{
-	font-size: 30px;
+.cont-borda{
+	border-bottom: 1px solid !important;
+	border-image-slice: 1 !important;
+	border-image-source: var(--gradient) !important;
+	margin-bottom: 2rem;
+	text-transform: capitalize !important;
 }
 
-.position1{
-	color: #f4c430 !important;
-}
-
-.position2{
-	color: #9a9a9a !important;
-}
-
-.position3{
-	color: #e07f1f !important;
+h4{
+	text-transform: uppercase;
 }

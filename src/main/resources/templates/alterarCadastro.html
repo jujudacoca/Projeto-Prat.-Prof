@@ -30,20 +30,20 @@
 						<div class="card fat">
 							<div class="card-body">
 								<h4 class="card-title">Alterar dados cadastrais</h4>
-								<form method="POST" class="my-login-validation" novalidate="" th:action="@{/cadastro}">
+								<form method="POST" class="my-login-validation" novalidate="" th:action="@{/alterarcadastro}">
 									<div class="form-group">
 										<label>Nome completo: </label>
-										<input type="text" class="form-control" name="nome" required autofocus>
+										<input type="text" class="form-control" name="nome" autofocus>
 									</div>
 
 									<div class="form-group">
 										<label>Data de nascimento: </label>
-										<input type="date" class="form-control" name="dtNasc" required>
+										<input type="date" class="form-control" name="dtNasc" >
 									</div>
 
 									<div class="form-group">
 										<label>Estado (UF): </label>
-										<select type = "text" class = "form-control" name = "uf" required>
+										<select type = "text" class = "form-control" name = "uf" >
 											<option value = "">Selecione</option>
 											<option value = "AC">Acre</option>
 											<option value = "AL">Alagoas</option>
@@ -77,16 +77,16 @@
 
 									<div class="form-group">
 										<label>Cidade: </label>
-										<input type="text" class="form-control" name="cidade" required>
+										<input type="text" class="form-control" name="cidade" >
 									</div>
 
 									<div class="form-group">
 										<label>Username: </label>
-										<input type="text" class="form-control" name="username" required>
+										<input type="text" class="form-control" name="username" >
 									</div>
 									<div class="form-group">
 										<label>Senha: </label>
-										<input type="password" class="form-control" name="senha" required data-eye>
+										<input type="password" class="form-control" name="senha"  data-eye>
 									</div>
 
 									<div class="form-group m-0">

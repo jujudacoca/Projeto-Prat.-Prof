@@ -52,15 +52,13 @@
 		</div>
 	</div>
 	
-	<!-- CORRIGIR ALERT -->
 	
-	<!--
-	<div th:if="${param.logout}"> 
-    	alert("Voce saiu");
-    </div>
-	-->
+	<script th:if="${param.error}"> 
+    	alert("Username e Senha incorretos!");
+    </script>
+	
 
-    <!-- CORRIGIR ALERT -->
+   
 
 	<script src="/image/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="/image/vendor/animsition/js/animsition.min.js"></script>

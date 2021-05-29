@@ -2,72 +2,122 @@
 <html xmlns:th="https://www.thymeleaf.org">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title th:text="${user.nome}"> Perfil</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title th:text="${user.nome}"> - Perfil</title>
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    	<link rel="stylesheet" href="/image/headers/assets/css/style.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+		<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+		<link rel="stylesheet" href="/image/css/styleIndexMembro.css">
+		<link rel="stylesheet" href="/image/css/stylePerfilMembro.css">
+		<link rel="stylesheet" href="/image/headers/assets/css/style.css">
+		<link rel="stylesheet" href="/image/css/styleAvaliacao.css">		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/image/css/stylePaginaItem.css">
 	</head>
 	<body>
-		<script th:if="${param.curtido}">
-			alert("voce retirou a curtida");
-		</script>
-		<h1><span th:text="${user.username}">username</span></h1>
 		
-		</br></br>
-		<div th:if="${membro=='eu'}">
-			<a href="/alterarCadastro"><button>Alterar Dados de cadastro</button></a>
-		</div>
-		</br>
-		<div th:if="${membro=='amigo'}">
-			<p>Seu amigo</p>>
-		</div>
-		<div th:if="${membro=='membro'}">
-			<form th:action="@{/pediramizade(id=${user.id})}" method="post">
-	       		 	<input type="submit" value="pedir amizade" />
-	   		</form>
-		</div>
+		<!-- HEADER -->
 		
+		<div class="header-blue">
+            <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+                <div class="container">
+                    <a class="navbar-brand" href="#">PPADS</a>
+                    <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navcol-1">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" href="/indexmembro">Sugestões para você</a>
+                            </li>
+                        </ul>
+                        <form class="form-inline mr-auto" th:action="@{/pesquisar}" method="POST">
+                            <div class="form-group">
+                                <label for="search-field">
+                                    <i class="fa fa-search"></i>
+                                </label>
+                                <input class="form-control search-field" type="search" name="pesquisa" id="search-field">
+                            </div>
+                        </form>
+                        <a th:if="${membro=='eu'}" class="btn btn-light action-button" href="/alterarCadastro">Alterar dados cadastrais</a>
+                        <a th:if="${membro!='eu'}" class="btn btn-light action-button" th:href="@{/perfilmembro/{username}(username=${log})}">Meu perfil</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <!-- FIM DO HEADER -->
 		
-		<div>
-		<h3>Avaliações</h3>
-			<dl th:each="a : ${listaAvaliacao}">
-	      		<dt>
-					<p>Membro: <span th:text="${a.username}">Username</span></br> </p>
-					<p>Joinha: <span th:text="${a.numJoinha}">numJoinha</span></p>
-					<p>nota: <span th:text="${a.nota}">nota</span></br> </p>
-					<p>Descricao: <span th:text="${a.descricao}">descricao</span></p>
-		      		
-		      		<a th:href="@{/paginaavaliacao/{id}(id=${a.id})}"><button>Ir avaliacao</button></a>
-		      		
-		      		
-		      		<form th:action="@{/darJoinha(id=${a.id},ind='pgmembro')}" method="post">
-		       		 	<input type="submit" value="curtir" />
-		   		 	</form>
-		   		 	<form th:if="${membro=='amigo'}" th:action="@{/comentar(id=${a.id},ind='pgmembro')}" method="post">
-	       		 		<input type="text" name="comentario">
-	       		 		<input type="submit" value="comentar" />
-	   		 		</form>
-	      		</dt>
-	    	</dl>
-		</div>
-		
-		<h3>Amizades</h3>
-			<dl th:each="a : ${listaAmizade}">
-	      	<dt th:if="${a.idUser1}==${user.id}">
-				<p>Membro: <span th:text="${a.username2}">Username</span></p>
-				<a th:href="@{/perfilmembro/{username}(username=${a.username2})}"><button>Visite a página do membro</button></a>
-	      		</br>
-	      </dt>
-	      <dt th:if="${a.idUser2}==${user.id}">
-				<p>Membro: <span th:text="${a.username1}">Username</span></p>
-				<a th:href="@{/perfilmembro/{username}(username=${a.username1})}"><button>Visite a página do membro</button></a>
-	      		</br>
-	      </dt>
-	    </dl>
-		</div>
-		<div th:if="${membro=='eu'}">
-			<form th:action="@{/deletarconta}" method="post">
-			<!-- Implementar javascript check de confirmação -->
-		       		 	<input type="submit" value="apagar conta" />
-		   	</form>
-		</div>
-	</body>
+		<div class="container mx-auto mt-4">
+			
+			<h3 class="card-title-individual" th:text="${user.nome}"></h3>
+			<h3 class="card-subtitle-individual" th:text="${user.username}"></h3>
+			
+			<form th:if="${membro=='eu'}" th th:action="@{/deletarconta}" method="post">
+				<!-- Implementar javascript check de confirmação -->
+				<button value="submit" class="btn btn-blog marginBottom10">Apagar conta</button>
+			</form>
+			<h3 class="card-title">Amigos: </h3>
+			<h4 class="card-subtitle" th:if="${l2==0 && membro=='eu'}">Você ainda não fez amigos.</h4>
+			<h4 class="card-subtitle" th:if="${l2==0 && membro!='eu'}">Este usuário não tem amigos.</h4>
+			<div class="row">
+				<div class="col-md-4" th:each="a : ${listaAmizade}">
+					<div class="card" style="width: 18rem;" th:if="${a.idUser1}==${user.id}">
+						<h5 class="card-title" th:text="${a.nome2}">Nome amigo</h5>
+						<h6 class="card-subtitlee mb-2 text-muted" th:text="${a.username2}">Username amigo</h6>
 	
+						<a th:href="@{/perfilmembro/{username}(username=${a.username2})}" class="btn mr-2">Visitar a página desse membro <i class="fas fa-external-link-alt"></i></a>
+					</div>
+					
+					<div class="card" style="width: 18rem;" th:if="${a.idUser2}==${user.id}">
+						<h5 class="card-title" th:text="${a.nome1}">Nome amigo</h5>
+						<h6 class="card-subtitlee mb-2 text-muted" th:text="${a.username1}">Username amigo</h6>
+						
+						<a th:href="@{/perfilmembro/{username}(username=${a.username1})}" class="btn mr-2">Visitar a página desse membro <i class="fas fa-external-link-alt"></i></a>
+					</div>
+				</div>
+			</div>
+			
+			<br>
+			<div th:if="${membro=='amigo'}">
+				<p>Este membro já seu amigo!</p>
+			</div>
+			<div th:if="${membro=='membro'}">
+				<form th:action="@{/pediramizade(id=${user.id})}" method="post">
+		       		 	<input type="submit" value="Pedir Amizade" class="btn btn-blog pull-right marginBottom10"/>
+		   		</form>
+			</div>		
+			
+			<div>
+			<h3>Avaliações</h3>
+			<div th:if="${l1==0}">
+				<h4 th:if="${membro=='eu'}">Você ainda não avaliou nenhuma mídia.</h4>
+				<h4 th:if="${membro!='eu'}">Este usuário não avaliou nenhuma mídia.</h4>	
+			</div>
+				<div class="container cont-borda" th:each="a : ${listaAvaliacao}">
+					<h4>Nome do item avaliado</h4>
+					<article>
+						<h5>Nota (0 a 10): <span th:text="${a.nota}"></span></h5>
+						<h5 th:text="${a.descricao}"></h5>
+					</article>
+					<em>Quantidade atual de joinhas: <span th:text="${a.numJoinha}"></span></em>
+					<a th:href="@{/paginaavaliacao/{id}(id=${a.id})}"><button class="btn btn-blog pull-right marginBottom10">Visitar a página dessa avaliação <i class="fas fa-external-link-alt"></i></button></a>
+					<br/>
+					<br/>
+				</div>
+			</div>			
+		</div>		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.2/umd/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	</body>
 </html>

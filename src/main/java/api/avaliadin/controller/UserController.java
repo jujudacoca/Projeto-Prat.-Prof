@@ -146,22 +146,25 @@ public class UserController {
 		}
 	
 		userRepository.save(t);
-		return "redirect:/listaUser";
+		return "redirect:/indexmembro";
 		
 	}
 	
 	@GetMapping(path="/perfilmembro/{username}")
 	public String pagMembro(@PathVariable String username, Model model,Authentication authentication) {
 		String username_ = authentication.getName();
+		model.addAttribute("log", username_);
 		User u = userRepository.findByUsername(username);
 		if(u!=null) {
 			model.addAttribute("user", u);
 			Iterable<Avaliacao> listaAvaliacao = avaliacaoRepository.findAllByIdUser(u.getId());
 			model.addAttribute("listaAvaliacao", listaAvaliacao);
+			model.addAttribute("l1", count(listaAvaliacao));
 			Iterable<Amizade> listaAmizade = amizadeRepository.findAllByIdUser(u.getId());
 			model.addAttribute("listaAmizade", listaAmizade);
+			model.addAttribute("l2", count(listaAmizade));
 		}else {
-			return "redirect:/indexmembro?notfound";//implementar essa excessão ainda 
+			return "redirect:/indexmembro?notfound";
 		}
 		if(username.equals(username_)) {
 				model.addAttribute("membro", "eu");
@@ -201,10 +204,12 @@ public class UserController {
 			l1.add(r.getIduser2());
 			l1.add(r.getIduser3());
 			int count = 0;
+			
 			while(itu.hasNext()) {
 				User idt = itu.next();
 				for(int j = 0; j<3;j++) {
-					if(idt.getId()==l1.get(j)) {
+					int o = l1.get(j);
+					if(idt.getId()==o) {
 						listaAmigo.add(idt);
 						count++;
 					}
@@ -225,7 +230,8 @@ public class UserController {
 			while(iti.hasNext()) {
 				Item idt = iti.next();
 				for(int j = 0; j<3;j++) {
-					if(idt.getId()==l2.get(j)) {
+					int p = l2.get(j);
+					if(idt.getId()==p) {
 						listaItem.add(idt);
 						count++;
 					}
