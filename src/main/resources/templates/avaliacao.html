@@ -4,6 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><span th:text="${Item.titulo}"></span> - Avaliação</title>
 		<meta name='viewport' content='width=device-width, initial-scale=1'>
+		<link rel="sortcut icon" href="/image/img/icone.jpg" type="image/jpg" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/image/css/stylePaginaItem.css">
 		<link rel="stylesheet" href="/image/headers/assets/css/styleheader.css">
@@ -92,7 +93,7 @@
 						<a th:href="@{/paginaitem/{id}(id=${Item.id})}"><i class="fa fa-times mr-2"></i></a>
 					</div>
 					<div class="card-body text-center"> 
-						<img src=" https://i.imgur.com/d2dKtI7.png" height="100" width="100">
+						<img src="/image/img/icone.svg" height="100" width="100">
 						<div class="comment-box text-center">
 							<form action="#" th:action="@{/criaAvaliacao(id=${Item.id})}" method="post" name="cadAval" >
 								<h4>Alterar a sua avaliação sobre <span th:value="${Item.titulo}"></span></h4>

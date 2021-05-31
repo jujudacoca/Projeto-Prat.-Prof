@@ -3,6 +3,7 @@ package api.avaliadin.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,7 +56,7 @@ public class Avaliacao {
 	@Column(name="titulo")
 	private String titulo;
 	
-	@OneToMany(mappedBy="avaliacao")
+	@OneToMany(mappedBy="avaliacao",cascade = CascadeType.ALL)
 	private List<Comentario> comentarios;
 	
 	

@@ -13,4 +13,6 @@ public interface ComentarioRepository extends CrudRepository<Comentario, Integer
     public Iterable<Comentario> findAllByIdAvaliacao(@Param("id_avaliacao") Integer id);
 	
 	Comentario findById(int id);
+	
+	void deleteByIdUsuario(int id);
 }

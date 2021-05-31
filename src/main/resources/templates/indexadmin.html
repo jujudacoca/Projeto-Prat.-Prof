@@ -4,142 +4,148 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title th:text="'Administracão de ' + ${user.nome}"></title>
 		<meta name='viewport' content='width=device-width, initial-scale=1'>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel="sortcut icon" href="/image/img/icone.jpg" type="image/jpg" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-	    <link rel="stylesheet" href="/image/headers/assets/css/style.css">
 	    <link rel="stylesheet" href="/image/css/stylePaginaItem.css">
 	    <link rel="stylesheet" href="/image/css/styleIndexAdmin.css">
 	    <link rel="stylesheet" href="/image/css/styleIndexMembro.css">
-	    		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
 	    <link rel='stylesheet' type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
 	   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
 		<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-   
+   		
+   		<!-- STYLE HEADER -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+		<link rel="stylesheet" href="/image/headers/assets/css/style.css">
+   		
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>	
 	    <script src="https://kit.fontawesome.com/458e90fb96.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
-	
-	<!-- HEADER -->
-	
-	<div class="header-blue">
-    	<nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-	        <div class="container">
-	        	<a class="navbar-brand" href="/indexadmin">PPADS</a>
-	            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
-	            	<span class="sr-only">Toggle navigation</span>
-	                <span class="navbar-toggler-icon"></span>
-	            </button>
-	            <div class="collapse navbar-collapse" id="navcol-1">
-	           		<ul class="nav navbar-nav">
-	                	<li class="nav-item" role="presentation">
-	                    	<a class="nav-link" href="/indexmembro">Sugestões para você</a>
-	                    </li>
-	                    <li class="dropdown">
-	                        <a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Cadastrar novo item</a>
-	                	        <div class="dropdown-menu" role="menu">
-	                    	      	<a class="dropdown-item" role="presentation" href="/cadastrofilme">Cadastrar filme</a>
-	                               	<a class="dropdown-item" role="presentation" href="/cadastrolivro">Cadastrar livro</a>
-	                               	<a class="dropdown-item" role="presentation" href="/cadastroserie">Cadastrar série</a>
-	                            </div>
-	                    </li>
-	                </ul>
-	                <form class="form-inline mr-auto" th:action="@{/pesquisar}" method="post">
-	                	<div class="form-group">
-	                    	<label for="search-field">
-	                        	<i class="fa fa-search"></i>
-	                        </label>
-	                        <input class="form-control search-field" type="search" name="pesquisa" id="search-field">
-	                    </div>
-	                </form>
-	                <a class="btn1 btn-light action-button" th:href="@{/perfilmembro/{username}(username=${user.username})}">Meu perfil</a>
-	             </div>
-	         </div>
-         </nav>
-    </div>
-    
-    <!-- FIM DO HEADER -->
-    
-    <div class="container mx-auto mt-4">
-    
-    <!-- SE ESTIVER LOGADO COMO ADMIN -->
-    
-		<div th:if="${user.role}=='ROLE ADMIN'">
-			<h3 style="padding-top: .75rem;">Avalie novos cadastros de mídia: </h3>
-			<ul class="list-style-none">
-				<h4 th:if="${l2==0}">Não há mídias para serem checadas</h4>
-				<li class="d-flex no-block card-body cont-borda" th:if="${l2!=0}" th:each="Item : ${listaItem}">
-					
-					<!-- CASO SEJA UM FILME -->
-					
-					<div th:if="${Item.tipo=='F'}">
-						<h4>Filme</h4>
-						<h5 th:text="${Item.titulo}"></h5>
-						<h5 th:text="${Item.diretor}"></h5>
-						<h5>Elenco Principal: <span th:text="${Item.elenco}"></span></h5>
-						<h5 th:text="${Item.pais}"></h5>
-						<h5 th:text="${Item.ano}"></h5>
-					</div>
-					
-					<!--  Caso seja um livro  -->
-					
-					<div th:if="${Item.tipo=='L'}">
-						<h4>Livro</h4>
-						<h5 th:text="${Item.titulo}"></h5>
-						<h5 th:text="${Item.autor}"></h5>
-						<h5 th:text="${Item.editora}"></h5>
-						<h5 th:text="${Item.pais}"></h5>
-						<h5 th:text="${Item.ano}"></h5>
-					</div>
-					
-					<!--  Caso seja um serie  -->
-					
-					<div th:if="${Item.tipo=='S'}">
-						<h4>Série</h4>
-						<h5 th:text="${Item.titulo}"></h5>
-						<h5 th:text="${Item.diretor}"></h5>
-						<h5>Elenco Principal: <span th:text="${Item.elenco}"></span></h5>
-						<h5 th:text="${Item.pais}"></h5>
-						<h5 th:text="${Item.ano}"></h5>
-						<h5><span th:text="${Item.numTemp}"></span> temporadas</h5>
-					</div>
-					<div class="ml-auto">
-						<div class="tetx-right">
-							<h5 class="text-muted m-b-0">
-								<form th:action="@{/aprovarItem(id=${Item.id})}" method="post" class="a-aceitar">
-									<input type="submit" class="a-aceitar" value="Aprovar"><i class="fas fa-check-circle"></i></button>
-						   		</form>
-							</h5>
-							
-							<h5 class="text-muted m-b-0">
-								<form th:action="@{/rejeitarItem(id=${Item.id})}" method="post" class="a-recusar">
-									<input type="submit" class="a-recusar" value="Cadastro já existe"><i class="fas fa-external-link-alt"></i>
-						   		</form>
-							</h5>
-							
-							<h5 class="text-muted m-b-0">
-								<form th:action="@{/rejeitarItem(id=${Item.id})}" method="post" class="a-recusar">
-									<input type="submit" class="a-recusar" value="Recusar"><i class="fas fa-times-circle"></i>
-						   		</form>
-							</h5>
+		
+		<!-- HEADER -->
+		
+		<div class="header-blue">
+	    	<nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+		        <div class="container">
+		        	<a class="navbar-brand" href="/indexadmin">PPADS</a>
+		            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
+		            	<span class="sr-only">Toggle navigation</span>
+		                <span class="navbar-toggler-icon"></span>
+		            </button>
+		            <div class="collapse navbar-collapse" id="navcol-1">
+		           		<ul class="nav navbar-nav">
+		                	<li class="nav-item" role="presentation">
+		                    	<a class="nav-link" href="/indexmembro">Sugestões para você</a>
+		                    </li>
+		                    <li class="dropdown">
+		                        <a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Cadastrar novo item</a>
+		                	        <div class="dropdown-menu" role="menu">
+		                    	      	<a class="dropdown-item" role="presentation" href="/cadastrofilme">Cadastrar filme</a>
+		                               	<a class="dropdown-item" role="presentation" href="/cadastrolivro">Cadastrar livro</a>
+		                               	<a class="dropdown-item" role="presentation" href="/cadastroserie">Cadastrar série</a>
+		                            </div>
+		                    </li>
+		                </ul>
+		                <form class="form-inline mr-auto" th:action="@{/pesquisar}" method="post">
+		                	<div class="form-group">
+		                    	<label for="search-field">
+		                        	<i class="fa fa-search"></i>
+		                        </label>
+		                        <input class="form-control search-field" type="search" name="pesquisa" id="search-field">
+		                    </div>
+		                </form>
+		                <a class="btn1 btn-light action-button" th:href="@{/perfilmembro/{username}(username=${user.username})}">Meu perfil</a>
+		             </div>
+		         </div>
+	         </nav>
+	    </div>
+	    
+	    <!-- FIM DO HEADER -->
+	    
+	    <div class="container mx-auto mt-4">
+	    
+	    	<!-- SE ESTIVER LOGADO COMO ADMIN -->
+	    
+			<div th:if="${user.role}=='ROLE ADMIN'">
+				<h3 style="padding-top: .75rem;">Avalie novos cadastros de mídia: </h3>
+				<ul class="list-style-none">
+					<h5 th:if="${l2==0}">Não há mídias para serem checadas</h5>
+					<li class="d-flex no-block card-body cont-borda" th:if="${l2!=0}" th:each="Item : ${listaItem}">
+						
+						<!-- CASO SEJA UM FILME -->
+						
+						<div th:if="${Item.tipo=='F'}">
+							<h4>Filme</h4>
+							<h5 th:text="${Item.titulo}"></h5>
+							<h5 th:text="${Item.diretor}"></h5>
+							<h5>Elenco Principal: <span th:text="${Item.elenco}"></span></h5>
+							<h5 th:text="${Item.pais}"></h5>
+							<h5 th:text="${Item.ano}"></h5>
 						</div>
-					</div>
-				</li>
-			</ul>
-		</div>
-		
-		<!-- FIM DE SE ESTIVER LOGADO COMO ADMIN -->
-		
-		<!-- SE ESTIVER LOGADO COMO MEMBRO -->
+						
+						<!--  Caso seja um livro  -->
+						
+						<div th:if="${Item.tipo=='L'}">
+							<h4>Livro</h4>
+							<h5 th:text="${Item.titulo}"></h5>
+							<h5 th:text="${Item.autor}"></h5>
+							<h5 th:text="${Item.editora}"></h5>
+							<h5 th:text="${Item.pais}"></h5>
+							<h5 th:text="${Item.ano}"></h5>
+						</div>
+						
+						<!--  Caso seja um serie  -->
+						
+						<div th:if="${Item.tipo=='S'}">
+							<h4>Série</h4>
+							<h5 th:text="${Item.titulo}"></h5>
+							<h5 th:text="${Item.diretor}"></h5>
+							<h5>Elenco Principal: <span th:text="${Item.elenco}"></span></h5>
+							<h5 th:text="${Item.pais}"></h5>
+							<h5 th:text="${Item.ano}"></h5>
+							<h5><span th:text="${Item.numTemp}"></span> temporadas</h5>
+						</div>
+						<div class="ml-auto">
+							<div class="tetx-right">
+								<h5 class="text-muted m-b-0">
+									<form th:action="@{/aprovarItem(id=${Item.id})}" method="post" class="a-aceitar">
+										<input type="submit" class="a-aceitar" value="Aprovar"><i class="fas fa-check-circle"></i></button>
+							   		</form>
+								</h5>
+								
+								<h5 class="text-muted m-b-0">
+									<form th:action="@{/rejeitarItem(id=${Item.id})}" method="post" class="a-recusar">
+										<input type="submit" class="a-recusar" value="Cadastro já existe"><i class="fas fa-external-link-alt"></i>
+							   		</form>
+								</h5>
+								
+								<h5 class="text-muted m-b-0">
+									<form th:action="@{/rejeitarItem(id=${Item.id})}" method="post" class="a-recusar">
+										<input type="submit" class="a-recusar" value="Recusar"><i class="fas fa-times-circle"></i>
+							   		</form>
+								</h5>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
 			
-		<div th:if="${user.role}=='ROLE USER'">
-			<h3> Você não tem acesso a essa página, <a th:href="@{/indexmembro}">Visite a página de membro</a></h3>
-		</div>
-		
-		<!-- FIM DE SE ESTIVER LOGADO COMO MEMBRO -->
-    </div>
-		
-</body>
+			<!-- FIM DE SE ESTIVER LOGADO COMO ADMIN -->
+			
+			<!-- SE ESTIVER LOGADO COMO MEMBRO -->
+				
+			<div th:if="${user.role}=='ROLE USER'">
+				<h3> Você não tem acesso a essa página, <a th:href="@{/indexmembro}">Visite a página de membro</a></h3>
+			</div>
+			
+			<!-- FIM DE SE ESTIVER LOGADO COMO MEMBRO -->
+	    </div>
+    
+	    <!-- SCRIPTS HEADER -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>		
+	</body>
 </html>

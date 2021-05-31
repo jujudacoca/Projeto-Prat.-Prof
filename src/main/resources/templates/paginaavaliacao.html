@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 	<head>
+		<link rel="sortcut icon" href="/image/img/icone.jpg" type="image/jpg" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title th:text="'Avaliacao de ' + ${avaliacao.titulo}"> Avaliação</title>
 		<meta name='viewport' content='width=device-width, initial-scale=1'>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/image/css/stylePaginaItem.css">
-		<link rel="stylesheet" href="/image/headers/assets/css/styleheader.css">
-		<link rel="stylesheet" href="/image/headers/assets/css/style.css">
 		<link rel="stylesheet" href="/image/css/styleAvaliacao.css">
 		<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
 		
@@ -17,6 +16,11 @@
 		<script src="https://kit.fontawesome.com/458e90fb96.js" crossorigin="anonymous"></script>
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+		
+		<!-- STYLE HEADER -->
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+	    <link rel="stylesheet" href="/image/headers/assets/css/style.css">
 	</head>
 	<body oncontextmenu='return false' class='snippet-body'>
 	
@@ -25,7 +29,7 @@
 		<div class="header-blue">
 			<nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
 				<div class="container">
-					<a class="navbar-brand" href="#">PPADS</a>
+					<a class="navbar-brand" href="/login"></a>
 					<button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="navbar-toggler-icon"></span>
@@ -76,58 +80,31 @@
 			</div>	
 			
 			<!-- Botao joinha arrumar -->
-			<form th:action="@{/darJoinha(id=${avaliacao.id})}" method="post">
-						<button value="submit" class="btn btn-blog pull-right marginBottom10"><i class="far fa-thumbs-up"></i></button> 
+			<form th:if="${membro!='eu'}" th:action="@{/darJoinha(id=${avaliacao.id})}" method="post">
+				<button value="submit" class="btn btn-danger pull-right"><i class="far fa-thumbs-up"></i></button> 
 			</form>
 			
 			<!-- Arrumar o comentario aqui -->
 			
-			<form th:action="@{/comentar(id=${avaliacao.id})}" method="post">
-	       		 	<input type="text" name="comentario">
-	       		 	<input type="submit" value="comentar" />
+			<form th:if="${membro!='eu'}" th:action="@{/comentar(id=${avaliacao.id})}" method="post">
+				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form1">Comentar</button>
 	   		 </form>
 	   		 		
 	 		<h3>Comentários nessa avaliação: </h3>
 			<h4 th:if="${l5==0}">Ainda não há comentários nessa avaliação.</h4>
 			
 			<div class="container cont-borda" th:if="${l5!=0}" th:each="c : ${avaliacao.comentarios}">
-				<h4>Comentário de <span th:text="${c.avaliacao.username}"></span></h4>	
+				<h4>Comentário de <span th:text="${c.username}"></span></h4>	
 				<h5 th:text="${c.descricao}"></h5>
 				
-				<form th:action="@{/deletarcomentario/{id}(id=${c.id})}" method="post"> 
-		       		 	<input type="submit" value="apagar comentario" />
+				<form th:action="@{/deletarcomentario/{id}(id=${c.id})}" method="post">
+					<button type="input" class="btn btn-danger pull-right">Excluir comentário</button>
 		   		</form>
+		   		<br/>
+		   		<br/>
 				
 			</div>
-		</div>
-		
-		<!-- FIM DOS COMENTÁRIOS -->
-	
-		<!--p>Membro: <span th:text="${avaliacao.username}">Username</span></br> </p>
-					
-					<h5>Nota (0 a 10): <span th:text="${avaliacao.nota}"></span></h5>
-					<h5 th:text="${avaliacao.descricao}"></h5>
-					<em>Quantidade atual de joinhas: <span th:text="${avaliacao.numJoinha}"></span></em>
-		      		<h5>Comentarios</h5>
-		      		<dl th:each="c : ${avaliacao.comentarios}">
-		      		<span th:text="${#lists.size(c)}"></span>
-		      		 	<dt th:if="${#lists.size(c) > 0}">
-		      				<p>Comentario: <span th:text="${c.descricao}">descicao</span></p>
-		      			</dt>
-		      		</dl>
-		
-		<div th:if="${membro=='eu'}">
-			<form th:action="@{/deletaravaliacao/{id}(id=${avaliacao.id})}" method="post">
-			<!-- Implementar javascript check de confirmação 
-		       		 	<input type="submit" value="apagar avaliacao" />
-		   	</form>
-		   	
-		   	<form th:action="@{/updateAvaliacao/{id}(id=${avaliacao.id})}" method="post">
-			<!-- Implementar javascript check de confirmação 
-		       		 	<input type="submit" value="apagar avaliacao" />
-		   	</form>
-		</div-->
-		
+		</div>		
 		
 		<!-- EDITAR AVALIAÇÃO -->
 			
@@ -138,7 +115,7 @@
 						<a class = "btn-exit" th:href="@{/paginaitem/{id}(id=${Item.id})}"><i class="fas fa-times"></i></a>
 					</div>
 					<div class="card-body text-center"> 
-						<img src=" https://i.imgur.com/d2dKtI7.png" height="100" width="100">
+						<img src="/image/img/icone.svg" height="100" width="100">
 						<div class="comment-box text-center">
 							<form action="#" th:action="@{/updateAvaliacao/{id}(id=${avaliacao.id})}" method="post" name="cadAval" >
 								<h4>Alterar sua avaliação sobre <span th:value="${Item.titulo}">isso</span>?</h4>
@@ -160,14 +137,11 @@
 								<div class="text-center mt-4">
 									<div>
 										<button value = "input" class="btn btn-success send px-5" th:href="@{/updateAvaliacao/{id}(id=${avaliacao.id})}" method="post">Alterar <i class="fas fa-upload"></i></button>
-									
-										
 									</div>
-																	 
 								</div>
 							</form>
 							<form th:action="@{/deletaravaliacao/{id}(id=${avaliacao.id})}" method="post">
-								<button value = "input" class="btn btn-success send px-5">Deletar <i class="far fa-trash-alt"></i></button>	
+								<button value = "input" class="btn btn-success send px-5">Excluir avaliação <i class="far fa-trash-alt"></i></button>	
 							</form>	
 						</div>
 					</div>
@@ -177,10 +151,42 @@
 		
 		<!-- FIM DA EDIÇÃO DE AVALIAÇÃO -->
 		
+		<!-- COMENTAR -->
+			
+		<div class="modal fade" id="form1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="text-right cross">
+						<a class = "btn-exit" th:href="@{/paginaitem/{id}(id=${Item.id})}"><i class="fas fa-times"></i></a>
+					</div>
+					<div class="card-body text-center"> 
+						<img src="/image/img/icone.jpg" height="100" width="100">
+						<div class="comment-box text-center">
+							<form action="#" th:action="@{/comentar(id=${avaliacao.id})}" method="post" name="cadAval" >
+								<h4>Comentar na avaliação</h4>
+								<div class="comment-area"> 
+									<textarea class="form-control" name="comentario" placeholder="Descreva o que achou..." rows="4"></textarea> 
+								</div>
+								<div class="text-center mt-4">
+									<div>
+										<button value = "input" class="btn btn-success send px-5" th:href="@{/comentar(id=${avaliacao.id})}">Publicar <i class="fas fa-upload"></i></button>									
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- FIM DO COMENTAR -->
+		
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.2/umd/popper.min.js"></script>
+		
+		<!-- SCRIPTS HEADER -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>   	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>	
 	</body>
 </html>

@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -204,7 +205,6 @@ public class UserController {
 			l1.add(r.getIduser2());
 			l1.add(r.getIduser3());
 			int count = 0;
-			
 			while(itu.hasNext()) {
 				User idt = itu.next();
 				for(int j = 0; j<3;j++) {
@@ -230,8 +230,8 @@ public class UserController {
 			while(iti.hasNext()) {
 				Item idt = iti.next();
 				for(int j = 0; j<3;j++) {
-					int p = l2.get(j);
-					if(idt.getId()==p) {
+					int o = l2.get(j);
+					if(idt.getId()==o) {
 						listaItem.add(idt);
 						count++;
 					}
@@ -326,13 +326,14 @@ public class UserController {
         String filename = ServletUtilities.saveChartAsPNG(graficoBarra, 500, 500, null,request.getSession());
         String chartURL = request.getContextPath() + "/chart?filename="+filename;
 		model.addAttribute("makeline", chartURL);
-		return "/indexgerente";
+		return "indexgerente";
 	}
 	@Bean
 	public ServletRegistrationBean<DisplayChart> MyServlet() {
 		return new ServletRegistrationBean<>(new DisplayChart(),"/chart");
 	}
 	
+	@Transactional
 	@PostMapping("/deletarconta")
 	public String deleteUser(Authentication authentication) {
 		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
@@ -340,25 +341,14 @@ public class UserController {
 		amizadeRepository.deleteByIdUser1(t.getId());
 		amizadeRepository.deleteByIdUser2(t.getId());
 		userRepository.delete(t);
-		//comentarioRepository.deleleByIdUsuario(t.getId());
+		comentarioRepository.deleteByIdUsuario(t.getId());
 		joinhaRepository.deleteByIdUsuario(t.getId());
 		avaliacaoRepository.deleteByIdUsuario(t.getId());
 		return "redirect:/login?logout";
 	}
 	
-	@RequestMapping(value = "/listaUser", method = RequestMethod.GET)
-    public String listaUsers(Model model) {
-		Iterable<User> listaUser = userRepository.findAll();
-        if (listaUser != null) {
-        	model.addAttribute("users", listaUser);
-        }
-        return "listaUser";
-    }
+
 	
-	@GetMapping(path="/all")
-	public @ResponseBody Iterable<User> getAllUsers() throws IOException {
-		return userRepository.findAll();
-	}
 	
     public static String criptografar(String rawPassword) {
    	 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

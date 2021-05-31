@@ -93,11 +93,6 @@ public class AvaliacaoController {
 		return "redirect:/indexmembro";
 	}
 	
-	@GetMapping(path="/allAval")
-	public @ResponseBody Iterable<Avaliacao> getAllAvalicaos() {
-		return avaliacaoRepository.findAll();
-	}
-	
 	@PostMapping("/darJoinha")
 	public String addJoinhapgitem(@RequestParam int id,Authentication authentication) {
 		MyUserDetails m = (MyUserDetails) authentication.getPrincipal();
@@ -178,12 +173,4 @@ public class AvaliacaoController {
 	}
 	
 	
-	@PostMapping("/deletarconta/{id}")
-	public String deleteAval(@PathVariable int id) {
-		Avaliacao a = avaliacaoRepository.findById(id);
-		avaliacaoRepository.delete(a);
-		return "redirect:/perfilmembro/"+a.getUsername();
-		
-
-	}
 }

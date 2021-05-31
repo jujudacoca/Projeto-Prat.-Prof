@@ -4,7 +4,7 @@
     background: -o-linear-gradient(left, #A300A3, #FF9A1F);
     background: -moz-linear-gradient(left, #A300A3, #FF9A1F);
     background: linear-gradient(left, #A300A3, #FF9A1F);
-    font-family:'Open Sans', sans-serif;
+    font-family:'Open Sans', sans-serif !important;
 }
 
 @media (min-width:768px) {
@@ -219,7 +219,15 @@
   opacity:0.2;
 }
 
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5) !important;
+}
+
 .btn1{
   border-radius: 40px !important;
   background: transparent !important;
+}
+
+.dropdown-item{
+	color: #000 !important;
 }

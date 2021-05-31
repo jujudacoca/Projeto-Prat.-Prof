@@ -58,10 +58,6 @@ public class ItemController {
 		    return "redirect:/indexmembro";
 		}
 		}
-	@GetMapping(path="/allLivro")
-	public @ResponseBody Iterable<Livro> getAllLivros() {
-		return livroRepository.findAll();
-	}
 	
 	@GetMapping("/cadastrofilme")
 	public String showCadastro(Filme filme) {
@@ -85,10 +81,6 @@ public class ItemController {
 		    filmeRepository.save(u);
 		    return "redirect:/indexmembro";
 		}
-	}
-	@GetMapping(path="/allFilme")
-	public @ResponseBody Iterable<Filme> getAllFilmes() {
-		return filmeRepository.findAll();
 	}
 	@GetMapping("/cadastroserie")
 	public String showCadastro(Serie serie) {
@@ -115,10 +107,6 @@ public class ItemController {
 		
 		}
 		}
-	@GetMapping(path="/allSerie")
-	public @ResponseBody Iterable<Serie> getAllSerie() {
-		return serieRepository.findAll();
-	}
 	
 	@GetMapping(path="/paginaitem/{id}")
 	public String pagItem(@PathVariable int id, Model model, Authentication authentication) {

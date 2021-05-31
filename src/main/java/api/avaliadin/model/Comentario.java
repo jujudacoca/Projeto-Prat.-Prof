@@ -20,15 +20,6 @@ public class Comentario {
 		this.id = id;
 	}
 
-	/**
-	public Integer getIdAvaliacao() {
-		return idAvaliacao;
-	}
-
-	public void setIdAvaliacao(Integer idAvaliacao) {
-		this.idAvaliacao = idAvaliacao;
-	}**/
-
 	public Integer getIdUsuario() {
 		return idUsuario;
 	}
@@ -65,9 +56,6 @@ public class Comentario {
 	@Column(name="idComentario")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	
-	//@Column(name="idAvaliacao")
-	//private Integer idAvaliacao;
 	
 	@Column(name="idUsuario")
 	private Integer idUsuario;

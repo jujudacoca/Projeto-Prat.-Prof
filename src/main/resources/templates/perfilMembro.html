@@ -3,20 +3,27 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title th:text="${user.nome}"> - Perfil</title>
-    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
-    	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+		<title th:text="${user.nome}"></title>
+		<link rel="sortcut icon" href="/image/img/icone.jpg" type="image/jpg" />
     	<link rel="stylesheet" href="/image/headers/assets/css/style.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
 		<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
 		<link rel="stylesheet" href="/image/css/styleIndexMembro.css">
-		<link rel="stylesheet" href="/image/css/stylePerfilMembro.css">
-		<link rel="stylesheet" href="/image/headers/assets/css/style.css">
-		<link rel="stylesheet" href="/image/css/styleAvaliacao.css">		
+		<link rel="stylesheet" href="/image/css/stylePerfilMembro.css">	
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/image/css/stylePaginaItem.css">
+		
+		<!-- STYLE HEADER -->
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+	    <link rel="stylesheet" href="/image/headers/assets/css/style.css">
+		
+		<!-- STYLE AVALIACAO -->
+		<link rel="stylesheet" href="/image/css/styleAvaliacao.css">
+		<script src="https://kit.fontawesome.com/458e90fb96.js" crossorigin="anonymous"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>		
 	</head>
 	<body>
 		
@@ -25,7 +32,7 @@
 		<div class="header-blue">
             <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
                 <div class="container">
-                    <a class="navbar-brand" href="#">PPADS</a>
+                    <a class="navbar-brand" href="/login">PPADS</a>
                     <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="navbar-toggler-icon"></span>
@@ -35,6 +42,14 @@
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" href="/indexmembro">Sugestões para você</a>
                             </li>
+                            <li class="dropdown">
+								<a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Cadastrar novo item</a>
+								<div class="dropdown-menu" role="menu">
+									<a class="dropdown-item" role="presentation" href="/cadastrofilme">Cadastrar filme</a>
+									<a class="dropdown-item" role="presentation" href="/cadastrolivro">Cadastrar livro</a>
+									<a class="dropdown-item" role="presentation" href="/cadastroserie">Cadastrar série</a>
+								</div>
+							</li>
                         </ul>
                         <form class="form-inline mr-auto" th:action="@{/pesquisar}" method="POST">
                             <div class="form-group">
@@ -44,8 +59,8 @@
                                 <input class="form-control search-field" type="search" name="pesquisa" id="search-field">
                             </div>
                         </form>
-                        <a th:if="${membro=='eu'}" class="btn btn-light action-button" href="/alterarCadastro">Alterar dados cadastrais</a>
-                        <a th:if="${membro!='eu'}" class="btn btn-light action-button" th:href="@{/perfilmembro/{username}(username=${log})}">Meu perfil</a>
+                        <a th:if="${membro=='eu'}" class="btn1 btn-light action-button" href="/alterarCadastro">Alterar dados cadastrais</a>
+                        <a th:if="${membro!='eu'}" class="btn1 btn-light action-button" th:href="@{/perfilmembro/{username}(username=${log})}">Meu perfil</a>
                     </div>
                 </div>
             </nav>
@@ -62,21 +77,23 @@
 				<!-- Implementar javascript check de confirmação -->
 				<button value="submit" class="btn btn-blog marginBottom10">Apagar conta</button>
 			</form>
-			<h3 class="card-title">Amigos: </h3>
+			<h3>Amigos: </h3>
 			<h4 class="card-subtitle" th:if="${l2==0 && membro=='eu'}">Você ainda não fez amigos.</h4>
-			<h4 class="card-subtitle" th:if="${l2==0 && membro!='eu'}">Este usuário não tem amigos.</h4>
+			<h4 class="card-subtitle" th:if="${l2==0 && membro!='eu'}">Este usuário ainda não tem amigos.</h4>
 			<div class="row">
 				<div class="col-md-4" th:each="a : ${listaAmizade}">
 					<div class="card" style="width: 18rem;" th:if="${a.idUser1}==${user.id}">
-						<h5 class="card-title" th:text="${a.nome2}">Nome amigo</h5>
-						<h6 class="card-subtitlee mb-2 text-muted" th:text="${a.username2}">Username amigo</h6>
-	
-						<a th:href="@{/perfilmembro/{username}(username=${a.username2})}" class="btn mr-2">Visitar a página desse membro <i class="fas fa-external-link-alt"></i></a>
+						<div class="card-body">
+							<h5 class="card-title" th:text="${a.nome2}">Nome amigo</h5>
+							<h6 class="card-subtitle mb-2 text-muted" th:text="${a.username2}">Username amigo</h6>
+		
+							<a th:href="@{/perfilmembro/{username}(username=${a.username2})}" class="btn mr-2">Visitar a página desse membro <i class="fas fa-external-link-alt"></i></a>
+						</div>
 					</div>
 					
 					<div class="card" style="width: 18rem;" th:if="${a.idUser2}==${user.id}">
 						<h5 class="card-title" th:text="${a.nome1}">Nome amigo</h5>
-						<h6 class="card-subtitlee mb-2 text-muted" th:text="${a.username1}">Username amigo</h6>
+						<h6 class="card-subtitle mb-2 text-muted" th:text="${a.username1}">Username amigo</h6>
 						
 						<a th:href="@{/perfilmembro/{username}(username=${a.username1})}" class="btn mr-2">Visitar a página desse membro <i class="fas fa-external-link-alt"></i></a>
 					</div>
@@ -84,23 +101,24 @@
 			</div>
 			
 			<br>
-			<div th:if="${membro=='amigo'}">
-				<p>Este membro já seu amigo!</p>
-			</div>
+			
 			<div th:if="${membro=='membro'}">
+				<h4 th:if="${membro=='amigo'}">Este membro já é seu amigo!</h4>
 				<form th:action="@{/pediramizade(id=${user.id})}" method="post">
 		       		 	<input type="submit" value="Pedir Amizade" class="btn btn-blog pull-right marginBottom10"/>
 		   		</form>
+		   		<br/>
+		   		<br/>
 			</div>		
 			
 			<div>
 			<h3>Avaliações</h3>
 			<div th:if="${l1==0}">
 				<h4 th:if="${membro=='eu'}">Você ainda não avaliou nenhuma mídia.</h4>
-				<h4 th:if="${membro!='eu'}">Este usuário não avaliou nenhuma mídia.</h4>	
+				<h4 th:if="${membro!='eu'}">Este usuário ainda não avaliou nenhuma mídia.</h4>	
 			</div>
 				<div class="container cont-borda" th:each="a : ${listaAvaliacao}">
-					<h4>Nome do item avaliado</h4>
+					<h4 style="padding-top: .75rem;" th:text="${a.titulo}">Nome do item avaliado</h4>
 					<article>
 						<h5>Nota (0 a 10): <span th:text="${a.nota}"></span></h5>
 						<h5 th:text="${a.descricao}"></h5>
@@ -111,12 +129,14 @@
 					<br/>
 				</div>
 			</div>			
-		</div>		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		</div>
+		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.2/umd/popper.min.js"></script>
+		
+		<!-- SCRIPTS HEADER -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 	</body>

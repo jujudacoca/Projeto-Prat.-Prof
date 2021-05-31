@@ -11,3 +11,7 @@ margin-top: 0px !important;
 .card-subtitle-individual{
 	text-align: center !important;
 }
+
+.card-body{
+	padding: 1.25rem;
+}
